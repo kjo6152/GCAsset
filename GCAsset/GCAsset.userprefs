@@ -2,7 +2,10 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ServerManager.cs">
     <Files>
-      <File FileName="Assets\ServerManager.cs" Line="54" Column="6" />
+      <File FileName="Assets\ServerManager.cs" Line="24" Column="37" />
+      <File FileName="Assets\GCcontext.cs" Line="26" Column="41" />
+      <File FileName="Assets\EventManager.cs" Line="10" Column="4" />
+      <File FileName="Assets\ResourceManager.cs" Line="12" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
