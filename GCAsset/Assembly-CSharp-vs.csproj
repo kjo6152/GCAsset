@@ -46,10 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\EventManager.cs" />
-     <Compile Include="Assets\GCcontext.cs" />
-     <Compile Include="Assets\ResourceManager.cs" />
-     <Compile Include="Assets\ServerManager.cs" />
+     <Compile Include="Assets\RemoteGameController\EventManager.cs" />
+     <Compile Include="Assets\RemoteGameController\GCcontext.cs" />
+     <Compile Include="Assets\RemoteGameController\ResourceManager.cs" />
+     <Compile Include="Assets\RemoteGameController\ServerManager.cs" />
+     <None Include="Assets\RemoteGameController\Resources\Example\DeviceInfo.xml" />
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>C:/Users/jiwon/git/GCAsset/GCAsset/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>

@@ -1,11 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\ServerManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\RemoteGameController\ServerManager.cs">
     <Files>
-      <File FileName="Assets\ServerManager.cs" Line="24" Column="37" />
-      <File FileName="Assets\GCcontext.cs" Line="26" Column="41" />
-      <File FileName="Assets\EventManager.cs" Line="10" Column="4" />
-      <File FileName="Assets\ResourceManager.cs" Line="12" Column="2" />
+      <File FileName="Assets\RemoteGameController\ResourceManager.cs" Line="15" Column="4" />
+      <File FileName="Assets\RemoteGameController\ServerManager.cs" Line="248" Column="3" />
+      <File FileName="Assets\RemoteGameController\GCcontext.cs" Line="26" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

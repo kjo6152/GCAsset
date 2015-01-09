@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{6EBF7AE6-E518-C281-F778-64128DF39181}</ProjectGuid>
+	<ProjectGuid>{0E46EF9F-9FC5-CCF8-8F64-BC0AFFE46026}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-UnityScript</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
 	<BaseDirectory>Assets</BaseDirectory>
@@ -46,11 +46,16 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\RemoteGameController\EventManager.cs" />
-     <Compile Include="Assets\RemoteGameController\GCcontext.cs" />
-     <Compile Include="Assets\RemoteGameController\ResourceManager.cs" />
-     <Compile Include="Assets\RemoteGameController\ServerManager.cs" />
-     <None Include="Assets\RemoteGameController\Resources\Example\DeviceInfo.xml" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\GUIExamplesJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\GUISimpleJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\GUISlideImageIn.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\GeneralBasicsJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\GeneralEventsListenersJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\PathLocalCurveJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\TestingAllJS.js" />
+     <Compile Include="Assets\LeanTween\LeanTweenExamples\Scripts\UIExampleJS.js" />
+     <None Include="Assets\LeanTween\LeanTweenExamples\Shader\2dUnlitWithFade.shader" />
+     <None Include="Assets\LeanTween\LeanTween-ReadMe.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

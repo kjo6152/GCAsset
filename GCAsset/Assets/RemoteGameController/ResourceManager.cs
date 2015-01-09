@@ -9,7 +9,7 @@ using System.Collections;
  */
 
 public class ResourceManager : MonoBehaviour {
-
+	string mResourcesPath;
 
 	void init(string path){
 		this.mResourcesPath = path;

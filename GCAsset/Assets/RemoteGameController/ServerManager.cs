@@ -35,24 +35,92 @@ public class ServerManager : MonoBehaviour {
 	int mPort;
 	Socket mServerSocket;
 	ArrayList mClientSockets;
+	ArrayList mGCPacketProcessorList;
 	Thread mServerThread;
 	IPEndPoint mServerEndPoint;
-
 	/**
 	 * 할당될 포트의 최소갑과 최대값 및 여러 서버에 관련된 설정 변수들
 	 */
 	int minPort = 6000, maxPort = 7000;
 	int maxPlayer = 5;
+
+	// Use this for initialization
+	void Start () {
+		Debug.Log ("start");
+		this.initSever ();
+		this.startServer ();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		
+	}
+
 	/**
 	 * 서버 초기화 작업을 수행한다.
 	 * 랜덤 포트 생성 작업 수행
 	 */
-
 	void initSever(){
 		Debug.Log ("initServer");
 		System.Random rand = new System.Random ();
 		mPort = rand.Next(minPort, maxPort);
 		mClientSockets = new ArrayList ();
+	}
+
+	/**
+	 * 생성된 소켓을 실제 서버에 바인딩하고 Accept하는 스레드를 생성한다.
+	 */
+	void startServer(){
+		Debug.Log ("startServer");
+		
+		if (mServerThread != null) {
+			Debug.Log("Server already started");
+			return;
+		}
+		
+		mServerSocket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		mServerEndPoint = new IPEndPoint (IPAddress.Any, mPort);
+		mServerSocket.Bind (mServerEndPoint);
+		mServerSocket.Listen (maxPlayer);
+		mServerThread = new Thread (waitPlayer);
+		mServerThread.Start ();
+	}
+
+	/**
+	 * 클라이언트를 기다린다.
+	 * 접속이 될 경우 초기화 작업을 수행한다.
+	 */ 
+	void waitPlayer(){
+		Debug.Log ("waitPlayer");
+		
+		try{
+			while(true){
+				Socket client = mServerSocket.Accept ();
+				GCPacketProcessor processor = new GCPacketProcessor(client);
+				mGCPacketProcessorList.Add(processor);
+				mClientSockets.Add(client);
+				processor.startProcessor();
+			}
+		}
+		//서버를 종료시키고자 인터럽트가 발생했을 때 수행한다.
+		catch(ThreadAbortException){
+			Thread.ResetAbort();
+			destroyServer();
+		}
+	}
+
+	/**
+	 * 스레드에 abort를 호출하여 종료시킨다.
+	 */ 
+	void stopServer(){
+		Debug.Log ("stopServer");
+		
+		if (mServerThread == null) {
+			Debug.Log ("Server already stopped");
+			return;
+		}
+		
+		mServerThread.Abort ();
 	}
 
 	/**
@@ -70,80 +138,53 @@ public class ServerManager : MonoBehaviour {
 	}
 
 	/**
-	 * 생성된 소켓을 실제 서버에 바인딩하고 Accept하는 스레드를 생성한다.
-	 */
-	void startServer(){
-		Debug.Log ("startServer");
-
-		if (mServerThread != null) {
-			Debug.Log("Server already started");
-			return;
-		}
-
-		mServerSocket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-		mServerEndPoint = new IPEndPoint (IPAddress.Any, mPort);
-		mServerSocket.Bind (mServerEndPoint);
-		mServerSocket.Listen (maxPlayer);
-		mServerThread = new Thread (waitPlayer);
-		mServerThread.Start ();
+	 * 서버 관려 변수 get 매소드
+	 */ 
+	public int getPort(){
+		return mPort; 
 	}
 
-	void stopServer(){
-		Debug.Log ("stopServer");
-
-		if (mServerThread == null) {
-			Debug.Log ("Server already stopped");
-			return;
-		}
-
-	}
-
-	void waitPlayer(){
-		Debug.Log ("waitPlayer");
-
-		try{
-			while(true){
-				Socket client = mServerSocket.Accept ();
-				mClientSockets.Add(client);
+	public string getIPAddress(){
+		IPHostEntry host = Dns.GetHostEntry (Dns.GetHostName ());
+		foreach (IPAddress ip in host.AddressList) {
+			if(ip.AddressFamily == AddressFamily.InterNetwork)
+			{
+				return ip.ToString();
 			}
-
 		}
-		//서버를 종료시키고자 인터럽트가 발생했을 때 수행한다.
-		catch(ThreadAbortException){
-			Thread.ResetAbort();
-			destroyServer();
-		}
+		return null;
 	}
 
 	/**
-	 * 클라이언트와 초기 연결시 수행할 작업들
-	 * 1. 클라이언트에 대한 정보 획득
-	 * 2. 
-	 */ 
-	void initClient(Socket client){
-		//
-		client.Receive ();
-	}
+	 * 클라이언트 소켓으로부터 패킷을 받아 처리하는 클래스
+	 */
+	class GCPacketProcessor{
+		/**
+		 * Type에 관련된 상수들
+		 */ 
+		static int TYPE_EVENT = 0x01;
+		static int TYPE_RESOURCE = 0x02;
+		static int TYPE_SENSOR = 0x03;
 
-	// Use this for initialization
-	void Start () {
-		Debug.Log ("start");
-		this.initSever ();
-		this.startServer ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+		/**
+		 * Code에 관련된 상수들
+		 */
+		static int CODE_ACCELERATION = 0x01;
+		static int CODE_GYRO = 0x02;
+		static int CODE_VIBRATION = 0x03;
+		static int CODE_SOUND = 0x04;
+		static int CODE_CONTROLLER = 0x05;
+		static int CODE_FILE = 0x06;
 
-	class GCPacket{
+		Thread mThread;
+		Socket mSocket;
+		byte[] buffer;
 		/**
 	 	* 안드로이드 게임 컨트롤러와 주고 받을 패킷
 	 	* 시간의 경우 운영체제의 종류에 따라 크기 차이가 있을 수 있지만 여서는 8byte로 고정한다.
 	 	*/
 		[StructLayout(LayoutKind.Sequential, Pack = 1)]
-		struct PacketData{
+		public struct PacketData{
 			public uint tv_sec;
 			public uint tv_usec;
 			public ushort type;
@@ -151,17 +192,76 @@ public class ServerManager : MonoBehaviour {
 			public int value;
 		}
 
-		//Nullable Structure
-		PacketData? mPacketData;
+		public GCPacketProcessor(Socket socket){
+			mSocket = socket;
+			mThread = new Thread(receivePacket);
+			buffer = new byte[4096];
+		}
+
+		/**
+		 * PacketData 구조체의 크기를 리턴한다. (고정값)
+		 */ 
+		public static int getSize(){
+			return 16;
+		}
+
+		/**
+		 * GCPacketProcessor를 동작시킨다.
+		 */
+		public void startProcessor(){
+			mThread.Start ();
+		}
+
+		/**
+		 * 클라이언트 소켓으로부터 패킷을 받는다.
+		 */ 
+		void receivePacket(){
+			try{
+				while (true) {
+					mSocket.Receive (buffer,GCPacketProcessor.getSize(),0);
+					processPacket(GCPacketProcessor.getPacketData (buffer));
+				}
+			}
+			catch(ThreadAbortException){
+				Thread.ResetAbort();
+			}
+
+		}
+
+		/**
+		 * 클라이언트 소켓으로부터 받은 패킷을 처리한다.
+		 */
+		void processPacket(PacketData packet){
+			switch (packet.type) {
+			case TYPE_EVENT:
+
+				break;
+			case TYPE_RESOURCE:
+					
+				break;
+			case TYPE_SENSOR:
+					
+				break;
+			}
+
+		}
+
+		/**
+		 * 패킷 프로세서를 중단한다.
+		 */ 
+		public void stopProcessor(){
+			if (mThread == null) {
+				Debug.Log ("Server already stopped");
+				return;
+			}
+			this.mThread.Abort();
+		}
 
 		/**
 		 * byte 배열을 통해 GCPacket을 만든다.
 		 */ 
-		public static GCPacket getInstance(byte[] data){
-			GCPacket tGCPacket = new GCPacket ();
-			tGCPacket.mPacketData = (PacketData)(ByteToStructure (data, typeof(PacketData)));
-			if (tGCPacket.mPacketData == null)return null;
-			return tGCPacket;
+		public static PacketData getPacketData(byte[] data){
+			return (PacketData)(ByteToStructure (data, typeof(PacketData)));
 		}
 
 		/**
@@ -184,8 +284,8 @@ public class ServerManager : MonoBehaviour {
 		/**
 		 * 클래스에 포함된 PacketData를 배열로 만든다.
 		 */ 
-		public byte[] getByteArray(){
-			return StructureToByte (this.mPacketData);
+		public byte[] getByteArray(PacketData packet){
+			return StructureToByte (packet);
 		}
 
 
@@ -211,11 +311,13 @@ public class ServerManager : MonoBehaviour {
 		string mDeviceName;
 		int mResolutionX, mResolutionY;
 
-		void init(string xml){
+		public GameController(string xml){
 			readDeviceDataFromXml (xml);
-
 		}
 
+		/**
+		 * Xml 스트링으로부터 게임 컨트롤러 변수를 설정한다.
+		 */ 
 		void readDeviceDataFromXml(string xml){
 			XmlReader reader = XmlReader.Create (new StringReader (xml));
 
@@ -231,4 +333,5 @@ public class ServerManager : MonoBehaviour {
 			this.mResolutionY = reader.ReadElementContentAsInt ();
 		}
 	}
+
 }
