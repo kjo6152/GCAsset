@@ -52,7 +52,7 @@ public class GCcontext : MonoBehaviour {
 
     public void startOrEndServer()
     {
-		/*
+		
         Debug.Log("startOrEndServer");
         if (mServerManager.isRunning())
         {
@@ -61,9 +61,9 @@ public class GCcontext : MonoBehaviour {
         else
         {
             mServerManager.startServer();
-        }*/
-		GameController gc = new GameController (null);
-		gc.readDeviceDataFromXml (null);
+        }
+		//GameController gc = new GameController (null);
+		//gc.readDeviceDataFromXml (null);
     }
 
 	// Use this for initialization

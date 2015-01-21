@@ -313,8 +313,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 490914964}
-        m_MethodName: connect
+      - m_Target: {fileID: 1204224611}
+        m_MethodName: onClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -365,6 +365,7 @@ GameObject:
   - 114: {fileID: 1204224609}
   - 114: {fileID: 1204224608}
   - 114: {fileID: 1204224607}
+  - 114: {fileID: 1204224611}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -427,6 +428,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!114 &1204224611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1204224606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1baaf509e69031b4e91ff24eb1d66705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ipAddress: {fileID: 0}
 --- !u!1 &1632342122
 GameObject:
   m_ObjectHideFlags: 0

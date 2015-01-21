@@ -84,7 +84,7 @@ public class ResourceManager {
 		{
 			resourcePath = resourceList[mResourceLength];
 			resource = new XElement(XML_ELEMENT_RESOURCE);
-			attr = new XAttribute(XML_ATTR_ID,mResourceLength);
+			attr = new XAttribute(XML_ATTR_ID,mResourceLength+1);
 			resource.Add(attr);
 			attr = new XAttribute(XML_ATTR_NAME,Path.GetFileName(resourcePath)); 
 			resource.Add(attr);
