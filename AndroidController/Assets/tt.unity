@@ -120,8 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db7b7364c717e5a47b90d96c137a89d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ipAddress: {fileID: 0}
-  connectState: 0
 --- !u!114 &490914965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,7 +312,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1204224611}
-        m_MethodName: onClick
+        m_MethodName: startOrEndServer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -436,10 +434,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1204224606}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1baaf509e69031b4e91ff24eb1d66705, type: 3}
+  m_Script: {fileID: 11500000, guid: b86f1ccc0858b7141813c36a6ba360ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ipAddress: {fileID: 0}
 --- !u!1 &1632342122
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,6 +739,7 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Priority: 3
   ignoreReversedGraphics: 1
   blockingObjects: 0
   m_BlockingMask:
