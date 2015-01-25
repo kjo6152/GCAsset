@@ -60,6 +60,16 @@ public class GCcontext : MonoBehaviour {
         mClientManager.setResourceMeneager(mResourceManager);
         mClientManager.init();
 
+        //센서 관련된 값 확인
+        if (SystemInfo.supportsAccelerometer) Debug.Log("supportsAccelerometer");
+        else Debug.Log("Not supportsAccelerometer");
+
+        if (SystemInfo.supportsGyroscope)
+        {
+            Debug.Log("supportsGyroscope");
+            Input.gyro.enabled = true;
+        }
+        else Debug.Log("Not supportsGyroscope");
 	}
     
     void OnDestroy()
@@ -73,15 +83,26 @@ public class GCcontext : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+        
 	}
 
 
 	
 	// Update is called once per frame
 	void Update () {
+        /*
 		// Todo : 이벤트 큐에서 이벤트를 꺼내 처리한다.
-
+        if(SystemInfo.supportsAccelerometer){
+            Debug.Log("Accelerometer - x : " + Input.acceleration.x + " / y : " + Input.acceleration.y + " / z : " + Input.acceleration.z);
+        }
+        if (SystemInfo.supportsGyroscope && Input.gyro.enabled)
+        {
+            Debug.Log("Gyroscope");
+            Debug.Log("rotationRate - x : " + Input.gyro.rotationRate.x + " / y : " + Input.gyro.rotationRate.y + " / z : " + Input.gyro.rotationRate.z);
+            Debug.Log("gravity - x : " + Input.gyro.gravity.x + " / y : " + Input.gyro.gravity.y + " / z : " + Input.gyro.gravity.z);
+            Debug.Log("attitude - x : " + Input.gyro.attitude.x + " / y : " + Input.gyro.attitude.y + " / z : " + Input.gyro.attitude.z + " / w : " + Input.gyro.attitude.w);
+        }
+         */
 	}
 
     void Awake()

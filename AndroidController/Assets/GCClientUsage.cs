@@ -9,25 +9,12 @@ public class GCClientUsage : MonoBehaviour {
     public Text Port;
 	// Use this for initialization
 	void Start () {
-        Debug.Log("Gyroscope : " + SystemInfo.supportsGyroscope);
-
+        mGCcontext = GCcontext.getInstance;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        
-        mClientManager = GCcontext.getInstance.mClientManager;
-
-        if (SystemInfo.supportsGyroscope)
-        {
-            
-            Debug.Log("rotation rate : " + Input.gyro.rotationRate);
-            Debug.Log("gravity : " + Input.gyro.gravity);
-            Debug.Log("attitude : " + Input.gyro.attitude);
-            Debug.Log("type : " + Input.gyro.GetType());
-
-            mClientManager.sendSensor(Input.gyro);
-        }
+       
 	}
 
     public void ConnectOrDisconnectServer()
@@ -45,5 +32,12 @@ public class GCClientUsage : MonoBehaviour {
             Application.LoadLevel("ViewController");
         }
         
+    }
+
+    public void loadAssetBundleScene()
+    {
+        AssetBundle asset = AssetBundle.CreateFromFile("Assets/myAssetBundle.unity3d");
+        Debug.Log("contains : "+asset.Contains("testScene"));
+        Application.LoadLevel("testScene");
     }
 }

@@ -38,6 +38,6 @@ public class GCServerUsage : MonoBehaviour {
 
     public void changeScene()
     {
-        Application.LoadLevel("testScene");
+        //Application.LoadLevel("testScene");
     }
 }
