@@ -9,6 +9,7 @@ using System;
 
 using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
 /**
  * 2. 게임서버 매니저
  * 기능 :
@@ -211,6 +212,7 @@ public class ServerManager {
         const int BUFFER_SIZE = 4096;
 		Socket mSocket;
 		StreamWriter mStreamWriter;
+        NetworkStream mNetworkStream;
 		GameController mGameController;
 		Thread mThread;
 		byte[] buffer;
@@ -250,7 +252,8 @@ public class ServerManager {
 
 		public void setSocket(Socket socket){
 			this.mSocket = socket;
-			this.mStreamWriter = new StreamWriter (new NetworkStream(mSocket));
+            this.mNetworkStream = new NetworkStream(mSocket);
+            this.mStreamWriter = new StreamWriter(mNetworkStream);
 		}
 
 		/**
@@ -301,11 +304,11 @@ public class ServerManager {
 			case GCconst.TYPE_EVENT:
 			//센서 이벤트
 			case GCconst.TYPE_SENSOR:
-				Debug.Log ("processPacket : event");
+				Debug.Log ("processPacket : event / sensor");
 				//Todo : 이벤트에 대한 처리
 				byte[] eventBuffer = new byte[packet.value];
 				mSocket.Receive(eventBuffer,eventBuffer.Length,0);
-				mEventManager.receiveEvent(mGameController,packet.code,eventBuffer);
+				//mEventManager.receiveEvent(mGameController,packet.code,eventBuffer);
 				break;
 			/**
 			 * 게임 컨트롤러에 대한 정보 패킷

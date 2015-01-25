@@ -6,9 +6,9 @@ using System.Net;
 using System.IO;
 using System.Runtime.InteropServices;
 using System;
-
 using System.Text;
 using System.Xml;
+using System.Xml.Serialization;
 /**
  * 2. 게임서버 매니저
  * 기능 :
@@ -191,7 +191,7 @@ public class ClientManager {
      * 서버로 이벤트를 보낸다.
      * 버튼 클릭이나 조이스틱 관련 이벤트
      */
-    public void sendEvent(ushort code, string value)
+    public void sendEvent(ushort code, int value)
     {
         if (mProcessor != null) mProcessor.sendEvent(code, value);
     }
@@ -382,9 +382,9 @@ public class ClientManager {
 		 * 서버로 이벤트를 보낸다.
          * 버튼 클릭이나 조이스틱 관련 이벤트
 		 */ 
-		public void sendEvent(ushort code,string value)
+		public void sendEvent(ushort code,int value)
         {
-            byte[] packet = getPacketByteArray(GCconst.TYPE_EVENT, 0, 0);
+            byte[] packet = getPacketByteArray(GCconst.TYPE_EVENT, code, value);
             mSocket.Send(packet, packet.Length, 0);
 		}
 
@@ -393,9 +393,16 @@ public class ClientManager {
 		 */
         public void sendSensor(Gyroscope gyro)
         {
-            byte[] packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_GYRO, 0);
+            XmlSerializer serializer = new XmlSerializer(typeof(Gyroscope));
+            MemoryStream ms = new MemoryStream();
+            serializer.Serialize(ms, gyro);
+            
+            byte[] packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_GYRO,Convert.ToInt32(ms.Length));
             mSocket.Send(packet, packet.Length, 0);
 
+            ms.Seek(0, SeekOrigin.Begin);
+            byte[] data = ms.ToArray();
+            mSocket.Send(data, data.Length, 0);
 
 		}
 
