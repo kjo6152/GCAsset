@@ -30,8 +30,8 @@ public class ClientManager {
 	 * 게임 서버의 기본 아이피(자기 자신)과 포트
 	 * 포트는 게임 서버 초기화시 임의로 정해진다.
 	 */
-	int mPort;
-    string mIPAddress = "127.0.0.1";
+    string mIPAddress;
+    int mPort;
 	Socket mClientSocket;
 	Thread mClientThread;
 	IPEndPoint mServerEndPoint;
@@ -42,7 +42,6 @@ public class ClientManager {
 	void Start () {
 		Debug.Log ("start");
 		this.init ();
-        this.startClient();
 	}
 	
 	// Update is called once per frame
@@ -68,9 +67,6 @@ public class ClientManager {
 	 */
 	public void init(){
         Debug.Log("init");
-		System.Random rand = new System.Random ();
-		//mPort = rand.Next(minPort, maxPort);
-		mPort = fixPort;
 		mProcessor = null;
         mClientThread = null;
 	}
@@ -78,8 +74,10 @@ public class ClientManager {
 	/**
 	 * 생성된 소켓을 실제 서버에 바인딩하고 Accept하는 스레드를 생성한다.
 	 */
-    public void startClient()
+    public void startClient(string ip,int port)
     {
+        mIPAddress = ip;
+        mPort = port;
         Debug.Log("startClient");
 		
 		if (mClientThread != null) {
@@ -88,7 +86,7 @@ public class ClientManager {
 		}
 		
 		mClientSocket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        mServerEndPoint = new IPEndPoint(IPAddress.Parse(mIPAddress), mPort);
+        mServerEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
         mClientThread = new Thread(connectServer);
 		mClientThread.Start ();
 	}
@@ -125,6 +123,7 @@ public class ClientManager {
 	 * 게임컨트롤러가 연결되었을 경우 발생하는 이벤트
 	 */ 
 	void onServerConnected(){
+        Debug.Log("onServerConnected");
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
 	}
 
@@ -133,6 +132,7 @@ public class ClientManager {
 	 */
     void onServerDisconnected()
     {
+        Debug.Log("onServerDisconnected");
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
 	}
 
@@ -141,6 +141,7 @@ public class ClientManager {
 	 */
     void onServerCompleted()
     {
+        Debug.Log("onServerCompleted");
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
 	}
 
@@ -177,25 +178,40 @@ public class ClientManager {
 		return mPort; 
 	}
 
-	public string[] getIPAddress(){
-        ArrayList ipList = new ArrayList();
-		IPHostEntry host = Dns.GetHostEntry (Dns.GetHostName ());
-		foreach (IPAddress ip in host.AddressList) {
-			if(ip.AddressFamily == AddressFamily.InterNetwork)
-			{
-				ipList.Add(ip.ToString());
-			}
-		}
-        string[] ipArray = new string[ipList.Count];
-        ipList.CopyTo(ipArray);
-        return ipArray;
+	public string getIPAddress(){
+        return mIPAddress;
 	}
 
     public bool isRunning()
     {
         return mClientThread == null ? false : true;
     }
-	
+
+    /**
+     * 서버로 이벤트를 보낸다.
+     * 버튼 클릭이나 조이스틱 관련 이벤트
+     */
+    public void sendEvent(ushort code, string value)
+    {
+        if (mProcessor != null) mProcessor.sendEvent(code, value);
+    }
+
+    /**
+     * 서버로 자이로 센서 이벤트를 보낸다.
+     */
+    public void sendSensor(Gyroscope gyro)
+    {
+        if (mProcessor != null) mProcessor.sendSensor(gyro);
+    }
+
+    /**
+     * 서버로 자이로 센서 이벤트를 보낸다.
+     */
+    public void sendSensor(AccelerationEvent acceleration)
+    {
+        if (mProcessor != null) mProcessor.sendSensor(acceleration);
+    }
+
 	/**
 	 * 클라이언트 소켓으로부터 패킷을 받아 처리하는 클래스
 	 */
@@ -273,9 +289,8 @@ public class ClientManager {
 					processPacket(GCPacketProcessor.getPacketData (buffer));
 				}
 			}
-			catch(ThreadAbortException){
-                Debug.Log("ThreadAbortException");
-				Thread.ResetAbort();
+			catch(Exception e){
+                Debug.Log(e);
 			}
 
 		}
@@ -286,7 +301,7 @@ public class ClientManager {
 		 * 이벤트와 센서만 ResourceManager로 전달하여 처리하도록 한다.
 		 */
 		void processPacket(PacketData packet){
-			Debug.Log ("processPacket");
+			Debug.Log ("processPacket type : "+packet.type+" code : "+packet.code+" value : "+packet.value);
 			switch (packet.type) {
 			//일반 이벤트
 			case GCconst.TYPE_EVENT:
@@ -362,22 +377,38 @@ public class ClientManager {
 			//데이터 전송
 			mSocket.Send(xmlBuffer,xmlBuffer.Length,0);
 		}
+
 		/**
-		 * 클라이언트로 이벤트 패킷을 보낸다.
-		 * name을 가진 리소스를 검색하여 해당 리소스의 아이디를 전송한다.
+		 * 서버로 이벤트를 보낸다.
+         * 버튼 클릭이나 조이스틱 관련 이벤트
 		 */ 
-		public void sendEvent(ushort type,ushort code,string value){
+		public void sendEvent(ushort code,string value)
+        {
+            byte[] packet = getPacketByteArray(GCconst.TYPE_EVENT, 0, 0);
+            mSocket.Send(packet, packet.Length, 0);
 		}
 
 		/**
-		 * 클라이언트로 이벤트 패킷을 보낸다.
-		 * 서버측에서는 TYPE_EVENT에 대한 패킷만 생성하여 전송한다.
-		 * data는 리소스에 대한 id나 진동 강도이다.
+		 * 서버로 자이로 센서 이벤트를 보낸다.
 		 */
-        public void sendEvent(ushort code, int id)
+        public void sendSensor(Gyroscope gyro)
         {
+            byte[] packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_GYRO, 0);
+            mSocket.Send(packet, packet.Length, 0);
+
+
 		}
 
+        /**
+		 * 서버로 자이로 센서 이벤트를 보낸다.
+		 */
+        public void sendSensor(AccelerationEvent acceleration)
+        {
+            byte[] packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_ACCELERATION, 0);
+            mSocket.Send(packet, packet.Length, 0);
+
+        }
+        
 		/**
 		 * 패킷 프로세서를 중단한다.
 		 */ 
@@ -387,7 +418,6 @@ public class ClientManager {
 				Debug.Log ("Server already stopped");
 				return;
             }
-            mThread.Abort();
             destroyProcessor();
 		}
 

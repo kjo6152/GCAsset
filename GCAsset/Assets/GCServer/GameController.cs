@@ -43,7 +43,11 @@ public class GameController {
     {
         list.Remove(this.processor);
     }
-	
+
+    public void disconnect()
+    {
+        processor.stopProcessor();
+    }
 	/**
 	 * Xml 스트링으로부터 게임 컨트롤러 변수를 설정한다.
 	 */ 

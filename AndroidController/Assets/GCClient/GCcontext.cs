@@ -19,6 +19,27 @@ public class GCcontext : MonoBehaviour {
     public ClientManager mClientManager = null;
 
 	EventManager.EventQueue mEventQueue;
+    private static GCcontext mGCcontext;
+
+    public static GCcontext getInstance
+    {
+        get
+        {
+            if (!mGCcontext)
+            {
+                mGCcontext = (GCcontext)GameObject.FindObjectOfType(typeof(GCcontext));
+                if (!mGCcontext)
+                {
+                    GameObject container = new GameObject();
+                    container.name = "GCcontext";
+                    mGCcontext = container.AddComponent(typeof(GCcontext)) as GCcontext;
+                    mGCcontext.init();
+                }
+            }
+
+            return mGCcontext;
+        }
+    } 
 
 	void init(){
 
@@ -29,7 +50,6 @@ public class GCcontext : MonoBehaviour {
 
 		//ResourceManager 의존성 주입 및 초기화
 		mResourceManager.init ();
-        mResourceManager.createResourceMap();
 
 		//EventManager 의존성 주입 및 초기화
 		mEventManager.setEventQueue (mEventQueue);
@@ -51,31 +71,12 @@ public class GCcontext : MonoBehaviour {
         }
     }
 
-    public void startOrEndServer()
-    {
-		
-        Debug.Log("startOrEndServer");
-        if (mClientManager.isRunning())
-        {
-            mClientManager.stopClient();
-        }
-        else
-        {
-            mClientManager.startClient();
-        }
-		//GameController gc = new GameController (null);
-		//gc.readDeviceDataFromXml (null);
-    }
-
 	// Use this for initialization
 	void Start () {
-        init();
+
 	}
 
-    void Awake()
-    {
 
-    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -83,4 +84,8 @@ public class GCcontext : MonoBehaviour {
 
 	}
 
+    void Awake()
+    {
+        DontDestroyOnLoad(transform.gameObject);
+    }
 }

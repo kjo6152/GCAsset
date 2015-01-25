@@ -20,6 +20,30 @@ public class GCcontext : MonoBehaviour {
 
 	EventManager.EventQueue mEventQueue;
 
+    public int TestValue;
+
+    private static GCcontext mGCcontext;
+    public static GCcontext getInstance
+    {
+        get
+        {
+            if (!mGCcontext)
+            {
+                mGCcontext = (GCcontext)GameObject.FindObjectOfType(typeof(GCcontext));
+
+                if (!mGCcontext)
+                {
+                    GameObject container = new GameObject();
+                    container.name = "GCcontext";
+                    mGCcontext = container.AddComponent(typeof(GCcontext)) as GCcontext;
+                    mGCcontext.init();
+                }
+            }
+
+            return mGCcontext;
+        }
+    }  
+
 	void init(){
 
 		mResourceManager = new ResourceManager ();
@@ -51,44 +75,20 @@ public class GCcontext : MonoBehaviour {
         }
     }
 
-    public void startOrEndServer()
-    {
-		
-        Debug.Log("startOrEndServer");
-        if (mServerManager.isRunning())
-        {
-            mServerManager.stopServer();
-        }
-        else
-        {
-            mServerManager.startServer();
-        }
-		//GameController gc = new GameController (null);
-		//gc.readDeviceDataFromXml (null);
-    }
 
 	// Use this for initialization
 	void Start () {
-        init();
-        string[] ipList = mServerManager.getIPAddress();
-        string port = mServerManager.getPort() + "";
-        string str = "";
-        foreach (string ip in ipList)
-        {
-            str += "IP : " + ip + "\r\n";
-        }
-        GameObject.Find("addressText").GetComponent<Text>().text = str + "port : " + port;
+
 	}
 
-    void Awake()
-    {
-
-    }
-	
 	// Update is called once per frame
 	void Update () {
 		// Todo : 이벤트 큐에서 이벤트를 꺼내 처리한다.
 
 	}
 
+    void Awake()
+    {
+        DontDestroyOnLoad(transform.gameObject);
+    }
 }

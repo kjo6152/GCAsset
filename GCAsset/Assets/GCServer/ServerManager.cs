@@ -116,17 +116,18 @@ public class ServerManager {
 				processor.startProcessor();
 			}
 		}
-		//서버를 종료시키고자 인터럽트가 발생했을 때 수행한다.
-		catch(ThreadAbortException){
-            Debug.Log("ThreadAbortException");
-			Thread.ResetAbort();
-		}
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+        Debug.Log("end waitPlayer");
 	}
 
 	/**
 	 * 게임컨트롤러가 연결되었을 경우 발생하는 이벤트
 	 */ 
 	void onGameControllerConnected(GameController gc){
+        Debug.Log("onGameControllerConnected : "+gc.getDeviceName());
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
 	}
 
@@ -134,6 +135,7 @@ public class ServerManager {
 	 * 게임컨트롤러가 연결이 끊겼을 경우 발생하는 이벤트
 	 */ 
 	void onGameControllerDisconnected(GameController gc){
+        Debug.Log("onGameControllerDisconnected : " + gc.getDeviceName());
         gc.removeFrom(this.mProcessorList);
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
 	}
@@ -142,6 +144,7 @@ public class ServerManager {
 	 * 게임 컨트롤러 연결이 완료되었을 경우 발생하는 이벤트
 	 */ 
 	void onGameControllerCompleted(GameController gc){
+        Debug.Log("onGameControllerCompleted : " + gc.getDeviceName());
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
 	}
 
@@ -155,7 +158,6 @@ public class ServerManager {
 			Debug.Log ("Server already stopped");
 			return;
 		}
-        mServerThread.Abort();
         destroyServer();
 	}
 
@@ -262,6 +264,7 @@ public class ServerManager {
 		 * GCPacketProcessor를 동작시킨다.
 		 */
 		public void startProcessor(){
+            Debug.Log("startProcessor");
 			mThread.Start ();
 		}
 
@@ -280,11 +283,10 @@ public class ServerManager {
 					processPacket(GCPacketProcessor.getPacketData (buffer));
 				}
 			}
-			catch(ThreadAbortException){
-                Debug.Log("ThreadAbortException");
-				Thread.ResetAbort();
+			catch(Exception e){
+                Debug.Log(e);
 			}
-
+            Debug.Log("end receivePacket");
 		}
 
 		/**
@@ -293,7 +295,7 @@ public class ServerManager {
 		 * 이벤트와 센서만 ResourceManager로 전달하여 처리하도록 한다.
 		 */
 		void processPacket(PacketData packet){
-			Debug.Log ("processPacket");
+            Debug.Log("processPacket type : " + packet.type + " code : " + packet.code + " value : " + packet.value);
 			switch (packet.type) {
 			//일반 이벤트
 			case GCconst.TYPE_EVENT:
@@ -368,20 +370,6 @@ public class ServerManager {
 			}
 		}
 
-        void sendFile(string path)
-        {
-            Debug.Log("sendFile : "+path);
-            FileStream fs = File.OpenRead(path);
-            int readSize = 0;
-            do
-            {
-                Debug.Log("sendFile");
-                readSize = fs.Read(buffer, 0, BUFFER_SIZE);
-                mSocket.Send(buffer, 0, readSize, SocketFlags.None);
-            } while (readSize > 0);
-            fs.Close();
-        }
-
 		void sendResourceMap(){
 			Debug.Log ("sendResourceMap");
             string xml = mResourceManager.getResourceMap();
@@ -424,8 +412,8 @@ public class ServerManager {
 				Debug.Log ("Server already stopped");
 				return;
             }
-            mThread.Abort();
             destroyProcessor();
+            
 		}
 
 		void destroyProcessor(){
