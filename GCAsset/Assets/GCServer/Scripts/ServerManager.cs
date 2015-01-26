@@ -110,9 +110,9 @@ public class ServerManager {
 				processor.setEventManager(mEventManager);
 				processor.setResourceMeneager(mResourceManager);
 				//게임 컨트롤러에 대한 이벤트 추가
-				processor.mConnectListener += new GCPacketProcessor.onListener(onGameControllerConnected);
-				processor.mDisconnectListener += new GCPacketProcessor.onListener(onGameControllerDisconnected);
-                processor.mCompleteListener += new GCPacketProcessor.onListener(onGameControllerCompleted);
+                processor.onConnectListener += new GCPacketProcessor.Listener(onGameControllerConnected);
+                processor.onDisconnectListener += new GCPacketProcessor.Listener(onGameControllerDisconnected);
+                processor.onCompleteListener += new GCPacketProcessor.Listener(onGameControllerCompleted);
 				//프로세서 시작
 				processor.startProcessor();
 			}
@@ -215,14 +215,15 @@ public class ServerManager {
         NetworkStream mNetworkStream;
 		GameController mGameController;
 		Thread mThread;
-		byte[] buffer;
+		byte[] recvBuffer;
+        byte[] sendBuffer;
 		ResourceManager mResourceManager;
 		EventManager mEventManager;
 
-		public delegate void onListener(GameController gc);
-		public event onListener mConnectListener;
-		public event onListener mDisconnectListener;
-		public event onListener mCompleteListener;
+		public delegate void Listener(GameController gc);
+		public event Listener onConnectListener;
+        public event Listener onDisconnectListener;
+        public event Listener onCompleteListener;
 
 		/**
 	 	* 안드로이드 게임 컨트롤러와 주고 받을 패킷
@@ -239,7 +240,8 @@ public class ServerManager {
 
 		public GCPacketProcessor(){
 			mThread = new Thread(receivePacket);
-            buffer = new byte[BUFFER_SIZE];
+            recvBuffer = new byte[BUFFER_SIZE];
+            sendBuffer = new byte[BUFFER_SIZE];
 		}
 
 		public void setResourceMeneager(ResourceManager rm){
@@ -278,12 +280,12 @@ public class ServerManager {
 			try{
 				while (true) {
 					Debug.Log("receivePacket");
-                    if (mSocket.Receive(buffer, GCPacketProcessor.getSize(), 0) <= 0)
+                    if (mSocket.Receive(recvBuffer, GCPacketProcessor.getSize(), 0) <= 0)
                     {
                         this.stopProcessor();
                     }
-                        
-					processPacket(GCPacketProcessor.getPacketData (buffer));
+
+                    processPacket(GCPacketProcessor.getPacketData(recvBuffer));
 				}
 			}
 			catch(Exception e){
@@ -306,9 +308,8 @@ public class ServerManager {
 			case GCconst.TYPE_SENSOR:
 				Debug.Log ("processPacket : event / sensor");
 				//Todo : 이벤트에 대한 처리
-				byte[] eventBuffer = new byte[packet.value];
-				mSocket.Receive(eventBuffer,eventBuffer.Length,0);
-				//mEventManager.receiveEvent(mGameController,packet.code,eventBuffer);
+				mSocket.Receive(recvBuffer,packet.value,0);
+                mEventManager.receiveEvent(mGameController, packet.code, recvBuffer);
 				break;
 			/**
 			 * 게임 컨트롤러에 대한 정보 패킷
@@ -324,8 +325,8 @@ public class ServerManager {
 
 				//게임 컨트롤러에 대한 정보
 				while(remain>0){
-					count = mSocket.Receive(buffer,remain,0);
-					xml += Encoding.Default.GetString(buffer,0,count);
+                    count = mSocket.Receive(recvBuffer, remain, 0);
+                    xml += Encoding.Default.GetString(recvBuffer, 0, count);
 					remain -= count;
 				}
 				//받은 xml 파일을 읽는다.
@@ -333,7 +334,7 @@ public class ServerManager {
 				mGameController = new GameController(this);
 				mGameController.readDeviceDataFromXml(xml);
 				//연결 이벤트를 발생한다.
-				mConnectListener(this.mGameController);
+				onConnectListener(this.mGameController);
 				//리소스맵과 리소스를 전송한다.
 				sendResourceMap();
 				sendReousrces();
@@ -352,7 +353,7 @@ public class ServerManager {
 			case GCconst.TYPE_ACK:
 				Debug.Log ("processPacket : TYPE_ACK");
 				//연결 완료 이벤트를 발생한다.
-				mCompleteListener(this.mGameController);
+                onCompleteListener(this.mGameController);
 				break;
 			}
 
@@ -399,7 +400,7 @@ public class ServerManager {
 		 */
 		public void sendEffect(ushort code,int id){
 			//보낼 패킷 생성
-			byte[] sendBuffer = getPacketByteArray (GCconst.TYPE_EVENT, code, 4);
+			sendBuffer = getPacketByteArray (GCconst.TYPE_EVENT, code, 4);
 			//패킷 전송
 			mSocket.Send(sendBuffer,sendBuffer.Length,0);
 			//데이터 전송
@@ -425,7 +426,7 @@ public class ServerManager {
 			mSocket.Close ();
             mSocket = null;
 			mThread = null;
-            mDisconnectListener(this.mGameController);
+            onDisconnectListener(this.mGameController);
 		}
 
 		/**

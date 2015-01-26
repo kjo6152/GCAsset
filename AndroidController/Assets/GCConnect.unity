@@ -267,6 +267,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1632342123}
+  - {fileID: 1167328731}
   m_Father: {fileID: 1994233448}
   m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
@@ -314,7 +315,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1167328730}
-        m_MethodName: loadAssetBundleScene
+        m_MethodName: ConnectOrDisconnectServer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -390,11 +391,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1167328729}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -281.149994, y: 25.4499817, z: 0}
+  m_LocalPosition: {x: -269.75, y: 12.9499817, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1994233448}
-  m_RootOrder: 3
+  m_Father: {fileID: 931427566}
+  m_RootOrder: 1
 --- !u!1 &1204224606
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +468,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1994233448}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1 &1237853524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,7 +1022,6 @@ RectTransform:
   - {fileID: 1612751084}
   - {fileID: 1651040407}
   - {fileID: 931427566}
-  - {fileID: 1167328731}
   - {fileID: 1204224610}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -1041,7 +1041,6 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Priority: 3
   ignoreReversedGraphics: 1
   blockingObjects: 0
   m_BlockingMask:

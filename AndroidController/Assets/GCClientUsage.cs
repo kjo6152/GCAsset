@@ -33,11 +33,12 @@ public class GCClientUsage : MonoBehaviour {
         }
         
     }
-
+    /*
     public void loadAssetBundleScene()
     {
         AssetBundle asset = AssetBundle.CreateFromFile("Assets/myAssetBundle.unity3d");
         Debug.Log("contains : "+asset.Contains("testScene"));
         Application.LoadLevel("testScene");
     }
+     */
 }

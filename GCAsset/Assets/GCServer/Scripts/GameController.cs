@@ -78,31 +78,28 @@ public class GameController {
 	
 	/**
 	 * 게임 컨트롤러를 통한 이벤트 처리
-	 */ 
-	public delegate void onEventListener(int code,byte[] value);
-	public delegate void onAccelerationListener(byte[] value);
-	public delegate void onGyroListener(byte[] value);
+	 */
+    public delegate void EventListener(int code, byte[] value);
+    public delegate void AccelerationListener(EventManager.Acceleration acceleration);
+    public delegate void GyroListener(EventManager.Gyro gyro);
 	
-	event onEventListener mEventListener;
-	event onAccelerationListener mAccelerationListener;
-	event onGyroListener mGyroListener;
-	
-	
-	public void receiveEvent(int code,byte[] value){
+	public event EventListener onEventListener;
+    public event AccelerationListener onAccelerationListener;
+    public event GyroListener onGyroListener;
 
-
-		mEventListener (code, value);
-		
-		/**
+    public void receiveEvent(EventManager.Event mEvent)
+    {
+        /**
 		 * 이벤트 종류에 대한 리스너 처리
-		 */ 
-		switch (code) {
-		case GCconst.CODE_ACCELERATION:
-			mAccelerationListener(value);
-			break;
-		case GCconst.CODE_GYRO:
-			mGyroListener(value);
-			break;
-		}
-	}
+		 */
+        switch (mEvent.getCode())
+        {
+            case GCconst.CODE_ACCELERATION:
+                onAccelerationListener(mEvent.getAcceleration());
+                break;
+            case GCconst.CODE_GYRO:
+                onGyroListener(mEvent.getGyro());
+                break;
+        }
+    }
 }

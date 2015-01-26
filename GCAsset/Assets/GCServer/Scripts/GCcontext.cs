@@ -18,7 +18,7 @@ public class GCcontext : MonoBehaviour {
     public EventManager mEventManager = null;
     public ServerManager mServerManager = null;
 
-	EventManager.EventQueue mEventQueue;
+	Queue mEventQueue;
 
     public int TestValue;
 
@@ -49,7 +49,7 @@ public class GCcontext : MonoBehaviour {
 		mResourceManager = new ResourceManager ();
 		mEventManager = new EventManager ();
 		mServerManager = new ServerManager ();
-		mEventQueue = new EventManager.EventQueue ();
+        mEventQueue = new Queue();
 
 		//ResourceManager 의존성 주입 및 초기화
 		mResourceManager.init ();
@@ -84,7 +84,7 @@ public class GCcontext : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Todo : 이벤트 큐에서 이벤트를 꺼내 처리한다.
-
+        mEventManager.Update();
 	}
 
     void Awake()

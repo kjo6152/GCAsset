@@ -26,6 +26,8 @@ public class ClientManager {
 	 */
 	const int minPort = 6000, maxPort = 7000, maxPlayer = 5;
 	const int fixPort = 6000;
+    const int gyroDataSize = sizeof(float) * 10;
+    const int accelDataSize = sizeof(float) * 3;
 	/**
 	 * 게임 서버의 기본 아이피(자기 자신)과 포트
 	 * 포트는 게임 서버 초기화시 임의로 정해진다.
@@ -219,7 +221,9 @@ public class ClientManager {
         const int BUFFER_SIZE = 4096;
 		Socket mSocket;
 		Thread mThread;
-		byte[] buffer;
+		byte[] recvBuffer;
+        byte[] sendBuffer;
+
 		ResourceManager mResourceManager;
 		EventManager mEventManager;
 
@@ -243,7 +247,8 @@ public class ClientManager {
 
 		public GCPacketProcessor(){
 			mThread = new Thread(receivePacket);
-            buffer = new byte[BUFFER_SIZE];
+            recvBuffer = new byte[BUFFER_SIZE];
+            sendBuffer = new byte[BUFFER_SIZE];
 		}
 
 		public void setResourceMeneager(ResourceManager rm){
@@ -282,11 +287,11 @@ public class ClientManager {
 			try{
 				while (true) {
 					Debug.Log("receivePacket");
-                    if (mSocket.Receive(buffer, GCPacketProcessor.getSize(), 0) <= 0)
+                    if (mSocket.Receive(recvBuffer, GCPacketProcessor.getSize(), 0) <= 0)
                     {
                         this.stopProcessor();
                     }
-					processPacket(GCPacketProcessor.getPacketData (buffer));
+                    processPacket(GCPacketProcessor.getPacketData(recvBuffer));
 				}
 			}
 			catch(Exception e){
@@ -344,8 +349,8 @@ public class ClientManager {
             FileStream writer = new FileStream(path,FileMode.Create);
 			while(remainSize>0){
                 Debug.Log("receiveResource : " + remainSize);
-                receiveSize = mSocket.Receive(buffer, remainSize > BUFFER_SIZE ? BUFFER_SIZE : remainSize, SocketFlags.None);
-                writer.Write(buffer,0,receiveSize);
+                receiveSize = mSocket.Receive(recvBuffer, remainSize > BUFFER_SIZE ? BUFFER_SIZE : remainSize, SocketFlags.None);
+                writer.Write(recvBuffer,0,receiveSize);
                 remainSize -= receiveSize;
             }
             writer.Close();
@@ -356,8 +361,8 @@ public class ClientManager {
             }
             else if (code == mResourceManager.getResourceLength())
             {
-                buffer = getPacketByteArray(GCconst.TYPE_ACK, 0, 0);
-                mSocket.Send(buffer, buffer.Length, 0);
+                byte[] packetBuffer = getPacketByteArray(GCconst.TYPE_ACK, 0, 0);
+                mSocket.Send(packetBuffer, packetBuffer.Length, 0);
                 mCompleteListener();
             }
             Debug.Log("End receiveResource");
@@ -384,26 +389,55 @@ public class ClientManager {
 		 */ 
 		public void sendEvent(ushort code,int value)
         {
-            byte[] packet = getPacketByteArray(GCconst.TYPE_EVENT, code, value);
-            mSocket.Send(packet, packet.Length, 0);
+            //byte[] packet = getPacketByteArray(GCconst.TYPE_EVENT, code, value);
+            //mSocket.Send(packet, packet.Length, 0);
 		}
 
-		/**
-		 * 서버로 자이로 센서 이벤트를 보낸다.
-		 */
+        /**
+         * 서버로 자이로 센서 이벤트를 보낸다.
+         * userAcceleration에 가속도도 포함되어있다.
+         * 자이로
+         *  - rotationRate : x, y, z
+         *  - gravity : x, y, z
+         *  - attitude : x, y, z, w
+         * 가속도
+         *  - userAcceleration : x, y, z
+         */
         public void sendSensor(Gyroscope gyro)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Gyroscope));
-            MemoryStream ms = new MemoryStream();
-            serializer.Serialize(ms, gyro);
-            
-            byte[] packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_GYRO,Convert.ToInt32(ms.Length));
+            //자이로 센서 전송
+            float[] gyroData = new float[10];
+            //rotationRate
+            gyroData[0] = gyro.rotationRate.x;
+            gyroData[1] = gyro.rotationRate.y;
+            gyroData[2] = gyro.rotationRate.z;
+            //gravity
+            gyroData[3] = gyro.gravity.x;
+            gyroData[4] = gyro.gravity.y;
+            gyroData[5] = gyro.gravity.z;
+            //attitude
+            gyroData[6] = gyro.attitude.x;
+            gyroData[7] = gyro.attitude.y;
+            gyroData[8] = gyro.attitude.z;
+            gyroData[9] = gyro.attitude.w;
+
+            byte[] packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_GYRO, gyroDataSize);
             mSocket.Send(packet, packet.Length, 0);
 
-            ms.Seek(0, SeekOrigin.Begin);
-            byte[] data = ms.ToArray();
-            mSocket.Send(data, data.Length, 0);
+            Buffer.BlockCopy(gyroData, 0, sendBuffer, 0, gyroDataSize);
+            mSocket.Send(sendBuffer, gyroDataSize, 0);
 
+            //가속도 센서 전송
+            float[] accelData = new float[3];
+            accelData[0] = gyro.userAcceleration.x;
+            accelData[1] = gyro.userAcceleration.y;
+            accelData[2] = gyro.userAcceleration.z;
+
+            packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_ACCELERATION, accelDataSize);
+            mSocket.Send(packet, packet.Length, 0);
+
+            Buffer.BlockCopy(accelData, 0, sendBuffer, 0, accelDataSize);
+            mSocket.Send(sendBuffer, accelDataSize, 0);
 		}
 
         /**
@@ -411,8 +445,8 @@ public class ClientManager {
 		 */
         public void sendSensor(AccelerationEvent acceleration)
         {
-            byte[] packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_ACCELERATION, 0);
-            mSocket.Send(packet, packet.Length, 0);
+            //byte[] packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_ACCELERATION, 0);
+            //mSocket.Send(packet, packet.Length, 0);
 
         }
         

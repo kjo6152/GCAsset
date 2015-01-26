@@ -12,6 +12,7 @@ public class GyroSensor : MonoBehaviour {
         {
             gyro = Input.gyro;
             gyro.enabled = true;
+            gyro.updateInterval = 1.0f;
         }
        
 	}
