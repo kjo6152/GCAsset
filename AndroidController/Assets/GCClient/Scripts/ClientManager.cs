@@ -34,6 +34,7 @@ public class ClientManager {
 	 */
     string mIPAddress;
     int mPort;
+    bool isReady;
 	Socket mClientSocket;
 	Thread mClientThread;
 	IPEndPoint mServerEndPoint;
@@ -62,7 +63,6 @@ public class ClientManager {
 	public void setEventManager(EventManager em){
 		this.mEventManager = em;
 	}
-
 	/**
 	 * 서버 초기화 작업을 수행한다.
 	 * 랜덤 포트 생성 작업 수행
@@ -71,6 +71,7 @@ public class ClientManager {
         Debug.Log("init");
 		mProcessor = null;
         mClientThread = null;
+        isReady = false;
 	}
 
 	/**
@@ -108,9 +109,9 @@ public class ClientManager {
             mProcessor.setEventManager(mEventManager);
             mProcessor.setResourceMeneager(mResourceManager);
 			//게임 컨트롤러에 대한 이벤트 추가
-            mProcessor.mConnectListener += new GCPacketProcessor.onListener(onServerConnected);
-            mProcessor.mDisconnectListener += new GCPacketProcessor.onListener(onServerDisconnected);
-            mProcessor.mCompleteListener += new GCPacketProcessor.onListener(onServerCompleted);
+            mProcessor.onConnectListener += new GCPacketProcessor.Listener(onServerConnected);
+            mProcessor.onDisconnectListener += new GCPacketProcessor.Listener(onServerDisconnected);
+            mProcessor.onCompleteListener += new GCPacketProcessor.Listener(onServerCompleted);
 			//프로세서 시작
             mProcessor.startProcessor();
 		}
@@ -127,6 +128,7 @@ public class ClientManager {
 	void onServerConnected(){
         Debug.Log("onServerConnected");
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
+        mEventManager.receiveEvent(GCconst.TYPE_SYSTEM, GCconst.CODE_CONNECTED, null);
 	}
 
 	/**
@@ -136,6 +138,7 @@ public class ClientManager {
     {
         Debug.Log("onServerDisconnected");
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
+        mEventManager.receiveEvent(GCconst.TYPE_SYSTEM, GCconst.CODE_DISCONNECTED, null);
 	}
 
 	/**
@@ -144,7 +147,9 @@ public class ClientManager {
     void onServerCompleted()
     {
         Debug.Log("onServerCompleted");
+        isReady = true;
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
+        mEventManager.receiveEvent(GCconst.TYPE_SYSTEM, GCconst.CODE_COMPLETE, null);
 	}
 
 	/**
@@ -195,7 +200,7 @@ public class ClientManager {
      */
     public void sendEvent(ushort code, int value)
     {
-        if (mProcessor != null) mProcessor.sendEvent(code, value);
+        if (mProcessor != null && isReady) mProcessor.sendEvent(code, value);
     }
 
     /**
@@ -203,7 +208,7 @@ public class ClientManager {
      */
     public void sendSensor(Gyroscope gyro)
     {
-        if (mProcessor != null) mProcessor.sendSensor(gyro);
+        if (mProcessor != null && isReady) mProcessor.sendSensor(gyro);
     }
 
     /**
@@ -211,7 +216,7 @@ public class ClientManager {
      */
     public void sendSensor(AccelerationEvent acceleration)
     {
-        if (mProcessor != null) mProcessor.sendSensor(acceleration);
+        if (mProcessor != null && isReady) mProcessor.sendSensor(acceleration);
     }
 
 	/**
@@ -227,10 +232,10 @@ public class ClientManager {
 		ResourceManager mResourceManager;
 		EventManager mEventManager;
 
-		public delegate void onListener();
-		public event onListener mConnectListener;
-		public event onListener mDisconnectListener;
-		public event onListener mCompleteListener;
+		public delegate void Listener();
+		public event Listener onConnectListener;
+		public event Listener onDisconnectListener;
+		public event Listener onCompleteListener;
 
 		/**
 	 	* 안드로이드 게임 컨트롤러와 주고 받을 패킷
@@ -284,6 +289,7 @@ public class ClientManager {
 		 * 클라이언트 소켓으로부터 패킷을 받는다.
 		 */ 
 		void receivePacket(){
+            onConnectListener();
 			try{
 				while (true) {
 					Debug.Log("receivePacket");
@@ -308,33 +314,44 @@ public class ClientManager {
 		void processPacket(PacketData packet){
 			Debug.Log ("processPacket type : "+packet.type+" code : "+packet.code+" value : "+packet.value);
 			switch (packet.type) {
-			//일반 이벤트
-			case GCconst.TYPE_EVENT:
-			//센서 이벤트
-			case GCconst.TYPE_SENSOR:
-
-				break;
-			/**
-			 * 게임 컨트롤러에 대한 정보 패킷
-			 * 첫 연결시 서버로 전송한다.
-			 */ 
-			case GCconst.TYPE_CONTROLLER:
-				break;
-			/**
-			 * 리소스 패킷
-			 * 서버로부터 리소스를 다운받는다.
-			 * 컨트롤러에 대한 정보 전송 후 바로 다운받는다.
-			 */
-			case GCconst.TYPE_RESOURCE:
-                receiveResource(packet.code, packet.value);
-				break;
-			/**
-			 * 리소스를 다 받았을 때 클라이언트에서 보내주는 패킷
-			 * 여기서는 호출되지 않는다.
-			 */ 
-			case GCconst.TYPE_ACK:
-				//연결 완료 이벤트를 발생한다.
-				break;
+			    //일반 이벤트
+			    case GCconst.TYPE_EVENT:
+                    mSocket.Receive(recvBuffer, packet.value, 0);
+                    if (packet.code == GCconst.CODE_SOUND || packet.code == GCconst.CODE_VIEW)
+                    {
+                        string name = Encoding.Default.GetString(recvBuffer, 0, packet.value);
+                        mEventManager.receiveEvent(packet.type, packet.code, name);
+                    }
+                    else if (packet.code == GCconst.CODE_VIBRATION)
+                    {
+                        mEventManager.receiveEvent(packet.type, packet.code, BitConverter.ToInt32(recvBuffer, 0));
+                    }
+                    
+                    break;
+			    //센서 이벤트
+			    case GCconst.TYPE_SENSOR:
+				    break;
+			    /**
+			     * 게임 컨트롤러에 대한 정보 패킷
+			     * 첫 연결시 서버로 전송한다.
+			     */ 
+			    case GCconst.TYPE_CONTROLLER:
+				    break;
+			    /**
+			     * 리소스 패킷
+			     * 서버로부터 리소스를 다운받는다.
+			     * 컨트롤러에 대한 정보 전송 후 바로 다운받는다.
+			     */
+			    case GCconst.TYPE_RESOURCE:
+                    receiveResource(packet.code, packet.value);
+				    break;
+			    /**
+			     * 리소스를 다 받았을 때 클라이언트에서 보내주는 패킷
+			     * 여기서는 호출되지 않는다.
+			     */ 
+			    case GCconst.TYPE_ACK:
+				    //연결 완료 이벤트를 발생한다.
+				    break;
 			}
 
 		}
@@ -363,7 +380,7 @@ public class ClientManager {
             {
                 byte[] packetBuffer = getPacketByteArray(GCconst.TYPE_ACK, 0, 0);
                 mSocket.Send(packetBuffer, packetBuffer.Length, 0);
-                mCompleteListener();
+                onCompleteListener();
             }
             Debug.Log("End receiveResource");
 		}
@@ -464,7 +481,7 @@ public class ClientManager {
 
 		void destroyProcessor(){
             Debug.Log("destroyProcessor");
-            mDisconnectListener();
+            onDisconnectListener();
             mSocket.Shutdown(SocketShutdown.Both);
 			mSocket.Close ();
             mSocket = null;

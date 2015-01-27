@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Threading;
+using System;
 
 /**
  * 3. 이벤트 메니저
@@ -11,26 +12,55 @@ using System.Threading;
  */
 public class EventManager {
 
-	public delegate void onEffectListener(ushort code,int value);
+    public delegate void EventListener();
+	public delegate void VibrationListener(int time);
+    public delegate void SoundListener(string path);
+    public delegate void ViewListener(string SceneName);
 
-    event onEffectListener mEffectListener;
+    public event EventListener onServerConnected;
+    public event EventListener onServerDisconnected;
+    public event EventListener onServerComplete;
+    public event VibrationListener onVibrationListener;
+    public event SoundListener onSoundListener;
+    public event ViewListener onViewListener;
+
+
     ResourceManager mResourceManager;
     ClientManager mClientManager;
+
     private bool supportsGyroscope;
 
-	public class EventQueue{
-		public Queue SystemEventQueue;
-        public Queue SoundQueue;
-        public Queue VibrartionQueue;
-		
-		public EventQueue(){
-            SystemEventQueue = new Queue();
-            SoundQueue = new Queue();
-            VibrartionQueue = new Queue();
-		}
-	}
+    Queue EventQueue = new Queue();
 
-	EventQueue mEventQueue;
+    public class Event
+    {
+        ushort type;
+        ushort code;
+        object Object;
+
+        public Event(ushort type, ushort code, object Object)
+        {
+            this.type = type;
+            this.code = code;
+            this.Object = Object;
+        }
+
+        public ushort getType(){
+            return type;
+        }
+
+        public ushort getCode(){
+            return code;
+        }
+
+        public string getPath(){
+            return (string)Object;
+        }
+
+        public int getTime(){
+            return (int)Object;
+        }
+    }
 
     public void setResourceManager(ResourceManager mResourceManager)
     {
@@ -40,9 +70,6 @@ public class EventManager {
     {
         this.mClientManager = mClientManager;
     }
-	public void setEventQueue(EventQueue queue){
-		this.mEventQueue = queue;
-	}
 
     public void setUpdateInterval(float interval)
     {
@@ -51,7 +78,16 @@ public class EventManager {
 
 	public void init(){
         supportsGyroscope = SystemInfo.supportsGyroscope;
-        setUpdateInterval(1.0f);
+        //디버깅 용도로 false로 설정
+        supportsGyroscope = false;
+        setUpdateInterval(0.1f);
+
+        onServerConnected = delegate { };
+        onServerDisconnected = delegate { };
+        onServerComplete = delegate { };
+        onVibrationListener = delegate { };
+        onSoundListener = delegate { };
+        onViewListener = delegate { };
 	}
 	
 	// Update is called once per frame
@@ -60,6 +96,7 @@ public class EventManager {
         {
             mClientManager.sendSensor(Input.gyro);
         }
+        processEvent();
 	}
 
 
@@ -67,44 +104,86 @@ public class EventManager {
 	 * 클라이언트로부터 온 이벤트를 ServerManager에게서 받아 처리한다.
 	 * 각각 알맞은 Queue에 쌓는 역할을 한다.
 	 */
-    public void receiveEvent(ushort code, int value)
+    public void receiveEvent(ushort type, ushort code, object value)
     {
+        EventQueue.Enqueue(new Event(type, code, value));
 		/**
 		 * 이벤트 종류에 대한 리스너 처리
 		 */
-        switch (code)
+        /*
+        if (type == GCconst.TYPE_SYSTEM)
         {
-            case GCconst.CODE_SOUND:
-                mEventQueue.SoundQueue.Enqueue(mResourceManager.getResourcePath(code));
-                break;
-            case GCconst.CODE_VIBRATION:
-                mEventQueue.VibrartionQueue.Enqueue(value);
-                break;
+            EventQueue.Enqueue(new Event(type, code, null));
         }
+        else if (type == GCconst.TYPE_EVENT)
+        {
+            switch (code)
+            {
+                case GCconst.CODE_SOUND:
+                    EventQueue.Enqueue(new Event(type, code, value));
+                    break;
+                case GCconst.CODE_VIBRATION:
+                    EventQueue.Enqueue(new Event(type, code, value));
+                    break;
+                case GCconst.CODE_VIEW:
+                    EventQueue.Enqueue(new Event(type, code, value));
+                    break;
+            }
+        } 
+         */
 	}
 
 	/**
 	 * Queue에 쌓인 이벤트들을 처리한다.
 	 * 메인스레드에서 동작시켜야한다.
 	 */ 
-	public void processEvent(ushort code,int value){
+	public void processEvent(){
 		//Todo : 각 이벤트에 대한 필터 제공
-		
-		/**
-		 * 이벤트 종류에 대한 리스너 처리
-		 */ 
-		switch (code) {
-		case GCconst.CODE_SOUND:
+        try
+        {
+            Event mEvent = (Event)EventQueue.Dequeue();
 
-			break;
-		case GCconst.CODE_VIBRATION:
-
-			break;
-		}
-		
-		/**
-		 * 게임 컨트롤러에 대한 리스너 처리
-		 */
+            /**
+             * 이벤트 종류에 대한 리스너 처리
+             */
+            if (mEvent.getType() == GCconst.TYPE_SYSTEM)
+            {
+                switch (mEvent.getCode())
+                {
+                    case GCconst.CODE_CONNECTED:
+                        onServerConnected();
+                        break;
+                    case GCconst.CODE_DISCONNECTED:
+                        onServerDisconnected();
+                        break;
+                    case GCconst.CODE_COMPLETE:
+                        //AssetBundle 로드
+                        AssetBundle asset = AssetBundle.CreateFromFile("Assets/GCClient/Resources/GCAssetBundle.unity3d");
+                        onServerComplete();
+                        break;
+                }
+            }
+            else if (mEvent.getType() == GCconst.TYPE_EVENT)
+            {
+                //Todo : 각 이벤트에 대한 필터 제공
+                switch (mEvent.getCode())
+                {
+                    case GCconst.CODE_ACCELERATION:
+                        onVibrationListener(mEvent.getTime());
+                        break;
+                    case GCconst.CODE_GYRO:
+                        onSoundListener(mEvent.getPath());
+                        break;
+                    case GCconst.CODE_VIEW:
+                        onViewListener(mEvent.getPath());
+                        break;
+                }
+            }
+        }
+        catch (InvalidOperationException e)
+        {
+            
+        }
 	}
 
 }

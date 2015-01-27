@@ -15,7 +15,15 @@ public class GCServerUsage : MonoBehaviour {
             str += "IP : " + ip + "\r\n";
         }
         GameObject.Find("addressText").GetComponent<Text>().text = str + "port : " + port;
+
+        mGCcontext.mEventManager.onAccelerationListener += new EventManager.AccelerationListener(mEventManager_onAccelerationListener);
 	}
+
+    void mEventManager_onAccelerationListener(GameController gc, EventManager.Acceleration acceleration)
+    {
+        Debug.Log("Main Acceleration Listener");
+        Debug.Log("x : " + acceleration.x + " / y : " + acceleration.y + " / z : " + acceleration.z);
+    }
 	
 	// Update is called once per frame
 	void Update () {

@@ -25,6 +25,12 @@ public class GameController {
 	
 	public GameController(ServerManager.GCPacketProcessor processor){
 		this.processor = processor;
+        onControllerConnected = delegate { };
+        onControllerDisconnected = delegate { };
+        onControllerComplete = delegate { };
+        onAccelerationListener = delegate { };
+        onGyroListener = delegate { };
+
 	}
 	
 	public string getDeviceName(){
@@ -66,24 +72,31 @@ public class GameController {
 		}
 	}
 
-	public void sendSoundEffect(string name)
+    public void sendSound(string name)
 	{
-		processor.sendEffect (GCconst.CODE_SOUND, name);
+		processor.sendSound (name);
 	}
 
-	public void  sendVibrationEffect(int count)
+    public void sendVibration(int time)
 	{
-		processor.sendEffect (GCconst.CODE_VIBRATION, count);
+		processor.sendVibration (time);
 	}
+    public void sendChangeView(string SceneName)
+    {
+        processor.sendChangeView(SceneName);
+    }
 	
 	/**
 	 * 게임 컨트롤러를 통한 이벤트 처리
 	 */
-    public delegate void EventListener(int code, byte[] value);
+    public delegate void EventListener();
     public delegate void AccelerationListener(EventManager.Acceleration acceleration);
     public delegate void GyroListener(EventManager.Gyro gyro);
-	
-	public event EventListener onEventListener;
+
+    //디바이스가 연결되어야 호출되기 때문에 Connected는 필요 없음
+    private event EventListener onControllerConnected;
+    public event EventListener onControllerDisconnected;
+    public event EventListener onControllerComplete;
     public event AccelerationListener onAccelerationListener;
     public event GyroListener onGyroListener;
 
@@ -92,14 +105,34 @@ public class GameController {
         /**
 		 * 이벤트 종류에 대한 리스너 처리
 		 */
-        switch (mEvent.getCode())
+        if (mEvent.getType() == GCconst.TYPE_SYSTEM)
         {
-            case GCconst.CODE_ACCELERATION:
-                onAccelerationListener(mEvent.getAcceleration());
-                break;
-            case GCconst.CODE_GYRO:
-                onGyroListener(mEvent.getGyro());
-                break;
+            switch (mEvent.getCode())
+            {
+                case GCconst.CODE_CONNECTED:
+                    onControllerConnected();
+                    break;
+                case GCconst.CODE_DISCONNECTED:
+                    onControllerDisconnected();
+                    break;
+                case GCconst.CODE_COMPLETE:
+                    onControllerComplete();
+                    break;
+            }
+        }
+        else if (mEvent.getType() == GCconst.TYPE_SENSOR)
+        {
+            //Todo : 각 이벤트에 대한 필터 제공
+            switch (mEvent.getCode())
+            {
+                case GCconst.CODE_ACCELERATION:
+                    onAccelerationListener(mEvent.getAcceleration());
+
+                    break;
+                case GCconst.CODE_GYRO:
+                    onGyroListener(mEvent.getGyro());
+                    break;
+            }
         }
     }
 }

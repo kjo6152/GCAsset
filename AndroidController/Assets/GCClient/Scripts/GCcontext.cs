@@ -18,7 +18,6 @@ public class GCcontext : MonoBehaviour {
     public EventManager mEventManager = null;
     public ClientManager mClientManager = null;
 
-	EventManager.EventQueue mEventQueue;
     private static GCcontext mGCcontext;
 
     public static GCcontext getInstance
@@ -46,13 +45,11 @@ public class GCcontext : MonoBehaviour {
 		mResourceManager = new ResourceManager ();
 		mEventManager = new EventManager ();
         mClientManager = new ClientManager();
-		mEventQueue = new EventManager.EventQueue ();
 
 		//ResourceManager 의존성 주입 및 초기화
 		mResourceManager.init ();
 
 		//EventManager 의존성 주입 및 초기화
-		mEventManager.setEventQueue (mEventQueue);
         mEventManager.setClientManager(mClientManager);
 		mEventManager.init ();
 

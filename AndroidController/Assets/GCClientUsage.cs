@@ -10,7 +10,13 @@ public class GCClientUsage : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         mGCcontext = GCcontext.getInstance;
+        mGCcontext.mEventManager.onServerComplete += new EventManager.EventListener(mEventManager_onServerComplete);
 	}
+
+    void mEventManager_onServerComplete()
+    {
+        Application.LoadLevel("test1");
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -29,16 +35,9 @@ public class GCClientUsage : MonoBehaviour {
             Debug.Log("ip address : " + IPaddress.text);
             Debug.Log("port : " + Port.text);
             mGCcontext.mClientManager.startClient(IPaddress.text, Convert.ToInt32(Port.text));
-            Application.LoadLevel("ViewController");
         }
         
     }
-    /*
-    public void loadAssetBundleScene()
-    {
-        AssetBundle asset = AssetBundle.CreateFromFile("Assets/myAssetBundle.unity3d");
-        Debug.Log("contains : "+asset.Contains("testScene"));
-        Application.LoadLevel("testScene");
-    }
-     */
+
+    
 }

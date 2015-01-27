@@ -6,8 +6,8 @@ using System.IO;
 
 public class ExportAssetBundles : Editor
 {
-    static string ScenesPath = "Assets/GCServer/Scenes";
-    static string AssetBundlePath = "Assets/GCServer/AssetBundle";
+    static string ScenesPath = "Assets\\GCServer\\Scenes";
+    static string ResourcePath = "Assets\\GCServer\\Resources";
 
     [MenuItem("Assets/Build AssetBundle")]
     static void ExportAssetBundle()
@@ -19,7 +19,7 @@ public class ExportAssetBundles : Editor
             Debug.Log(scenes[i]);
         }
 
-        BuildPipeline.BuildStreamedSceneAssetBundle(scenes, AssetBundlePath+"/GCAssetBundle.unity3d", BuildTarget.Android,BuildOptions.UncompressedAssetBundle);
+        BuildPipeline.BuildStreamedSceneAssetBundle(scenes, ResourcePath + "/GCAssetBundle.unity3d", BuildTarget.Android, BuildOptions.UncompressedAssetBundle);
     }
 
     static string[] getSceneList()

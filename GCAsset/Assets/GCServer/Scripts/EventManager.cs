@@ -12,21 +12,25 @@ using System;
  */
 public class EventManager {
 
-    public delegate void EventListener(GameController gc, int code, byte[] value);
+    public delegate void EventListener(GameController gc);
 	public delegate void AccelerationListener(GameController gc,Acceleration acceleration);
 	public delegate void GyroListener(GameController gc,Gyro gyro);
 
-    public event EventListener onEventListener;
+    public event EventListener onControllerConnected;
+    public event EventListener onControllerDisconnected;
+    public event EventListener onControllerComplete;
     public event AccelerationListener onAccelerationListener;
     public event GyroListener onGyroListener;
 
     float[] sensorBuffer = new float[10];
+    Queue EventQueue = new Queue();
+
     public class Event
     {
-        int code;
-        string sensorName;
+        ushort type;
+        ushort code;
         GameController mGameController;
-        object Sensor;
+        object Object;
 
         public GameController getGameController()
         {
@@ -36,31 +40,30 @@ public class EventManager {
         public Gyro getGyro()
         {
             if(code!=GCconst.CODE_GYRO)return null;
-            else return (Gyro)Sensor;
+            else return (Gyro)Object;
         }
 
         public Acceleration getAcceleration()
         {
             if (code != GCconst.CODE_ACCELERATION) return null;
-            else return (Acceleration)Sensor;
+            else return (Acceleration)Object;
         }
 
-        public string getSensorName()
-        {
-            return sensorName;
+        public int getType(){
+            return type;
         }
 
         public int getCode()
         {
             return code;
         }
-        public Event(GameController gc,int code,object sensor)
+
+        public Event(GameController gc, ushort type, ushort code, object Object)
         {
             this.mGameController = gc;
             this.code = code;
-            if (code == GCconst.CODE_GYRO) sensorName = "GYRO";
-            else if (code == GCconst.CODE_ACCELERATION) sensorName = "ACCELERATION";
-            this.Sensor = sensor;
+            this.type = type;
+            this.Object = Object;
         }
     }
     public class Gyro
@@ -86,15 +89,15 @@ public class EventManager {
 
     }
 
-	Queue EventQueue;
+	
 
-    public void setEventQueue(Queue queue)
-    {
-        this.EventQueue = queue;
-	}
 
 	public void init(){
-        
+        onControllerConnected = delegate { };
+        onControllerDisconnected = delegate { };
+        onControllerComplete = delegate { };
+        onAccelerationListener = delegate { };
+        onGyroListener = delegate { };
 	}
 
 	// Use this for initialization
@@ -111,16 +114,24 @@ public class EventManager {
 	 * 클라이언트로부터 온 이벤트를 ServerManager에게서 받아 처리한다.
 	 * 각각 알맞은 Queue에 쌓는 역할을 한다.
 	 */ 
-	public void receiveEvent(GameController gc,int code,byte[] value){
+	public void receiveEvent(GameController gc,ushort type, ushort code,byte[] value){
 		//Todo:이벤트 처리를 어떻게 할 것인지 정해야함
-        Buffer.BlockCopy(value, 0, sensorBuffer, 0, value.Length);
-        switch (code){
-            case GCconst.CODE_GYRO:
-                EventQueue.Enqueue(new Event(gc, code, new Gyro(sensorBuffer)));
-                break;
-            case GCconst.CODE_ACCELERATION:
-                EventQueue.Enqueue(new Event(gc, code, new Acceleration(sensorBuffer)));
-                break;
+        if (type == GCconst.TYPE_SYSTEM)
+        {
+            EventQueue.Enqueue(new Event(gc, type, code, null));
+        }
+        else if (type == GCconst.TYPE_SENSOR)
+        {
+            Buffer.BlockCopy(value, 0, sensorBuffer, 0, 40);
+            switch (code)
+            {
+                case GCconst.CODE_GYRO:
+                    EventQueue.Enqueue(new Event(gc, type, code, new Gyro(sensorBuffer)));
+                    break;
+                case GCconst.CODE_ACCELERATION:
+                    EventQueue.Enqueue(new Event(gc, type, code, new Acceleration(sensorBuffer)));
+                    break;
+            }
         }
 		return;
 	}
@@ -130,27 +141,56 @@ public class EventManager {
 	 * 메인스레드에서 동작시켜야한다.
 	 */ 
 	public void processEvent(){
-		//Todo : 각 이벤트에 대한 필터 제공
-        Event mEvent = (Event)EventQueue.Dequeue();
-
-		/**
-		 * 이벤트 종류에 대한 리스너 처리
-		 */
-        switch (mEvent.getCode())
+        try
         {
-		    case GCconst.CODE_ACCELERATION:
-                onAccelerationListener(mEvent.getGameController(), mEvent.getAcceleration());
-                
-			    break;
-		    case GCconst.CODE_GYRO:
-                onGyroListener(mEvent.getGameController(), mEvent.getGyro());
-			    break;
-		}
-		
-		/**
-		 * 게임 컨트롤러에 대한 리스너 처리
-		 */
-        mEvent.getGameController().receiveEvent(mEvent);
+            while (true)
+            {
+                Event mEvent = (Event)EventQueue.Dequeue();
+
+                /**
+                 * 이벤트 종류에 대한 리스너 처리
+                 */
+                if (mEvent.getType() == GCconst.TYPE_SYSTEM)
+                {
+                    switch (mEvent.getCode())
+                    {
+                        case GCconst.CODE_CONNECTED:
+                            onControllerConnected(mEvent.getGameController());
+                            break;
+                        case GCconst.CODE_DISCONNECTED:
+                            onControllerDisconnected(mEvent.getGameController());
+                            break;
+                        case GCconst.CODE_COMPLETE:
+                            onControllerComplete(mEvent.getGameController());
+                            break;
+                    }
+                }
+                else if (mEvent.getType() == GCconst.TYPE_SENSOR)
+                {
+                    //Todo : 각 이벤트에 대한 필터 제공
+                    switch (mEvent.getCode())
+                    {
+                        case GCconst.CODE_ACCELERATION:
+                            onAccelerationListener(mEvent.getGameController(), mEvent.getAcceleration());
+
+                            break;
+                        case GCconst.CODE_GYRO:
+                            onGyroListener(mEvent.getGameController(), mEvent.getGyro());
+                            break;
+                    }
+                }
+
+
+                /**
+                 * 게임 컨트롤러에 대한 리스너 처리
+                 */
+                mEvent.getGameController().receiveEvent(mEvent);
+            }
+        }
+        catch (InvalidOperationException e)
+        {
+
+        }
 	}
 
 }

@@ -130,6 +130,7 @@ public class ServerManager {
 	void onGameControllerConnected(GameController gc){
         Debug.Log("onGameControllerConnected : "+gc.getDeviceName());
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
+        mEventManager.receiveEvent(gc, GCconst.TYPE_SYSTEM, GCconst.CODE_CONNECTED, null);
 	}
 
 	/**
@@ -139,6 +140,7 @@ public class ServerManager {
         Debug.Log("onGameControllerDisconnected : " + gc.getDeviceName());
         gc.removeFrom(this.mProcessorList);
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
+        mEventManager.receiveEvent(gc, GCconst.TYPE_SYSTEM, GCconst.CODE_DISCONNECTED, null);
 	}
 
 	/**
@@ -147,6 +149,7 @@ public class ServerManager {
 	void onGameControllerCompleted(GameController gc){
         Debug.Log("onGameControllerCompleted : " + gc.getDeviceName());
 		//Todo : 라이브러리쪽으로 이벤트를 처리할 수 있도록 큐에 저장
+        mEventManager.receiveEvent(gc, GCconst.TYPE_SYSTEM, GCconst.CODE_COMPLETE, null);
 	}
 
 	/**
@@ -309,7 +312,7 @@ public class ServerManager {
 				Debug.Log ("processPacket : event / sensor");
 				//Todo : 이벤트에 대한 처리
 				mSocket.Receive(recvBuffer,packet.value,0);
-                mEventManager.receiveEvent(mGameController, packet.code, recvBuffer);
+                mEventManager.receiveEvent(mGameController, GCconst.TYPE_SENSOR, packet.code, recvBuffer);
 				break;
 			/**
 			 * 게임 컨트롤러에 대한 정보 패킷
@@ -386,26 +389,46 @@ public class ServerManager {
 			mSocket.Send(xmlBuffer,xmlBuffer.Length,0);
 		}
 		/**
-		 * 클라이언트로 이벤트 패킷을 보낸다.
-		 * name을 가진 리소스를 검색하여 해당 리소스의 아이디를 전송한다.
+		 * 사운드 효과에 대한 이벤트를 보낸다.
+         * name은 재생할 파일명이다. (example.mp3)
 		 */ 
-		public void sendEffect(ushort code,string name){
-			sendEffect (code, mResourceManager.getResourceCode (name));
+		public void sendSound(string name){
+            byte[] strBuffer = new UTF8Encoding().GetBytes(name);
+            //보낼 패킷 생성
+			byte[] packetBuffer = getPacketByteArray (GCconst.TYPE_EVENT, GCconst.CODE_SOUND, strBuffer.Length);
+            //패킷 전송
+            mSocket.Send(packetBuffer,packetBuffer.Length,0);
+            //데이터 전송
+            mSocket.Send(strBuffer,strBuffer.Length,0);
 		}
 
 		/**
-		 * 클라이언트로 이벤트 패킷을 보낸다.
-		 * 서버측에서는 TYPE_EVENT에 대한 패킷만 생성하여 전송한다.
-		 * data는 리소스에 대한 id나 진동 강도이다.
+		 * 진동에 대한 이벤트를 보낸다.
+         * Time은 진동 시간이다.
 		 */
-		public void sendEffect(ushort code,int id){
+		public void sendVibration(int time){
 			//보낼 패킷 생성
-			sendBuffer = getPacketByteArray (GCconst.TYPE_EVENT, code, 4);
+			byte[] packetBuffer = getPacketByteArray (GCconst.TYPE_EVENT, GCconst.CODE_VIBRATION, 4);
 			//패킷 전송
 			mSocket.Send(sendBuffer,sendBuffer.Length,0);
 			//데이터 전송
-			mStreamWriter.Write (id);
+			mStreamWriter.Write (time);
 		}
+
+        /**
+         * View를 변경하라는 이벤트를 보낸다.
+         * 씬 이름을 보내면 된다. (.unity 제외)
+         */ 
+        public void sendChangeView(string SceneName)
+        {
+            byte[] strBuffer = new UTF8Encoding().GetBytes(SceneName);
+            //보낼 패킷 생성
+            byte[] packetBuffer = getPacketByteArray(GCconst.TYPE_EVENT, GCconst.CODE_VIEW, strBuffer.Length);
+            //패킷 전송
+            mSocket.Send(packetBuffer, packetBuffer.Length, 0);
+            //데이터 전송
+            mSocket.Send(strBuffer, strBuffer.Length, 0);
+        }
 
 		/**
 		 * 패킷 프로세서를 중단한다.

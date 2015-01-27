@@ -17,9 +17,7 @@ public class GCcontext : MonoBehaviour {
 	public ResourceManager mResourceManager = null;
     public EventManager mEventManager = null;
     public ServerManager mServerManager = null;
-
-	Queue mEventQueue;
-
+    
     public int TestValue;
 
     private static GCcontext mGCcontext;
@@ -49,14 +47,12 @@ public class GCcontext : MonoBehaviour {
 		mResourceManager = new ResourceManager ();
 		mEventManager = new EventManager ();
 		mServerManager = new ServerManager ();
-        mEventQueue = new Queue();
 
 		//ResourceManager 의존성 주입 및 초기화
 		mResourceManager.init ();
         mResourceManager.createResourceMap();
 
 		//EventManager 의존성 주입 및 초기화
-		mEventManager.setEventQueue (mEventQueue);
 		mEventManager.init ();
 
 		//ServerManager 의존성 주입 및 초기화
@@ -91,4 +87,5 @@ public class GCcontext : MonoBehaviour {
     {
         DontDestroyOnLoad(transform.gameObject);
     }
+
 }
