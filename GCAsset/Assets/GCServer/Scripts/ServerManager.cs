@@ -182,10 +182,20 @@ public class ServerManager {
 		mServerThread = null;
 	}
 
-	/**
-	 * 서버 관려 변수 get 매소드
-	 */ 
-	public int getPort(){
+    public ArrayList getControllerList()
+    {
+        ArrayList ControllerList = new ArrayList();
+        for(int i=0;i<mProcessorList.Count;i++){
+            GCPacketProcessor processor = (GCPacketProcessor)mProcessorList[i];
+            ControllerList.Add(processor.getGameController());
+        }
+        return ControllerList;
+    }
+    /**
+     * 서버 관려 변수 get 매소드
+     */
+    public int getPort()
+    {
 		return mPort; 
 	}
 
@@ -282,7 +292,7 @@ public class ServerManager {
 		void receivePacket(){
 			try{
 				while (true) {
-					Debug.Log("receivePacket");
+					//Debug.Log("receivePacket");
                     if (mSocket.Receive(recvBuffer, GCPacketProcessor.getSize(), 0) <= 0)
                     {
                         this.stopProcessor();
@@ -303,13 +313,13 @@ public class ServerManager {
 		 * 이벤트와 센서만 ResourceManager로 전달하여 처리하도록 한다.
 		 */
 		void processPacket(PacketData packet){
-            Debug.Log("processPacket type : " + packet.type + " code : " + packet.code + " value : " + packet.value);
+            //Debug.Log("processPacket type : " + packet.type + " code : " + packet.code + " value : " + packet.value);
 			switch (packet.type) {
 			//일반 이벤트
 			case GCconst.TYPE_EVENT:
 			//센서 이벤트
 			case GCconst.TYPE_SENSOR:
-				Debug.Log ("processPacket : event / sensor");
+				//Debug.Log ("processPacket : event / sensor");
 				//Todo : 이벤트에 대한 처리
 				mSocket.Receive(recvBuffer,packet.value,0);
                 mEventManager.receiveEvent(mGameController, GCconst.TYPE_SENSOR, packet.code, recvBuffer);
@@ -320,7 +330,7 @@ public class ServerManager {
 			 * 연결 이벤트를 발생시킨다.
 			 */ 
 			case GCconst.TYPE_CONTROLLER:
-				Debug.Log ("processPacket : TYPE_CONTROLLER");
+				//Debug.Log ("processPacket : TYPE_CONTROLLER");
 				//컨트롤러에 대한 정보를 받는다.
 				int count,remain;
 				string xml="";
@@ -354,7 +364,7 @@ public class ServerManager {
 			 * 완료이벤트를 발생시킨다.
 			 */ 
 			case GCconst.TYPE_ACK:
-				Debug.Log ("processPacket : TYPE_ACK");
+				//Debug.Log ("processPacket : TYPE_ACK");
 				//연결 완료 이벤트를 발생한다.
                 onCompleteListener(this.mGameController);
 				break;
@@ -430,6 +440,9 @@ public class ServerManager {
             mSocket.Send(strBuffer, strBuffer.Length, 0);
         }
 
+        public GameController getGameController(){
+            return mGameController;
+        }
 		/**
 		 * 패킷 프로세서를 중단한다.
 		 */ 

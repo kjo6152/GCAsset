@@ -422,39 +422,47 @@ public class ClientManager {
          */
         public void sendSensor(Gyroscope gyro)
         {
-            //자이로 센서 전송
-            float[] gyroData = new float[10];
-            //rotationRate
-            gyroData[0] = gyro.rotationRate.x;
-            gyroData[1] = gyro.rotationRate.y;
-            gyroData[2] = gyro.rotationRate.z;
-            //gravity
-            gyroData[3] = gyro.gravity.x;
-            gyroData[4] = gyro.gravity.y;
-            gyroData[5] = gyro.gravity.z;
-            //attitude
-            gyroData[6] = gyro.attitude.x;
-            gyroData[7] = gyro.attitude.y;
-            gyroData[8] = gyro.attitude.z;
-            gyroData[9] = gyro.attitude.w;
+            try
+            {
+                //자이로 센서 전송
+                float[] gyroData = new float[10];
+                //rotationRate
+                gyroData[0] = gyro.rotationRate.x;
+                gyroData[1] = gyro.rotationRate.y;
+                gyroData[2] = gyro.rotationRate.z;
+                //gravity
+                gyroData[3] = gyro.gravity.x;
+                gyroData[4] = gyro.gravity.y;
+                gyroData[5] = gyro.gravity.z;
+                //attitude
+                gyroData[6] = gyro.attitude.x;
+                gyroData[7] = gyro.attitude.y;
+                gyroData[8] = gyro.attitude.z;
+                gyroData[9] = gyro.attitude.w;
 
-            byte[] packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_GYRO, gyroDataSize);
-            mSocket.Send(packet, packet.Length, 0);
+                byte[] packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_GYRO, gyroDataSize);
+                mSocket.Send(packet, packet.Length, 0);
 
-            Buffer.BlockCopy(gyroData, 0, sendBuffer, 0, gyroDataSize);
-            mSocket.Send(sendBuffer, gyroDataSize, 0);
+                Buffer.BlockCopy(gyroData, 0, sendBuffer, 0, gyroDataSize);
+                mSocket.Send(sendBuffer, gyroDataSize, 0);
 
-            //가속도 센서 전송
-            float[] accelData = new float[3];
-            accelData[0] = gyro.userAcceleration.x;
-            accelData[1] = gyro.userAcceleration.y;
-            accelData[2] = gyro.userAcceleration.z;
+                //가속도 센서 전송
+                float[] accelData = new float[3];
+                accelData[0] = gyro.userAcceleration.x;
+                accelData[1] = gyro.userAcceleration.y;
+                accelData[2] = gyro.userAcceleration.z;
 
-            packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_ACCELERATION, accelDataSize);
-            mSocket.Send(packet, packet.Length, 0);
+                packet = getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_ACCELERATION, accelDataSize);
+                mSocket.Send(packet, packet.Length, 0);
 
-            Buffer.BlockCopy(accelData, 0, sendBuffer, 0, accelDataSize);
-            mSocket.Send(sendBuffer, accelDataSize, 0);
+                Buffer.BlockCopy(accelData, 0, sendBuffer, 0, accelDataSize);
+                mSocket.Send(sendBuffer, accelDataSize, 0);
+            }
+            catch
+            {
+                stopProcessor();
+            }
+            
 		}
 
         /**

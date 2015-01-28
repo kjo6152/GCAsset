@@ -15,7 +15,7 @@ public class GCClientUsage : MonoBehaviour {
 
     void mEventManager_onServerComplete()
     {
-        Application.LoadLevel("test1");
+
     }
 	
 	// Update is called once per frame

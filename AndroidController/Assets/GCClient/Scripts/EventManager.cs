@@ -78,9 +78,11 @@ public class EventManager {
 
 	public void init(){
         supportsGyroscope = SystemInfo.supportsGyroscope;
+        Debug.Log("supportsGyroscope : " + supportsGyroscope);
         //디버깅 용도로 false로 설정
-        supportsGyroscope = false;
+        //supportsGyroscope = false;
         setUpdateInterval(0.1f);
+        Input.gyro.enabled = true;
 
         onServerConnected = delegate { };
         onServerDisconnected = delegate { };
@@ -107,30 +109,6 @@ public class EventManager {
     public void receiveEvent(ushort type, ushort code, object value)
     {
         EventQueue.Enqueue(new Event(type, code, value));
-		/**
-		 * 이벤트 종류에 대한 리스너 처리
-		 */
-        /*
-        if (type == GCconst.TYPE_SYSTEM)
-        {
-            EventQueue.Enqueue(new Event(type, code, null));
-        }
-        else if (type == GCconst.TYPE_EVENT)
-        {
-            switch (code)
-            {
-                case GCconst.CODE_SOUND:
-                    EventQueue.Enqueue(new Event(type, code, value));
-                    break;
-                case GCconst.CODE_VIBRATION:
-                    EventQueue.Enqueue(new Event(type, code, value));
-                    break;
-                case GCconst.CODE_VIEW:
-                    EventQueue.Enqueue(new Event(type, code, value));
-                    break;
-            }
-        } 
-         */
 	}
 
 	/**
@@ -175,6 +153,7 @@ public class EventManager {
                         onSoundListener(mEvent.getPath());
                         break;
                     case GCconst.CODE_VIEW:
+                        Application.LoadLevel(mEvent.getPath());
                         onViewListener(mEvent.getPath());
                         break;
                 }
