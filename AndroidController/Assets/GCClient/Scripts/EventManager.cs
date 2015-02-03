@@ -146,10 +146,10 @@ public class EventManager {
                 //Todo : 각 이벤트에 대한 필터 제공
                 switch (mEvent.getCode())
                 {
-                    case GCconst.CODE_ACCELERATION:
+                    case GCconst.CODE_VIBRATION:
                         onVibrationListener(mEvent.getTime());
                         break;
-                    case GCconst.CODE_GYRO:
+                    case GCconst.CODE_SOUND:
                         onSoundListener(mEvent.getPath());
                         break;
                     case GCconst.CODE_VIEW:

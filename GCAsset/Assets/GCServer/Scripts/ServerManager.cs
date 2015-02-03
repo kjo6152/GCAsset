@@ -420,7 +420,7 @@ public class ServerManager {
 			//보낼 패킷 생성
 			byte[] packetBuffer = getPacketByteArray (GCconst.TYPE_EVENT, GCconst.CODE_VIBRATION, 4);
 			//패킷 전송
-			mSocket.Send(sendBuffer,sendBuffer.Length,0);
+            mSocket.Send(packetBuffer, packetBuffer.Length, 0);
 			//데이터 전송
 			mStreamWriter.Write (time);
 		}

@@ -22,6 +22,9 @@ public class EventManager {
     public event AccelerationListener onAccelerationListener;
     public event GyroListener onGyroListener;
 
+    public IEventFilter mGyroFilter;
+    public IEventFilter mAccelerationFilter;
+
     float[] sensorBuffer = new float[10];
     Queue EventQueue = new Queue();
 
@@ -126,9 +129,11 @@ public class EventManager {
             switch (code)
             {
                 case GCconst.CODE_GYRO:
+                    if (mGyroFilter != null) mGyroFilter.filter(ref sensorBuffer);
                     EventQueue.Enqueue(new Event(gc, type, code, new Gyro(sensorBuffer)));
                     break;
                 case GCconst.CODE_ACCELERATION:
+                    if (mAccelerationFilter != null) mAccelerationFilter.filter(ref sensorBuffer);
                     EventQueue.Enqueue(new Event(gc, type, code, new Acceleration(sensorBuffer)));
                     break;
             }
@@ -189,7 +194,7 @@ public class EventManager {
         }
         catch (InvalidOperationException e)
         {
-
+            Debug.Log(e);
         }
 	}
 
