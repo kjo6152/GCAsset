@@ -10,13 +10,7 @@ public class GCClientUsage : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         mGCcontext = GCcontext.getInstance;
-        mGCcontext.mEventManager.onServerComplete += new EventManager.EventListener(mEventManager_onServerComplete);
 	}
-
-    void mEventManager_onServerComplete()
-    {
-
-    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -36,8 +30,5 @@ public class GCClientUsage : MonoBehaviour {
             Debug.Log("port : " + Port.text);
             mGCcontext.mClientManager.startClient(IPaddress.text, Convert.ToInt32(Port.text));
         }
-        
     }
-
-    
 }

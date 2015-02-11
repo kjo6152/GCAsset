@@ -17,10 +17,9 @@ public class GCcontext : MonoBehaviour {
 	public ResourceManager mResourceManager = null;
     public EventManager mEventManager = null;
     public ServerManager mServerManager = null;
-    
-    public int TestValue;
 
     private static GCcontext mGCcontext;
+
     public static GCcontext getInstance
     {
         get
@@ -40,7 +39,7 @@ public class GCcontext : MonoBehaviour {
 
             return mGCcontext;
         }
-    }  
+    }
 
 	void init(){
 

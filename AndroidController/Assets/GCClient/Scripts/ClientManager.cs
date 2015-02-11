@@ -361,7 +361,7 @@ public class ClientManager {
          */
 		void receiveResource(ushort code,int value){
             Debug.Log("receiveResource code : "+code+" value : "+value);
-            int FileSize = value, remainSize = value,receiveSize=0;
+            int remainSize = value,receiveSize=0;
 			string path = mResourceManager.getResourcePath(code);
             FileStream writer = new FileStream(path,FileMode.Create);
 			while(remainSize>0){

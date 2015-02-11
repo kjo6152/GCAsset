@@ -11,5 +11,5 @@ EditorBuildSettings:
     path: Assets/GCScene.unity
   - enabled: 0
     path: Assets/GCScene.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/testScene.unity

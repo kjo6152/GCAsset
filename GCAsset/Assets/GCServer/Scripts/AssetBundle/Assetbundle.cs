@@ -18,7 +18,6 @@ public class ExportAssetBundles : Editor
         {
             Debug.Log(scenes[i]);
         }
-
         BuildPipeline.BuildStreamedSceneAssetBundle(scenes, ResourcePath + "/GCAssetBundle.unity3d", BuildTarget.Android, BuildOptions.UncompressedAssetBundle);
     }
 

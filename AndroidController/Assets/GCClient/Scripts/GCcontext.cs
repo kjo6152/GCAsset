@@ -19,6 +19,7 @@ public class GCcontext : MonoBehaviour {
     public ClientManager mClientManager = null;
 
     private static GCcontext mGCcontext;
+    private static AudioSource mAudioSource;
 
     public static GCcontext getInstance
     {
@@ -32,10 +33,16 @@ public class GCcontext : MonoBehaviour {
                     GameObject container = new GameObject();
                     container.name = "GCcontext";
                     mGCcontext = container.AddComponent(typeof(GCcontext)) as GCcontext;
+                    mAudioSource = container.AddComponent<AudioSource>();
+
                     mGCcontext.init();
                 }
             }
-
+            Camera mainCamera = Camera.main;
+            if (mainCamera != null)
+            {
+                mAudioSource.transform.position = new Vector3(mainCamera.transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z);
+            }
             return mGCcontext;
         }
     } 
@@ -51,6 +58,7 @@ public class GCcontext : MonoBehaviour {
 
 		//EventManager 의존성 주입 및 초기화
         mEventManager.setClientManager(mClientManager);
+        mEventManager.setAudioSource(mAudioSource);
 		mEventManager.init ();
 
 		//ServerManager 의존성 주입 및 초기화
