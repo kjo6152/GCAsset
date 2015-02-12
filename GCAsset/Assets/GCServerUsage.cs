@@ -57,7 +57,7 @@ public class GCServerUsage : MonoBehaviour {
         for (int i = 0; i < ControllerList.Count; i++)
         {
             GameController controller = (GameController)ControllerList[i];
-            controller.sendChangeView("UserScriptTest");
+            controller.sendChangeView("controller");
 
         }
         

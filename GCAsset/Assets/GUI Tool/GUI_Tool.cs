@@ -62,25 +62,39 @@ public class GUI_Tool : EditorWindow {
         obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprite/Button" + type + "_On_" + shape);
         obj.GetComponent<ButtonClick>().downPressSprite = Resources.Load<Sprite>("Sprite/Button" + type + "_Off_" + shape);
 
-        TouchCorrection newObj = GameObject.FindObjectOfType<TouchCorrection>();
+        ButtonTouchCorrection newObj = GameObject.FindObjectOfType<ButtonTouchCorrection>();
         obj.transform.parent = newObj.transform;
     }
 
     static void CreateJoystick()
     {
-        /*
-                여기서 부터 진영이 형이 주는 소스 코드 합치는 작업 시작
-        */
-        GameObject obj = new GameObject();
-        obj.AddComponent<Button>();
-        obj.AddComponent<RectTransform>();
-        obj.AddComponent<Image>();
-        obj.name = "Joystck";
+        string [] temp = 
+        {
+            "Normal",
+            "Up",
+            "Down",
+            "Left",
+            "Right"
+        };
 
-        obj.GetComponent<RectTransform>().position = new Vector3(0f, 0f, 0f);
-        obj.GetComponent<RectTransform>().localRotation = new Quaternion(0f, 0f, 0f, 0f);
-        obj.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
-        obj.GetComponent<RectTransform>().sizeDelta = new Vector2(220f, 220f);
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject obj = new GameObject();
+            obj.AddComponent<SpriteRenderer>();
+            obj.AddComponent<CircleCollider2D>();
+            obj.GetComponent<CircleCollider2D>().radius = 1;
+            obj.AddComponent<ButtonClick>();
+            obj.name = "Joystick";
+            obj.tag = "GameController";
+
+            obj.transform.position = new Vector3(0f, 0f, 0f);
+            obj.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
+            obj.transform.localScale = new Vector3(180f, 180f, 1f);
+            obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprite/Joystick1_" + temp[i]);
+
+            ButtonTouchCorrection newObj = GameObject.FindObjectOfType<ButtonTouchCorrection>();
+            obj.transform.parent = newObj.transform;
+        }
     }
 }
 #endif
