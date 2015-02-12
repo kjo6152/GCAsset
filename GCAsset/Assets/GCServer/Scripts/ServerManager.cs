@@ -229,7 +229,7 @@ public class ServerManager {
 		GameController mGameController;
 		Thread mThread;
 		byte[] recvBuffer;
-        byte[] sendBuffer;
+        //byte[] sendBuffer;
 		ResourceManager mResourceManager;
 		EventManager mEventManager;
 
@@ -254,7 +254,7 @@ public class ServerManager {
 		public GCPacketProcessor(){
 			mThread = new Thread(receivePacket);
             recvBuffer = new byte[BUFFER_SIZE];
-            sendBuffer = new byte[BUFFER_SIZE];
+            //sendBuffer = new byte[BUFFER_SIZE];
 		}
 
 		public void setResourceMeneager(ResourceManager rm){

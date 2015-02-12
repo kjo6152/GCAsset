@@ -24,9 +24,8 @@ public class EventManager {
     public event SoundListener onSoundListener;
     public event ViewListener onViewListener;
 
-
-    ResourceManager mResourceManager;
     ClientManager mClientManager;
+    AudioSource mAudioSource;
 
     private bool supportsGyroscope;
 
@@ -62,15 +61,14 @@ public class EventManager {
         }
     }
 
-    public void setResourceManager(ResourceManager mResourceManager)
-    {
-        this.mResourceManager = mResourceManager;
-    }
     public void setClientManager(ClientManager mClientManager)
     {
         this.mClientManager = mClientManager;
     }
-
+    public void setAudioSource(AudioSource mAudioSource)
+    {
+        this.mAudioSource = mAudioSource;
+    }
     public void setUpdateInterval(float interval)
     {
         Input.gyro.updateInterval = interval;
@@ -136,7 +134,7 @@ public class EventManager {
                         break;
                     case GCconst.CODE_COMPLETE:
                         //AssetBundle 로드
-                        AssetBundle asset = AssetBundle.CreateFromFile("Assets/GCClient/Resources/GCAssetBundle.unity3d");
+                        AssetBundle.CreateFromFile("Assets/GCClient/Resources/GCAssetBundle.unity3d");
                         onServerComplete();
                         break;
                 }
@@ -150,6 +148,9 @@ public class EventManager {
                         onVibrationListener(mEvent.getTime());
                         break;
                     case GCconst.CODE_SOUND:
+                        Debug.Log(mEvent.getPath());
+                        mAudioSource.clip = (AudioClip)Resources.Load(mEvent.getPath());
+                        mAudioSource.Play();
                         onSoundListener(mEvent.getPath());
                         break;
                     case GCconst.CODE_VIEW:
@@ -161,7 +162,7 @@ public class EventManager {
         }
         catch (InvalidOperationException e)
         {
-            
+            Debug.Log(e);
         }
 	}
 

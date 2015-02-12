@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -18,6 +18,7 @@ public class GCServerUsage : MonoBehaviour {
 
         mGCcontext.mEventManager.onAccelerationListener += new EventManager.AccelerationListener(mEventManager_onAccelerationListener);
         mGCcontext.mEventManager.onGyroListener += new EventManager.GyroListener(mEventManager_onGyroListener);
+
 	}
 
     void mEventManager_onGyroListener(GameController gc, EventManager.Gyro gyro)
@@ -53,13 +54,13 @@ public class GCServerUsage : MonoBehaviour {
 
     public void changeScene()
     {
+        Debug.Log("changeScene");
         ArrayList ControllerList = mGCcontext.mServerManager.getControllerList();
         for (int i = 0; i < ControllerList.Count; i++)
         {
             GameController controller = (GameController)ControllerList[i];
             controller.sendChangeView("controller");
-
+            //controller.sendSound("GunShot");
         }
-        
     }
 }
