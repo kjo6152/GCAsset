@@ -38,7 +38,8 @@ public class ResourceManager {
 
 	public void init(){
 		Debug.Log ("init");
-		mResourcesPath = Application.dataPath + NAME_RESOURCE_DIR;
+        mResourcesPath = Application.persistentDataPath + NAME_RESOURCE_DIR;
+        Directory.CreateDirectory(mResourcesPath);
 		mResourceLength = 0;
         createDeviceInfo();
 	}
@@ -68,8 +69,17 @@ public class ResourceManager {
         XElement ResolutionY = new XElement("ResolutionY");
 
         Name.Value = SystemInfo.deviceModel;
-        ResolutionX.Value = Screen.resolutions[0].width.ToString();
-        ResolutionY.Value = Screen.resolutions[0].height.ToString();
+        if (Screen.resolutions.Length > 0)
+        {
+            ResolutionX.Value = Screen.resolutions[0].width.ToString();
+            ResolutionY.Value = Screen.resolutions[0].height.ToString();
+        }
+        else
+        {
+            ResolutionX.Value = "0";
+            ResolutionY.Value = "0";
+        }
+        
 
         mDeivceInfo.Add(Name);
         mDeivceInfo.Add(ResolutionX);

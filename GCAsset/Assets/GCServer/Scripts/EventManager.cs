@@ -194,7 +194,7 @@ public class EventManager {
         }
         catch (InvalidOperationException e)
         {
-            Debug.Log(e);
+            //Debug.Log(e);
         }
 	}
 

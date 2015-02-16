@@ -9,8 +9,8 @@ public class ExportAssetBundles : Editor
     static string ScenesPath = "Assets\\GCServer\\Scenes";
     static string ResourcePath = "Assets\\GCServer\\Resources";
 
-    [MenuItem("Assets/Build AssetBundle")]
-    static void ExportAssetBundle()
+    [MenuItem("Assets/Build Scenes AssetBundle")]
+    static void ExportScenesAssetBundle()
     {
         string[] scenes = getSceneList();
 
@@ -18,7 +18,16 @@ public class ExportAssetBundles : Editor
         {
             Debug.Log(scenes[i]);
         }
-        BuildPipeline.BuildStreamedSceneAssetBundle(scenes, ResourcePath + "/GCAssetBundle.unity3d", BuildTarget.Android, BuildOptions.UncompressedAssetBundle);
+
+        BuildPipeline.BuildStreamedSceneAssetBundle(scenes, ResourcePath + "\\Scene.unity3d", BuildTarget.Android, BuildOptions.UncompressedAssetBundle);
+    }
+
+    [MenuItem("Assets/Build Resources AssetBundle")]
+    static void ExportResourcesAssetBundles()
+    {
+        //Object[] resourceList = AssetDatabase.LoadAllAssetsAtPath(ResourcePath);
+        //Debug.Log(resourceList.Length + "");
+        //BuildPipeline.BuildAssetBundleExplicitAssetNames(null, resourceList, ResourcePath + "\\Resources.unity3d", BuildAssetBundleOptions.CollectDependencies);
     }
 
     static string[] getSceneList()

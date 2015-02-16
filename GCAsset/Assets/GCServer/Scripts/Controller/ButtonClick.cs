@@ -39,7 +39,9 @@ public class ButtonClick : MonoBehaviour {
                 
             }
         }
+#if UNITY_ANDROID
         AndroidManager.GetInstance().CallVibrate(vibrate_int);
+#endif
         //GCcontext mGCcontext = GCcontext.getInstance;
         //mGCcontext.mClientManager.sendEvent(0, 0);
     }

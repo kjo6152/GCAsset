@@ -30,8 +30,9 @@ public class DirectionKeyClick : MonoBehaviour
 
             }
         }
+#if UNITY_ANDROID
         AndroidManager.GetInstance().CallVibrate(vibrate_int);
- 
+#endif
     }
 
  

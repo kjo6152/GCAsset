@@ -36,9 +36,9 @@ public class ResourceManager {
 	XElement mResourceMap;
 	public void init(){
 		Debug.Log ("init");
-		mResourcesPath = Application.dataPath + NAME_RESOURCE_DIR;
+		mResourcesPath = Application.persistentDataPath + NAME_RESOURCE_DIR;
+        Directory.CreateDirectory(mResourcesPath);
 		mResourceLength = 0;
-		createViewMap ();
 	}
 
 	// Use this for initialization
@@ -52,24 +52,10 @@ public class ResourceManager {
 	}
 
 	/**
-	 * 컨트롤러 씬으로부터 오브젝트를 파싱하여 xml 파일로 생성
-	 */ 
-	void createViewMap()
-	{
-		//StreamWriter sw = new StreamWriter(mResourcesPath + NAME_VIEW_MAP);
-		//Todo : 컨트롤러 씬으로부터 오브젝트를 파싱하여 xml 파일로 생성
-
-
-
-		//sw.Close ();
-	}
-
-	/**
 	 * 리소스의 정보를 저장하는 리소스 맵 xml 파일을 만든다.
 	 */ 
 	public void createResourceMap(){
 		Debug.Log ("createResourceMap");
-
 		string[] fileList = Directory.GetFiles (mResourcesPath);
         ArrayList resourceList = new ArrayList();
         for (int i = 0; i < fileList.Length; i++)

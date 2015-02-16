@@ -134,7 +134,7 @@ public class EventManager {
                         break;
                     case GCconst.CODE_COMPLETE:
                         //AssetBundle 로드
-                        AssetBundle.CreateFromFile("Assets/GCClient/Resources/GCAssetBundle.unity3d");
+                        AssetBundle.CreateFromFile(GCcontext.getInstance.mResourceManager.getResourceDirectory()+"GCAssetBundle.unity3d");
                         onServerComplete();
                         break;
                 }
@@ -162,7 +162,7 @@ public class EventManager {
         }
         catch (InvalidOperationException e)
         {
-            Debug.Log(e);
+            //Debug.Log(e);
         }
 	}
 
