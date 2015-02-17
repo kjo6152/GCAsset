@@ -19,6 +19,8 @@ public class GCServerUsage : MonoBehaviour {
         mGCcontext.mEventManager.onAccelerationListener += new EventManager.AccelerationListener(mEventManager_onAccelerationListener);
         mGCcontext.mEventManager.onGyroListener += new EventManager.GyroListener(mEventManager_onGyroListener);
 
+        //TextAsset asset = Resources.Load("ClickOn") as TextAsset;
+
 	}
 
     void mEventManager_onGyroListener(GameController gc, EventManager.Gyro gyro)
@@ -59,8 +61,8 @@ public class GCServerUsage : MonoBehaviour {
         for (int i = 0; i < ControllerList.Count; i++)
         {
             GameController controller = (GameController)ControllerList[i];
-            controller.sendChangeView("controller");
-            //controller.sendSound("GunShot");
+            //controller.sendChangeView("controller");
+            controller.sendSound("GunShot");
         }
     }
 }

@@ -376,14 +376,21 @@ public class ServerManager {
 		void sendReousrces(){
             Debug.Log("sendReousrces");
 			int size=0,count = mResourceManager.getResourceLength ();
-			string path;
             byte[] buf;
+            int remain,offset,ret;
 			for (ushort i=1; i<=count; i++) {
-				path = mResourceManager.getResourcePath(i);
 				size = mResourceManager.getResourceSize(i);
                 buf = getPacketByteArray(GCconst.TYPE_RESOURCE, i, size);
                 mSocket.Send(buf, buf.Length, 0);
-                mSocket.SendFile(path);
+                remain = size;
+                offset = 0;
+                buf = mResourceManager.getResourceByte(i);
+                while (remain > 0)
+                {
+                    ret = mSocket.Send(buf,offset,remain,SocketFlags.None);
+                    remain -= ret;
+                    offset += ret;
+                }
 			}
 		}
 

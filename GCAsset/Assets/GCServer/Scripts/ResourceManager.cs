@@ -17,28 +17,32 @@ using System;
  * 리소스 요청을 받았을 때 해당 파일의 패스를 리턴해주어 서버 매니저에서 전송할 수 있도록 한다.
  */
 public class ResourceManager {
+    /**
+     * 리소스 파일의 경로
+     */ 
+    public static string NAME_RESOURCE_DIR = "Assets/GCServer/Resources/";
+    public static string NAME_RESOURCE_MAP = "ResourceMap.xml";
+
+    /**
+     * XML에서 쓰이는 엘리먼트 이름과 속성 이름
+     */
+    public static string XML_ELEMENT_RESOURCE = "Resource";
+    public static string XML_ATTR_ID = "id";
+    public static string XML_ATTR_NAME = "name";
+    public static string XML_ATTR_TYPE = "type";
+    public static string XML_ATTR_SIZE = "size";
+
+
 	string mResourcesPath;
 	int mResourceLength;
-
-	const string NAME_RESOURCE_DIR = "/GCServer/Resources/";
-    const string NAME_RESOURCE_MAP = "ResourceMap.xml";
-	const string NAME_VIEW_MAP = "View.xml";
-
-	/**
-	 * XML에서 쓰이는 엘리먼트 이름과 속성 이름
-	 */ 
-	const string XML_ELEMENT_RESOURCE = "Resource";
-	const string XML_ATTR_ID = "id";
-	const string XML_ATTR_NAME = "name";
-	const string XML_ATTR_TYPE = "type";
-	const string XML_ATTR_SIZE = "size";
+    byte[][] assetbytes;
 
 	XElement mResourceMap;
 	public void init(){
 		Debug.Log ("init");
-		mResourcesPath = Application.persistentDataPath + NAME_RESOURCE_DIR;
-        Directory.CreateDirectory(mResourcesPath);
 		mResourceLength = 0;
+        LoadResourceMap(NAME_RESOURCE_DIR + NAME_RESOURCE_MAP);
+        
 	}
 
 	// Use this for initialization
@@ -51,50 +55,41 @@ public class ResourceManager {
 		
 	}
 
-	/**
-	 * 리소스의 정보를 저장하는 리소스 맵 xml 파일을 만든다.
-	 */ 
-	public void createResourceMap(){
-		Debug.Log ("createResourceMap");
-		string[] fileList = Directory.GetFiles (mResourcesPath);
-        ArrayList resourceList = new ArrayList();
-        for (int i = 0; i < fileList.Length; i++)
-        {
-            if (fileList[i].Contains(".meta")) continue;
-            resourceList.Add(fileList[i]);
-        }
-        
-        FileStream fs;
-		string resourcePath;
-		mResourceMap = new XElement ("ResourceList");
-		XElement resource;
-		XAttribute attr;
-        for (mResourceLength = 0; mResourceLength < resourceList.Count; mResourceLength++)
-		{
-			resourcePath = (string)resourceList[mResourceLength];
-			resource = new XElement(XML_ELEMENT_RESOURCE);
-			attr = new XAttribute(XML_ATTR_ID,mResourceLength+1);
-			resource.Add(attr);
-			attr = new XAttribute(XML_ATTR_NAME,Path.GetFileName(resourcePath)); 
-			resource.Add(attr);
-			attr = new XAttribute(XML_ATTR_TYPE,""); 
-			resource.Add(attr);
-            fs = File.Open(resourcePath, FileMode.Open);
-            attr = new XAttribute(XML_ATTR_SIZE, fs.Length);
-			resource.Add(attr);
-			mResourceMap.Add(resource);
-            fs.Close();
-		}
-	}
-
     /*
      * 기존의 리소스맵에서부터 정보를 읽어온다.
      */
     public void LoadResourceMap(string path){
         string xml = new StreamReader(path).ReadToEnd();
         mResourceMap = XElement.Parse(xml);
+        LoadResourceLength();
+        LoadResourcesBytes();
     }
 
+    /**
+     * 리소스의 개수를 구한다.
+     */ 
+    void LoadResourceLength()
+    {
+        IEnumerator elements = mResourceMap.Elements(XML_ELEMENT_RESOURCE).GetEnumerator();
+        while (elements.MoveNext())
+        {
+            mResourceLength++;
+        }
+    }
+
+    void LoadResourcesBytes()
+    {
+        assetbytes = new byte[mResourceLength+1][];
+        TextAsset asset;
+        string name;
+        for(int i=1;i<=mResourceLength;i++){
+            name = getResourceName(i).Split('.')[0];
+            Debug.Log("resource : " + name);
+            asset = Resources.Load(name) as TextAsset;
+            assetbytes[i] = asset.bytes;
+            Debug.Log("LoadResourcesBytes - " + name + " / " + assetbytes[i].Length);
+        }
+    }
 	/**
 	 * 코드(아이디)를 가진 리소스 엘리먼트를 리턴한다.
 	 */
@@ -110,15 +105,21 @@ public class ResourceManager {
 		return null;
 	}
 
+    /**
+     * 코드(아이디)를 가진 리소스의 바이트를 얻는다.
+     */
+    public byte[] getResourceByte(int code)
+    {
+        return assetbytes[code];
+    }
 
 	/**
-	 * 코드(리소스의 아이디)를 통해 해당 리소스가 저장 패스를 리턴해준다.
+	 * 코드(리소스의 아이디)를 통해 해당 리소스의 이름을 리턴해준다.
 	 */
-	public string getResourcePath(int code){
-
+	public string getResourceName(int code){
 		XElement element = getElement (code);
 		if (element == null)return null;
-		return mResourcesPath + element.Attribute(XML_ATTR_NAME).Value;
+		return element.Attribute(XML_ATTR_NAME).Value;
 	}
 
 	/**
@@ -186,6 +187,9 @@ public class ResourceManager {
 		return Convert.ToInt32 (element.Attribute (XML_ATTR_SIZE).Value);
 	}
 
+    /**
+     * 리소스 맵을 string으로 변환한다.
+     */
 	public string getResourceMap(){
 		return mResourceMap.ToString();
 	}

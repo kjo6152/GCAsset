@@ -362,7 +362,7 @@ public class ClientManager {
 		void receiveResource(ushort code,int value){
             Debug.Log("receiveResource code : "+code+" value : "+value);
             int remainSize = value,receiveSize=0;
-			string path = mResourceManager.getResourcePath(code);
+            string path = mResourceManager.getResourcePath(code);
             FileStream writer = new FileStream(path,FileMode.Create);
 			while(remainSize>0){
                 Debug.Log("receiveResource : " + remainSize);
@@ -373,7 +373,7 @@ public class ClientManager {
             writer.Close();
             if (code == 0)
             {
-                Debug.Log("code 0");
+                Debug.Log("receiveResourceMap");
                 mResourceManager.LoadResourceMap(path);
             }
             else if (code == mResourceManager.getResourceLength())

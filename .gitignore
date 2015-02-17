@@ -15,3 +15,9 @@
 
 # Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+# GCAsset Generated File On AssetBundle Build
+*_asset.bytes
+*_asset.bytes.meta
+ResourceMap.xml
+ResourceMap.xml.meta

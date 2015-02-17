@@ -32,6 +32,7 @@ public class GCconst
     public const ushort CODE_CONNECTED = 0x21;
     public const ushort CODE_DISCONNECTED = 0x22;
     public const ushort CODE_COMPLETE = 0x23;
+
     // Use this for initialization
     void Start()
     {

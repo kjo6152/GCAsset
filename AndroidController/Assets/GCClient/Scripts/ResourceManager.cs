@@ -139,6 +139,15 @@ public class ResourceManager {
         }
     }
 
+    public void LoadResources()
+    {
+        string path;
+        for (int i = 1; i <= mResourceLength; i++)
+        {
+            path = this.getResourcePath(i);
+            AssetBundle.CreateFromFile(path);
+        }
+    }
 	/**
 	 * 코드(아이디)를 가진 리소스 엘리먼트를 리턴한다.
 	 */
@@ -162,7 +171,7 @@ public class ResourceManager {
         if (code == 0) return getResourceMap();
 		XElement element = getElement (code);
 		if (element == null)return null;
-		return mResourcesPath + element.Attribute(XML_ATTR_NAME).Value;
+        return mResourcesPath + element.Attribute(XML_ATTR_NAME).Value;
 	}
 
 	/**

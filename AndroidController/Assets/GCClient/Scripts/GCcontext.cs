@@ -59,6 +59,7 @@ public class GCcontext : MonoBehaviour {
 		//EventManager 의존성 주입 및 초기화
         mEventManager.setClientManager(mClientManager);
         mEventManager.setAudioSource(mAudioSource);
+        mEventManager.setResourceManager(mResourceManager);
 		mEventManager.init ();
 
 		//ServerManager 의존성 주입 및 초기화

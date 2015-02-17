@@ -25,6 +25,7 @@ public class EventManager {
     public event ViewListener onViewListener;
 
     ClientManager mClientManager;
+    ResourceManager mResourceManager;
     AudioSource mAudioSource;
 
     private bool supportsGyroscope;
@@ -64,6 +65,10 @@ public class EventManager {
     public void setClientManager(ClientManager mClientManager)
     {
         this.mClientManager = mClientManager;
+    }
+    public void setResourceManager(ResourceManager mResourceManager)
+    {
+        this.mResourceManager = mResourceManager;
     }
     public void setAudioSource(AudioSource mAudioSource)
     {
@@ -134,7 +139,7 @@ public class EventManager {
                         break;
                     case GCconst.CODE_COMPLETE:
                         //AssetBundle 로드
-                        AssetBundle.CreateFromFile(GCcontext.getInstance.mResourceManager.getResourceDirectory()+"GCAssetBundle.unity3d");
+                        mResourceManager.LoadResources();
                         onServerComplete();
                         break;
                 }

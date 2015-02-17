@@ -49,7 +49,6 @@ public class GCcontext : MonoBehaviour {
 
 		//ResourceManager 의존성 주입 및 초기화
 		mResourceManager.init ();
-        mResourceManager.createResourceMap();
 
 		//EventManager 의존성 주입 및 초기화
 		mEventManager.init ();
