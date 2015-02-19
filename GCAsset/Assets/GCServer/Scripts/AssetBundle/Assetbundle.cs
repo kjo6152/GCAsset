@@ -80,7 +80,7 @@ public class ExportAssetBundles : Editor
         resourcePath = ResourceManager.NAME_RESOURCE_DIR + ResourceManager.NAME_RESOURCE_MAP;
         Debug.Log("ResourceMap : " + resourcePath);
         Debug.Log(mResourceMap.ToString());
-        fs = File.Open(resourcePath, FileMode.Create);
+        fs = File.Open(resourcePath+".xml", FileMode.Create);
         byte[] xmlBuffer = new UTF8Encoding().GetBytes(mResourceMap.ToString());
         fs.Write(xmlBuffer, 0, xmlBuffer.Length);
         fs.Close();

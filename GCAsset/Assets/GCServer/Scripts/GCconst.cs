@@ -25,6 +25,9 @@ public class GCconst
     public const ushort CODE_VIBRATION = 0x11;
     public const ushort CODE_VIEW = 0x12;
     public const ushort CODE_SOUND = 0x13;
+    public const ushort CODE_BUTTON = 0x14;
+    public const ushort CODE_JOYSTICK = 0x15;
+    public const ushort CODE_DIRECTION_KEY = 0x16;
 
     /**
      * TYPE_SYSTEM 관련 CODE

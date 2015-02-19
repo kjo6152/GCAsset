@@ -35,6 +35,7 @@ public class ResourceManager {
 
 	XElement mResourceMap;
     XElement mDeivceInfo;
+    AssetBundle[] asset;
 
 	public void init(){
 		Debug.Log ("init");
@@ -46,7 +47,7 @@ public class ResourceManager {
 
 	// Use this for initialization
 	void Start () {
-		init ();
+
 	}
 	
 	// Update is called once per frame
@@ -142,11 +143,24 @@ public class ResourceManager {
     public void LoadResources()
     {
         string path;
+        asset = new AssetBundle[mResourceLength];
         for (int i = 1; i <= mResourceLength; i++)
         {
             path = this.getResourcePath(i);
-            AssetBundle.CreateFromFile(path);
+            Debug.Log("asset path : " + path);
+            asset[i-1] = AssetBundle.CreateFromFile(path);
         }
+    }
+
+    public UnityEngine.Object getResource(string name)
+    {
+        UnityEngine.Object obj = null;
+        for (int i = 0; i < mResourceLength; i++)
+        {
+            obj = asset[i].Load(name);
+            if (obj != null) return obj;
+        }
+        return obj;
     }
 	/**
 	 * 코드(아이디)를 가진 리소스 엘리먼트를 리턴한다.

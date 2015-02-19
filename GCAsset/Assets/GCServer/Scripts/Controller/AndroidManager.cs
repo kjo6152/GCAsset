@@ -1,4 +1,4 @@
-﻿#if UNITY_ANDROID
+﻿
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,4 +35,3 @@ public class AndroidManager : MonoBehaviour
  
 
 }
-#endif

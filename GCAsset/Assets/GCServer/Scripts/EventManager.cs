@@ -25,6 +25,8 @@ public class EventManager {
     public IEventFilter mGyroFilter;
     public IEventFilter mAccelerationFilter;
 
+    private AudioSource mAudioSource;
+
     float[] sensorBuffer = new float[10];
     Queue EventQueue = new Queue();
 
@@ -92,8 +94,10 @@ public class EventManager {
 
     }
 
-	
-
+    public void setAudioSource(AudioSource mAudioSource)
+    {
+        this.mAudioSource = mAudioSource;
+    }
 
 	public void init(){
         onControllerConnected = delegate { };
@@ -103,6 +107,7 @@ public class EventManager {
         onGyroListener = delegate { };
 	}
 
+    
 	// Use this for initialization
 	void Start () {
 		
@@ -115,10 +120,10 @@ public class EventManager {
 
 	/**
 	 * 클라이언트로부터 온 이벤트를 ServerManager에게서 받아 처리한다.
+     * 이벤트 필터를 적용하여 전달된 센서 값들을 필터링한다.
 	 * 각각 알맞은 Queue에 쌓는 역할을 한다.
 	 */ 
 	public void receiveEvent(GameController gc,ushort type, ushort code,byte[] value){
-		//Todo:이벤트 처리를 어떻게 할 것인지 정해야함
         if (type == GCconst.TYPE_SYSTEM)
         {
             EventQueue.Enqueue(new Event(gc, type, code, null));
@@ -172,19 +177,16 @@ public class EventManager {
                 }
                 else if (mEvent.getType() == GCconst.TYPE_SENSOR)
                 {
-                    //Todo : 각 이벤트에 대한 필터 제공
                     switch (mEvent.getCode())
                     {
                         case GCconst.CODE_ACCELERATION:
                             onAccelerationListener(mEvent.getGameController(), mEvent.getAcceleration());
-
                             break;
                         case GCconst.CODE_GYRO:
                             onGyroListener(mEvent.getGameController(), mEvent.getGyro());
                             break;
                     }
                 }
-
 
                 /**
                  * 게임 컨트롤러에 대한 리스너 처리
@@ -197,5 +199,11 @@ public class EventManager {
             //Debug.Log(e);
         }
 	}
+
+    public void playSound(string sound)
+    {
+        mAudioSource.clip = (AudioClip)Resources.Load(sound);
+        mAudioSource.Play();
+    }
 
 }

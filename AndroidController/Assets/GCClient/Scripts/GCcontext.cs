@@ -68,7 +68,25 @@ public class GCcontext : MonoBehaviour {
         mClientManager.init();
 
 	}
-    
+
+    public ResourceManager getResourceManager()
+    {
+        return mResourceManager;
+    }
+    public EventManager getEventManager()
+    {
+        return mEventManager;
+    }
+    public ClientManager getClientManager()
+    {
+        return mClientManager;
+    }
+
+    public AudioSource getAudioSource()
+    {
+        return mAudioSource;
+    }
+
     void OnDestroy()
     {
         Debug.Log("OnDestroy");

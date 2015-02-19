@@ -21,7 +21,7 @@ public class ResourceManager {
      * 리소스 파일의 경로
      */ 
     public static string NAME_RESOURCE_DIR = "Assets/GCServer/Resources/";
-    public static string NAME_RESOURCE_MAP = "ResourceMap.xml";
+    public static string NAME_RESOURCE_MAP = "ResourceMap";
 
     /**
      * XML에서 쓰이는 엘리먼트 이름과 속성 이름
@@ -41,13 +41,13 @@ public class ResourceManager {
 	public void init(){
 		Debug.Log ("init");
 		mResourceLength = 0;
-        LoadResourceMap(NAME_RESOURCE_DIR + NAME_RESOURCE_MAP);
+        LoadResourceMap(NAME_RESOURCE_MAP);
         
 	}
 
 	// Use this for initialization
 	void Start () {
-		init ();
+
 	}
 	
 	// Update is called once per frame
@@ -58,8 +58,9 @@ public class ResourceManager {
     /*
      * 기존의 리소스맵에서부터 정보를 읽어온다.
      */
-    public void LoadResourceMap(string path){
-        string xml = new StreamReader(path).ReadToEnd();
+    public void LoadResourceMap(string name){
+        TextAsset asset = Resources.Load(name) as TextAsset;
+        string xml = asset.text;
         mResourceMap = XElement.Parse(xml);
         LoadResourceLength();
         LoadResourcesBytes();

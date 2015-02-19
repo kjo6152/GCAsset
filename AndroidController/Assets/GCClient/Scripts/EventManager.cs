@@ -82,8 +82,6 @@ public class EventManager {
 	public void init(){
         supportsGyroscope = SystemInfo.supportsGyroscope;
         Debug.Log("supportsGyroscope : " + supportsGyroscope);
-        //디버깅 용도로 false로 설정
-        //supportsGyroscope = false;
         setUpdateInterval(0.1f);
         Input.gyro.enabled = true;
 
@@ -154,8 +152,7 @@ public class EventManager {
                         break;
                     case GCconst.CODE_SOUND:
                         Debug.Log(mEvent.getPath());
-                        mAudioSource.clip = (AudioClip)Resources.Load(mEvent.getPath());
-                        mAudioSource.Play();
+                        playSound(mEvent.getPath());
                         onSoundListener(mEvent.getPath());
                         break;
                     case GCconst.CODE_VIEW:
@@ -171,4 +168,9 @@ public class EventManager {
         }
 	}
 
+    public void playSound(string sound){
+        Debug.Log("playSound : " + sound);
+        mAudioSource.clip = (AudioClip)mResourceManager.getResource(sound);
+        mAudioSource.Play();
+    }
 }

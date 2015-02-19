@@ -117,6 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downPressSprite: {fileID: 21300000, guid: 499c44c1de0370545aa0564389ebb3f8, type: 3}
   vibrate_int: 15
+  downPressSound: 1234
 --- !u!58 &129706291
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -315,6 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downPressSprite: {fileID: 21300000, guid: 5db66a5cc363b484cae349cb1b9f420a, type: 3}
   vibrate_int: 15
+  downPressSound: GunShot
 --- !u!58 &869689542
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -490,6 +492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downPressSprite: {fileID: 21300000, guid: 419901f926812b946a42bc4c0c4a00ec, type: 3}
   vibrate_int: 15
+  downPressSound: 
 --- !u!58 &1133987978
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -629,6 +632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downPressSprite: {fileID: 21300000, guid: b1e0b656b34bf884c8be958e5c18d3f0, type: 3}
   vibrate_int: 15
+  downPressSound: ClickOn
 --- !u!58 &1595857638
 CircleCollider2D:
   m_ObjectHideFlags: 0

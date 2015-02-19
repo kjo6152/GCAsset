@@ -19,6 +19,7 @@ public class GCcontext : MonoBehaviour {
     public ServerManager mServerManager = null;
 
     private static GCcontext mGCcontext;
+    private static AudioSource mAudioSource;
 
     public static GCcontext getInstance
     {
@@ -33,6 +34,8 @@ public class GCcontext : MonoBehaviour {
                     GameObject container = new GameObject();
                     container.name = "GCcontext";
                     mGCcontext = container.AddComponent(typeof(GCcontext)) as GCcontext;
+                    mAudioSource = container.AddComponent<AudioSource>();
+
                     mGCcontext.init();
                 }
             }
@@ -52,6 +55,7 @@ public class GCcontext : MonoBehaviour {
 
 		//EventManager 의존성 주입 및 초기화
 		mEventManager.init ();
+        mEventManager.setAudioSource(mAudioSource);
 
 		//ServerManager 의존성 주입 및 초기화
 		mServerManager.setEventManager (mEventManager);
@@ -59,7 +63,25 @@ public class GCcontext : MonoBehaviour {
 		mServerManager.init ();
 
 	}
-    
+
+    public ResourceManager getResourceManager()
+    {
+        return mResourceManager;
+    }
+    public EventManager getEventManager()
+    {
+        return mEventManager;
+    }
+    public ServerManager getClientManager()
+    {
+        return mServerManager;
+    }
+
+    public AudioSource getAudioSource()
+    {
+        return mAudioSource;
+    }
+
     void OnDestroy()
     {
         Debug.Log("OnDestroy");

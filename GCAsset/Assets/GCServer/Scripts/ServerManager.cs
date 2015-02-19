@@ -313,13 +313,11 @@ public class ServerManager {
 		 * 이벤트와 센서만 ResourceManager로 전달하여 처리하도록 한다.
 		 */
 		void processPacket(PacketData packet){
-            //Debug.Log("processPacket type : " + packet.type + " code : " + packet.code + " value : " + packet.value);
-			switch (packet.type) {
+            switch (packet.type) {
 			//일반 이벤트
 			case GCconst.TYPE_EVENT:
 			//센서 이벤트
 			case GCconst.TYPE_SENSOR:
-				//Debug.Log ("processPacket : event / sensor");
 				//Todo : 이벤트에 대한 처리
 				mSocket.Receive(recvBuffer,packet.value,0);
                 mEventManager.receiveEvent(mGameController, GCconst.TYPE_SENSOR, packet.code, recvBuffer);
@@ -330,7 +328,6 @@ public class ServerManager {
 			 * 연결 이벤트를 발생시킨다.
 			 */ 
 			case GCconst.TYPE_CONTROLLER:
-				//Debug.Log ("processPacket : TYPE_CONTROLLER");
 				//컨트롤러에 대한 정보를 받는다.
 				int count,remain;
 				string xml="";
