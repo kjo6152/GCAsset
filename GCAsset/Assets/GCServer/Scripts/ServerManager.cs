@@ -316,6 +316,9 @@ public class ServerManager {
             switch (packet.type) {
 			//일반 이벤트
 			case GCconst.TYPE_EVENT:
+                mSocket.Receive(recvBuffer, packet.value, 0);
+                mEventManager.receiveEvent(mGameController, GCconst.TYPE_EVENT, packet.code, recvBuffer);
+                break;
 			//센서 이벤트
 			case GCconst.TYPE_SENSOR:
 				//Todo : 이벤트에 대한 처리
@@ -326,8 +329,8 @@ public class ServerManager {
 			 * 게임 컨트롤러에 대한 정보 패킷
 			 * 해당 xml 파일을 읽어서 게임 컨트롤러 객체를 만든다.
 			 * 연결 이벤트를 발생시킨다.
-			 */ 
-			case GCconst.TYPE_CONTROLLER:
+			 */
+            case GCconst.TYPE_RESOURCE:
 				//컨트롤러에 대한 정보를 받는다.
 				int count,remain;
 				string xml="";
@@ -348,13 +351,6 @@ public class ServerManager {
 				//리소스맵과 리소스를 전송한다.
 				sendResourceMap();
 				sendReousrces();
-				break;
-			/**
-			 * 리소스 요청 패킷
-			 * 해당하는 리소스를 찾아서 클라이언트로 전송해준다.
-			 * 클라이언트 접속 후 바로 리소스를 모두 전송하는 형태로 변경되면서 사용하지 않음
-			 */
-			case GCconst.TYPE_RESOURCE:
 				break;
 			/**
 			 * 리소스를 다 받았을 때 클라이언트에서 보내주는 패킷

@@ -28,6 +28,10 @@ public class EventManager {
     private AudioSource mAudioSource;
 
     float[] sensorBuffer = new float[10];
+    int sensorSize = 10 * sizeof(float);
+    int[] eventBuffer = new int[2];
+    int eventSize = 2 * sizeof(int);
+
     Queue EventQueue = new Queue();
 
     public class Event
@@ -124,7 +128,12 @@ public class EventManager {
 	 * 각각 알맞은 Queue에 쌓는 역할을 한다.
 	 */ 
 	public void receiveEvent(GameController gc,ushort type, ushort code,byte[] value){
-        if (type == GCconst.TYPE_SYSTEM)
+        if (type == GCconst.TYPE_EVENT)
+        {
+            Buffer.BlockCopy(value, 0, eventBuffer, 0, eventSize);
+            Debug.Log("type : " + type + " / code : " + code + " / value[0] :" + eventBuffer[0] + " / value[1] : " + eventBuffer[1]);
+        }
+        else if (type == GCconst.TYPE_SYSTEM)
         {
             EventQueue.Enqueue(new Event(gc, type, code, null));
         }

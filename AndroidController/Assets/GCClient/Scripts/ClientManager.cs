@@ -28,6 +28,7 @@ public class ClientManager {
 	const int fixPort = 6000;
     const int gyroDataSize = sizeof(float) * 10;
     const int accelDataSize = sizeof(float) * 3;
+    
 	/**
 	 * 게임 서버의 기본 아이피(자기 자신)과 포트
 	 * 포트는 게임 서버 초기화시 임의로 정해진다.
@@ -198,9 +199,9 @@ public class ClientManager {
      * 서버로 이벤트를 보낸다.
      * 버튼 클릭이나 조이스틱 관련 이벤트
      */
-    public void sendEvent(ushort code, int value)
+    public void sendEvent(ushort code, int[] values)
     {
-        if (mProcessor != null && isReady) mProcessor.sendEvent(code, value);
+        if (mProcessor != null && isReady) mProcessor.sendEvent(code, values);
     }
 
     /**
@@ -332,12 +333,6 @@ public class ClientManager {
 			    case GCconst.TYPE_SENSOR:
 				    break;
 			    /**
-			     * 게임 컨트롤러에 대한 정보 패킷
-			     * 첫 연결시 서버로 전송한다.
-			     */ 
-			    case GCconst.TYPE_CONTROLLER:
-				    break;
-			    /**
 			     * 리소스 패킷
 			     * 서버로부터 리소스를 다운받는다.
 			     * 컨트롤러에 대한 정보 전송 후 바로 다운받는다.
@@ -393,7 +388,7 @@ public class ClientManager {
             string xml = mResourceManager.getDeviceXml();
 			byte[] xmlBuffer = new UTF8Encoding().GetBytes(xml);
 			//보낼 패킷 생성
-			byte[] packetBuffer = getPacketByteArray (GCconst.TYPE_CONTROLLER, 0, xmlBuffer.Length);
+			byte[] packetBuffer = getPacketByteArray (GCconst.TYPE_RESOURCE, 0, xmlBuffer.Length);
 			//패킷 전송
 			mSocket.Send(packetBuffer,packetBuffer.Length,0);
 			//데이터 전송
@@ -404,10 +399,15 @@ public class ClientManager {
 		 * 서버로 이벤트를 보낸다.
          * 버튼 클릭이나 조이스틱 관련 이벤트
 		 */ 
-		public void sendEvent(ushort code,int value)
+		public void sendEvent(ushort code,int[] values)
         {
-            //byte[] packet = getPacketByteArray(GCconst.TYPE_EVENT, code, value);
-            //mSocket.Send(packet, packet.Length, 0);
+            if (values == null) return;
+            int sendSize = values.Length * sizeof(int);
+            byte[] packet = getPacketByteArray(GCconst.TYPE_EVENT, code, sendSize);
+            mSocket.Send(packet, packet.Length, 0);
+
+            Buffer.BlockCopy(values, 0, sendBuffer, 0, sendSize);
+            mSocket.Send(sendBuffer, sendSize, 0);
 		}
 
         /**

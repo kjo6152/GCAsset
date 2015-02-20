@@ -117,7 +117,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downPressSprite: {fileID: 21300000, guid: 499c44c1de0370545aa0564389ebb3f8, type: 3}
   vibrate_int: 15
-  downPressSound: 1234
+  downPressSound: ClickOn
+  id: 3
 --- !u!58 &129706291
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -211,7 +212,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 257392637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -316, y: 16, z: 1}
+  m_LocalPosition: {x: -313, y: 16, z: 1}
   m_LocalScale: {x: 160, y: 160, z: 1}
   m_Children:
   - {fileID: 1667066481}
@@ -273,6 +274,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downPressSprite: {fileID: 21300000, guid: 404efa9ee46bfc140895dd4bd7c20dd0, type: 3}
   vibrate_int: 15
+  downPressSound: 
+  id: 0
 --- !u!1 &869689539
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +320,7 @@ MonoBehaviour:
   downPressSprite: {fileID: 21300000, guid: 5db66a5cc363b484cae349cb1b9f420a, type: 3}
   vibrate_int: 15
   downPressSound: GunShot
+  id: 2
 --- !u!58 &869689542
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -403,6 +407,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downPressSprite: {fileID: 21300000, guid: 6ab5f75d53f631e4daf4160769df8376, type: 3}
   vibrate_int: 15
+  downPressSound: 
+  id: 0
 --- !u!1 &1126317436
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,6 +499,7 @@ MonoBehaviour:
   downPressSprite: {fileID: 21300000, guid: 419901f926812b946a42bc4c0c4a00ec, type: 3}
   vibrate_int: 15
   downPressSound: 
+  id: 1
 --- !u!58 &1133987978
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -632,7 +639,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downPressSprite: {fileID: 21300000, guid: b1e0b656b34bf884c8be958e5c18d3f0, type: 3}
   vibrate_int: 15
-  downPressSound: ClickOn
+  downPressSound: 1234
+  id: 4
 --- !u!58 &1595857638
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -818,6 +826,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downPressSprite: {fileID: 21300000, guid: a999b3554281be44aa1fa5dea5dcf379, type: 3}
   vibrate_int: 15
+  downPressSound: 
+  id: 0
 --- !u!1 &1727778617
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,3 +944,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downPressSprite: {fileID: 21300000, guid: 7941ce33b8993e6438159b349136a7e2, type: 3}
   vibrate_int: 15
+  downPressSound: 
+  id: 0
