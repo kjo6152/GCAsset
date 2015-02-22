@@ -207,6 +207,9 @@ public class EventManager {
         {
             //Debug.Log(e);
         }
+        catch (Exception e){
+
+        }
 	}
 
     public void playSound(string sound)

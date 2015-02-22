@@ -598,7 +598,7 @@ GameObject:
   - 4: {fileID: 960905653}
   - 114: {fileID: 960905652}
   m_Layer: 0
-  m_Name: GCServerUsage
+  m_Name: ServerExample
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
