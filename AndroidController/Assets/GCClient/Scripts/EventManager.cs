@@ -83,8 +83,8 @@ public class EventManager {
         supportsGyroscope = SystemInfo.supportsGyroscope;
         Debug.Log("supportsGyroscope : " + supportsGyroscope);
         //디버깅을 위해서 센서 이벤트를 임시로 받지 않기 위한 코드
-        supportsGyroscope = false;
-        setUpdateInterval(0.1f);
+        //supportsGyroscope = false;
+        setUpdateInterval(0.5f);
         Input.gyro.enabled = true;
 
         onServerConnected = delegate { };
@@ -166,6 +166,7 @@ public class EventManager {
         }
         catch (InvalidOperationException e)
         {
+            e.ToString();
             //Debug.Log(e);
         }
 	}

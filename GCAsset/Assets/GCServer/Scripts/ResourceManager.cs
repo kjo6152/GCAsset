@@ -33,7 +33,7 @@ public class ResourceManager {
     public static string XML_ATTR_SIZE = "size";
 
 
-	string mResourcesPath;
+	string mResourcesPath = null;
 	int mResourceLength;
     byte[][] assetbytes;
 

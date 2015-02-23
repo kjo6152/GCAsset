@@ -316,14 +316,11 @@ public class ServerManager {
             switch (packet.type) {
 			//일반 이벤트
 			case GCconst.TYPE_EVENT:
-                mSocket.Receive(recvBuffer, packet.value, 0);
-                mEventManager.receiveEvent(mGameController, GCconst.TYPE_EVENT, packet.code, recvBuffer);
-                break;
 			//센서 이벤트
 			case GCconst.TYPE_SENSOR:
 				//Todo : 이벤트에 대한 처리
 				mSocket.Receive(recvBuffer,packet.value,0);
-                mEventManager.receiveEvent(mGameController, GCconst.TYPE_SENSOR, packet.code, recvBuffer);
+                mEventManager.receiveEvent(mGameController, packet.type, packet.code, recvBuffer);
 				break;
 			/**
 			 * 게임 컨트롤러에 대한 정보 패킷

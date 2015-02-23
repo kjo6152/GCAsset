@@ -20,15 +20,15 @@ public class GCClientUsage : MonoBehaviour {
     public void ConnectOrDisconnectServer()
     {
         mGCcontext = GCcontext.getInstance;
-        if (mGCcontext.mClientManager.isRunning())
+        if (mGCcontext.getClientManager().isRunning())
         {
-            mGCcontext.mClientManager.stopClient();
+            mGCcontext.getClientManager().stopClient();
         }
         else
         {
             Debug.Log("ip address : " + IPaddress.text);
             Debug.Log("port : " + Port.text);
-            mGCcontext.mClientManager.startClient(IPaddress.text, Convert.ToInt32(Port.text));
+            mGCcontext.getClientManager().startClient(IPaddress.text, Convert.ToInt32(Port.text));
         }
     }
 }

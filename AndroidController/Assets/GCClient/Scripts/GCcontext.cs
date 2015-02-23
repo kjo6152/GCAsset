@@ -14,9 +14,9 @@ using UnityEngine.UI;
  */
 public class GCcontext : MonoBehaviour {
 
-	public ResourceManager mResourceManager = null;
-    public EventManager mEventManager = null;
-    public ClientManager mClientManager = null;
+	ResourceManager mResourceManager = null;
+    EventManager mEventManager = null;
+    ClientManager mClientManager = null;
 
     private static GCcontext mGCcontext;
     private static AudioSource mAudioSource;

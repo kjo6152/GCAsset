@@ -39,6 +39,7 @@ public class GCconst
      * CODE_BUTTON 관련 VALUE
      */
     public const int VALUE_PRESSED = 0x41;
+    public const int VALUE_UNPRESSED = 0x42;
 
     /**
      * CODE_DIRECTION_KEY 관련 VALUE
@@ -47,4 +48,12 @@ public class GCconst
     public const int VALUE_RIGHT = 0x52;
     public const int VALUE_DOWN = 0x53;
     public const int VALUE_LEFT = 0x54;
+
+    /**
+     * Event Size 관련 상수
+     */
+    public const int SIZE_SENSOR = 10 * sizeof(float);
+    public const int SIZE_BUTTON = 2 * sizeof(int);
+    public const int SIZE_JOYSTICK = 3 * sizeof(int);
+    public const int SIZE_DIRECTION_KEY = 2 * sizeof(int);
 }

@@ -3,9 +3,6 @@
 using UnityEngine;
 using System.Collections;
 
-/**
- * 서버측에서 테스트를 위한 용도로 사용되는 코드
- */ 
 public class ButtonClick : MonoBehaviour
 {
 
@@ -17,7 +14,6 @@ public class ButtonClick : MonoBehaviour
      * 서버와의 통신 기능
      * 
      **/
-
 
     bool result;
     public Sprite downPressSprite;
@@ -58,17 +54,12 @@ public class ButtonClick : MonoBehaviour
         AndroidManager.GetInstance().CallVibrate(vibrate_int);
 #endif
         //사운드
-        mGCcontext.mEventManager.playSound(downPressSound);
+        mGCcontext.getEventManager().playSound(downPressSound);
       
 #if CONTROLLER
-        /**
-         * 서버에 보낼 이벤트
-         * 여기는 서버측 코드로 클라이언트 코드와 다르기 때문에 서버에 이벤트를 보내는 매소드가 정의되어 있지 않다.
-         * 따라서 여기서는 테스트 용도로 비어두고 클라이언트측 코드에서 이벤트를 보내는 매소드를 사용한다.
-         */ 
         int[] values = new int[2];
         values[0] = id; values[1] = GCconst.VALUE_PRESSED;
-        mGCcontext.mClientManager.sendEvent(GCconst.CODE_BUTTON, values);
+        mGCcontext.getClientManager().sendEvent(GCconst.CODE_BUTTON, values);
 #endif
     }
 

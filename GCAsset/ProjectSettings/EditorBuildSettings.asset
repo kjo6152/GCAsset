@@ -7,7 +7,7 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 0
     path: Assets/GCServer/Example/ServerExample.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/UserResources/controller.unity
   - enabled: 0
     path: Assets/GCServer/Example/ServerExample.unity
@@ -15,3 +15,7 @@ EditorBuildSettings:
     path: Assets/GCServer/Example/ServerExample.unity
   - enabled: 0
     path: Assets/testScene.unity
+  - enabled: 1
+    path: Assets/GCServer/Example/ServerExample.unity
+  - enabled: 1
+    path: Assets/GCServer/Example/EventExample.unity

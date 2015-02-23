@@ -30,6 +30,9 @@ public class GameController {
         onControllerComplete = delegate { };
         onAccelerationListener = delegate { };
         onGyroListener = delegate { };
+        onButtonListener = delegate { };
+        onDirectionKeyListener = delegate { };
+        onJoystickListener = delegate { };
 
 	}
 	
@@ -89,16 +92,21 @@ public class GameController {
 	/**
 	 * 게임 컨트롤러를 통한 이벤트 처리
 	 */
-    public delegate void EventListener();
-    public delegate void AccelerationListener(EventManager.Acceleration acceleration);
-    public delegate void GyroListener(EventManager.Gyro gyro);
+    public delegate void SystemEventListener();
+    public delegate void AccelerationListener(EventManager.AccelerationEvent acceleration);
+    public delegate void GyroListener(EventManager.GyroEvent gyro);
+    public delegate void ButtonListener(EventManager.ButtonEvent buttonEvent);
+    public delegate void DirectionKeyListener(EventManager.DirectionKeyEvent directionKeyEvent);
+    public delegate void JoystickListener(EventManager.JoystickEvent joystickEvent);
 
-    //디바이스가 연결되어야 호출되기 때문에 Connected는 필요 없음
-    private event EventListener onControllerConnected;
-    public event EventListener onControllerDisconnected;
-    public event EventListener onControllerComplete;
+    public event SystemEventListener onControllerConnected;
+    public event SystemEventListener onControllerDisconnected;
+    public event SystemEventListener onControllerComplete;
     public event AccelerationListener onAccelerationListener;
     public event GyroListener onGyroListener;
+    public event ButtonListener onButtonListener;
+    public event DirectionKeyListener onDirectionKeyListener;
+    public event JoystickListener onJoystickListener;
 
     public void receiveEvent(EventManager.Event mEvent)
     {
@@ -120,17 +128,30 @@ public class GameController {
                     break;
             }
         }
+        else if (mEvent.getType() == GCconst.TYPE_EVENT)
+        {
+            switch (mEvent.getCode())
+            {
+                case GCconst.CODE_BUTTON:
+                    onButtonListener(mEvent.getButtonEvent());
+                    break;
+                case GCconst.CODE_DIRECTION_KEY:
+                    onDirectionKeyListener(mEvent.getDirectionKeyEvent());
+                    break;
+                case GCconst.CODE_JOYSTICK:
+                    onJoystickListener(mEvent.getJoystickEvent());
+                    break;
+            }
+        }
         else if (mEvent.getType() == GCconst.TYPE_SENSOR)
         {
-            //Todo : 각 이벤트에 대한 필터 제공
             switch (mEvent.getCode())
             {
                 case GCconst.CODE_ACCELERATION:
-                    onAccelerationListener(mEvent.getAcceleration());
-
+                    onAccelerationListener(mEvent.getAccelerationEvent());
                     break;
                 case GCconst.CODE_GYRO:
-                    onGyroListener(mEvent.getGyro());
+                    onGyroListener(mEvent.getGyroEvent());
                     break;
             }
         }

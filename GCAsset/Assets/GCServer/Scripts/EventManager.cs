@@ -12,15 +12,22 @@ using System;
  */
 public class EventManager {
 
-    public delegate void EventListener(GameController gc);
-	public delegate void AccelerationListener(GameController gc,Acceleration acceleration);
-	public delegate void GyroListener(GameController gc,Gyro gyro);
+    public delegate void SystemEventListener(GameController gc);
+	public delegate void AccelerationListener(GameController gc,AccelerationEvent acceleration);
+	public delegate void GyroListener(GameController gc,GyroEvent gyro);
+    public delegate void ButtonListener(GameController gc, ButtonEvent buttonEvent);
+    public delegate void DirectionKeyListener(GameController gc, DirectionKeyEvent directionKeyEvent);
+    public delegate void JoystickListener(GameController gc, JoystickEvent joystickEvent);
 
-    public event EventListener onControllerConnected;
-    public event EventListener onControllerDisconnected;
-    public event EventListener onControllerComplete;
+    public event SystemEventListener onControllerConnected;
+    public event SystemEventListener onControllerDisconnected;
+    public event SystemEventListener onControllerComplete;
     public event AccelerationListener onAccelerationListener;
     public event GyroListener onGyroListener;
+    public event ButtonListener onButtonListener;
+    public event DirectionKeyListener onDirectionKeyListener;
+    public event JoystickListener onJoystickListener;
+
 
     public IEventFilter mGyroFilter;
     public IEventFilter mAccelerationFilter;
@@ -28,9 +35,7 @@ public class EventManager {
     private AudioSource mAudioSource;
 
     float[] sensorBuffer = new float[10];
-    int sensorSize = 10 * sizeof(float);
-    int[] eventBuffer = new int[2];
-    int eventSize = 2 * sizeof(int);
+    int[] eventBuffer = new int[3];
 
     Queue EventQueue = new Queue();
 
@@ -46,16 +51,34 @@ public class EventManager {
             return mGameController;
         }
 
-        public Gyro getGyro()
+        public GyroEvent getGyroEvent()
         {
             if(code!=GCconst.CODE_GYRO)return null;
-            else return (Gyro)Object;
+            else return (GyroEvent)Object;
         }
 
-        public Acceleration getAcceleration()
+        public AccelerationEvent getAccelerationEvent()
         {
             if (code != GCconst.CODE_ACCELERATION) return null;
-            else return (Acceleration)Object;
+            else return (AccelerationEvent)Object;
+        }
+
+        public ButtonEvent getButtonEvent()
+        {
+            if (code != GCconst.CODE_BUTTON) return null;
+            else return (ButtonEvent)Object;
+        }
+
+        public DirectionKeyEvent getDirectionKeyEvent()
+        {
+            if (code != GCconst.CODE_DIRECTION_KEY) return null;
+            else return (DirectionKeyEvent)Object;
+        }
+
+        public JoystickEvent getJoystickEvent()
+        {
+            if (code != GCconst.CODE_JOYSTICK) return null;
+            else return (JoystickEvent)Object;
         }
 
         public int getType(){
@@ -75,10 +98,10 @@ public class EventManager {
             this.Object = Object;
         }
     }
-    public class Gyro
+    public class GyroEvent
     {
         public float x, y, z, w;
-        public Gyro(float[] sensor)
+        public GyroEvent(float[] sensor)
         {
             x = sensor[0];
             y = sensor[1];
@@ -86,16 +109,41 @@ public class EventManager {
             w = sensor[3];
         }
     }
-    public class Acceleration
+    public class AccelerationEvent
     {
         public float x, y, z;
-        public Acceleration(float[] sensor)
+        public AccelerationEvent(float[] sensor)
         {
             x = sensor[0];
             y = sensor[1];
             z = sensor[2];
         }
-
+    }
+    public class ButtonEvent
+    {
+        public int id;
+        public ButtonEvent(int[] eventBuffer){
+            id = eventBuffer[0];
+        }
+    }
+    public class DirectionKeyEvent
+    {
+        public int id,key;
+        public DirectionKeyEvent(int[] eventBuffer)
+        {
+            id = eventBuffer[0];
+            key = eventBuffer[1];
+        }
+    }
+    public class JoystickEvent
+    {
+        public int id,x,y;
+        public JoystickEvent(int[] eventBuffer)
+        {
+            id = eventBuffer[0];
+            x = eventBuffer[1];
+            y = eventBuffer[2];
+        }
     }
 
     public void setAudioSource(AudioSource mAudioSource)
@@ -104,14 +152,20 @@ public class EventManager {
     }
 
 	public void init(){
+        clearListener();
+	}
+
+    public void clearListener()
+    {
         onControllerConnected = delegate { };
         onControllerDisconnected = delegate { };
         onControllerComplete = delegate { };
         onAccelerationListener = delegate { };
         onGyroListener = delegate { };
-	}
-
-    
+        onButtonListener = delegate { };
+        onDirectionKeyListener = delegate { };
+        onJoystickListener = delegate { };
+    }
 	// Use this for initialization
 	void Start () {
 		
@@ -130,8 +184,21 @@ public class EventManager {
 	public void receiveEvent(GameController gc,ushort type, ushort code,byte[] value){
         if (type == GCconst.TYPE_EVENT)
         {
-            Buffer.BlockCopy(value, 0, eventBuffer, 0, eventSize);
-            Debug.Log("type : " + type + " / code : " + code + " / value[0] :" + eventBuffer[0] + " / value[1] : " + eventBuffer[1]);
+            switch (code)
+            {
+                case GCconst.CODE_BUTTON:
+                    Buffer.BlockCopy(value, 0, eventBuffer, 0, GCconst.SIZE_BUTTON);
+                    EventQueue.Enqueue(new Event(gc, type, code, new ButtonEvent(eventBuffer)));
+                    break;
+                case GCconst.CODE_DIRECTION_KEY:
+                    Buffer.BlockCopy(value, 0, eventBuffer, 0, GCconst.SIZE_DIRECTION_KEY);
+                    EventQueue.Enqueue(new Event(gc, type, code, new DirectionKeyEvent(eventBuffer)));
+                    break;
+                case GCconst.CODE_JOYSTICK:
+                    Buffer.BlockCopy(value, 0, eventBuffer, 0, GCconst.SIZE_JOYSTICK);
+                    EventQueue.Enqueue(new Event(gc, type, code, new JoystickEvent(eventBuffer)));
+                    break;
+            }
         }
         else if (type == GCconst.TYPE_SYSTEM)
         {
@@ -139,16 +206,16 @@ public class EventManager {
         }
         else if (type == GCconst.TYPE_SENSOR)
         {
-            Buffer.BlockCopy(value, 0, sensorBuffer, 0, 40);
+            Buffer.BlockCopy(value, 0, sensorBuffer, 0, GCconst.SIZE_SENSOR);
             switch (code)
             {
                 case GCconst.CODE_GYRO:
                     if (mGyroFilter != null) mGyroFilter.filter(ref sensorBuffer);
-                    EventQueue.Enqueue(new Event(gc, type, code, new Gyro(sensorBuffer)));
+                    EventQueue.Enqueue(new Event(gc, type, code, new GyroEvent(sensorBuffer)));
                     break;
                 case GCconst.CODE_ACCELERATION:
                     if (mAccelerationFilter != null) mAccelerationFilter.filter(ref sensorBuffer);
-                    EventQueue.Enqueue(new Event(gc, type, code, new Acceleration(sensorBuffer)));
+                    EventQueue.Enqueue(new Event(gc, type, code, new AccelerationEvent(sensorBuffer)));
                     break;
             }
         }
@@ -184,15 +251,30 @@ public class EventManager {
                             break;
                     }
                 }
+                else if (mEvent.getType() == GCconst.TYPE_EVENT)
+                {
+                    switch (mEvent.getCode())
+                    {
+                        case GCconst.CODE_BUTTON:
+                            onButtonListener(mEvent.getGameController(), mEvent.getButtonEvent());
+                            break;
+                        case GCconst.CODE_DIRECTION_KEY:
+                            onDirectionKeyListener(mEvent.getGameController(), mEvent.getDirectionKeyEvent());
+                            break;
+                        case GCconst.CODE_JOYSTICK:
+                            onJoystickListener(mEvent.getGameController(), mEvent.getJoystickEvent());
+                            break;
+                    }
+                }
                 else if (mEvent.getType() == GCconst.TYPE_SENSOR)
                 {
                     switch (mEvent.getCode())
                     {
                         case GCconst.CODE_ACCELERATION:
-                            onAccelerationListener(mEvent.getGameController(), mEvent.getAcceleration());
+                            onAccelerationListener(mEvent.getGameController(), mEvent.getAccelerationEvent());
                             break;
                         case GCconst.CODE_GYRO:
-                            onGyroListener(mEvent.getGameController(), mEvent.getGyro());
+                            onGyroListener(mEvent.getGameController(), mEvent.getGyroEvent());
                             break;
                     }
                 }
@@ -205,10 +287,12 @@ public class EventManager {
         }
         catch (InvalidOperationException e)
         {
+            e.ToString();
             //Debug.Log(e);
         }
         catch (Exception e){
-
+            e.ToString();
+            //Debug.Log(e);
         }
 	}
 

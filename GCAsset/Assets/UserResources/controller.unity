@@ -275,7 +275,7 @@ MonoBehaviour:
   downPressSprite: {fileID: 21300000, guid: 404efa9ee46bfc140895dd4bd7c20dd0, type: 3}
   vibrate_int: 15
   downPressSound: 
-  id: 0
+  id: 5
 --- !u!1 &869689539
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
   downPressSprite: {fileID: 21300000, guid: 6ab5f75d53f631e4daf4160769df8376, type: 3}
   vibrate_int: 15
   downPressSound: 
-  id: 0
+  id: 5
 --- !u!1 &1126317436
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,7 +827,7 @@ MonoBehaviour:
   downPressSprite: {fileID: 21300000, guid: a999b3554281be44aa1fa5dea5dcf379, type: 3}
   vibrate_int: 15
   downPressSound: 
-  id: 0
+  id: 5
 --- !u!1 &1727778617
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +891,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MainCamera: {fileID: 1658253730}
+  downPressSound: 
+  id: 6
 --- !u!1 &1990800975
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,4 +947,4 @@ MonoBehaviour:
   downPressSprite: {fileID: 21300000, guid: 7941ce33b8993e6438159b349136a7e2, type: 3}
   vibrate_int: 15
   downPressSound: 
-  id: 0
+  id: 5
