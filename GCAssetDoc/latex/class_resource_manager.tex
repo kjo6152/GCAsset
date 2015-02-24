@@ -1,0 +1,127 @@
+\hypertarget{class_resource_manager}{}\section{Resource\+Manager 클래스 참조}
+\label{class_resource_manager}\index{Resource\+Manager@{Resource\+Manager}}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_resource_manager_a0977694caba2ac744775ab1d7dd67223}{}void {\bfseries init} ()\label{class_resource_manager_a0977694caba2ac744775ab1d7dd67223}
+
+\item 
+void \hyperlink{class_resource_manager_a9708efe73c033a8bb4edbe86897b358e}{Load\+Resource\+Map} (string name)
+\item 
+byte\mbox{[}$\,$\mbox{]} \hyperlink{class_resource_manager_adf0cc85df80ca48a2b9de8b8726908c1}{get\+Resource\+Byte} (int code)
+\item 
+string \hyperlink{class_resource_manager_a4c9274aa6ad2fddd6430332b6d422e20}{get\+Resource\+Name} (int code)
+\item 
+int \hyperlink{class_resource_manager_a326e4f9a9bd90de1dc598fc7fcf06f9c}{get\+Resource\+Size} (int code)
+\item 
+int \hyperlink{class_resource_manager_a79ffae0cb55cf2d7efa0c3f4211d5cc6}{get\+Resource\+Length} ()
+\item 
+string \hyperlink{class_resource_manager_ac24c8489e48334f42d652439ae0c258b}{get\+Resource\+Map} ()
+\end{DoxyCompactItemize}
+\subsection*{정적 Public 속성}
+\begin{DoxyCompactItemize}
+\item 
+static string \hyperlink{class_resource_manager_a0e3b7dbcf2f10e9261dba2597b5d05fe}{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+D\+I\+R} = \char`\"{}Assets/G\+C\+Server/Resources/\char`\"{}
+\item 
+static string \hyperlink{class_resource_manager_a1938a66b618ec099b4355e997a5f3c36}{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+M\+A\+P} = \char`\"{}Resource\+Map\char`\"{}
+\item 
+static string \hyperlink{class_resource_manager_a1ab2338caffe52ed804c94b05b26a5c1}{X\+M\+L\+\_\+\+E\+L\+E\+M\+E\+N\+T\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E} = \char`\"{}Resource\char`\"{}
+\item 
+static string \hyperlink{class_resource_manager_a027f98709c4beea9a7fcabe8237aedfc}{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+I\+D} = \char`\"{}id\char`\"{}
+\item 
+static string \hyperlink{class_resource_manager_a53e4547e881701612126d07eaf40183a}{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+N\+A\+M\+E} = \char`\"{}name\char`\"{}
+\item 
+static string \hyperlink{class_resource_manager_a76e5f3f0e545a34c09fd85b33aab10b5}{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+T\+Y\+P\+E} = \char`\"{}type\char`\"{}
+\item 
+static string \hyperlink{class_resource_manager_a4ce23d5df107fbacec3a6fe820c4dd0f}{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+S\+I\+Z\+E} = \char`\"{}size\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+G\+C\+Asset와 컨트롤러간 주고 받을 리소스를 관리하는 클래스
+
+사용자가 생성한 Asset\+Bundle을 컨트롤러로 전송할 수 있도록 xml을 파싱하여 정보를 가지고 있는 클래스이다. Asset\+Bundle에 대한 경로나 xml 문서의 명칭 등 상수를 가지고 있다. \begin{DoxySeeAlso}{참고}
+\hyperlink{class_export_g_c_asset_bundles}{Export\+G\+C\+Asset\+Bundles} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{작성자}
+jiwon 
+\end{DoxyAuthor}
+
+
+\subsection{멤버 함수 문서화}
+\hypertarget{class_resource_manager_adf0cc85df80ca48a2b9de8b8726908c1}{}\index{Resource\+Manager@{Resource\+Manager}!get\+Resource\+Byte@{get\+Resource\+Byte}}
+\index{get\+Resource\+Byte@{get\+Resource\+Byte}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{get\+Resource\+Byte}]{\setlength{\rightskip}{0pt plus 5cm}byte \mbox{[}$\,$\mbox{]} Resource\+Manager.\+get\+Resource\+Byte (
+\begin{DoxyParamCaption}
+\item[{int}]{code}
+\end{DoxyParamCaption}
+)}\label{class_resource_manager_adf0cc85df80ca48a2b9de8b8726908c1}
+코드(아이디)를 가진 리소스의 바이트를 리턴하는 매소드 \hypertarget{class_resource_manager_a79ffae0cb55cf2d7efa0c3f4211d5cc6}{}\index{Resource\+Manager@{Resource\+Manager}!get\+Resource\+Length@{get\+Resource\+Length}}
+\index{get\+Resource\+Length@{get\+Resource\+Length}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{get\+Resource\+Length}]{\setlength{\rightskip}{0pt plus 5cm}int Resource\+Manager.\+get\+Resource\+Length (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_resource_manager_a79ffae0cb55cf2d7efa0c3f4211d5cc6}
+리소스의 개수를 리턴하는 매소드 \hypertarget{class_resource_manager_ac24c8489e48334f42d652439ae0c258b}{}\index{Resource\+Manager@{Resource\+Manager}!get\+Resource\+Map@{get\+Resource\+Map}}
+\index{get\+Resource\+Map@{get\+Resource\+Map}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{get\+Resource\+Map}]{\setlength{\rightskip}{0pt plus 5cm}string Resource\+Manager.\+get\+Resource\+Map (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_resource_manager_ac24c8489e48334f42d652439ae0c258b}
+리소스 맵을 string으로 변환해주는 매소드 \hypertarget{class_resource_manager_a4c9274aa6ad2fddd6430332b6d422e20}{}\index{Resource\+Manager@{Resource\+Manager}!get\+Resource\+Name@{get\+Resource\+Name}}
+\index{get\+Resource\+Name@{get\+Resource\+Name}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{get\+Resource\+Name}]{\setlength{\rightskip}{0pt plus 5cm}string Resource\+Manager.\+get\+Resource\+Name (
+\begin{DoxyParamCaption}
+\item[{int}]{code}
+\end{DoxyParamCaption}
+)}\label{class_resource_manager_a4c9274aa6ad2fddd6430332b6d422e20}
+코드(리소스의 아이디)를 통해 해당 리소스의 이름을 리턴하는 매소드 \hypertarget{class_resource_manager_a326e4f9a9bd90de1dc598fc7fcf06f9c}{}\index{Resource\+Manager@{Resource\+Manager}!get\+Resource\+Size@{get\+Resource\+Size}}
+\index{get\+Resource\+Size@{get\+Resource\+Size}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{get\+Resource\+Size}]{\setlength{\rightskip}{0pt plus 5cm}int Resource\+Manager.\+get\+Resource\+Size (
+\begin{DoxyParamCaption}
+\item[{int}]{code}
+\end{DoxyParamCaption}
+)}\label{class_resource_manager_a326e4f9a9bd90de1dc598fc7fcf06f9c}
+코드(아이디)를 가진 리소스의 크기를 리턴하는 매소드 \hypertarget{class_resource_manager_a9708efe73c033a8bb4edbe86897b358e}{}\index{Resource\+Manager@{Resource\+Manager}!Load\+Resource\+Map@{Load\+Resource\+Map}}
+\index{Load\+Resource\+Map@{Load\+Resource\+Map}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{Load\+Resource\+Map}]{\setlength{\rightskip}{0pt plus 5cm}void Resource\+Manager.\+Load\+Resource\+Map (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)}\label{class_resource_manager_a9708efe73c033a8bb4edbe86897b358e}
+리소스맵에서부터 정보를 읽어온다.
+
+클라이언트와 연결 시 전송할 수 있도록 리소스 개수, 이름, 바이트를 로드한다. \begin{DoxySeeAlso}{참고}
+\hyperlink{class_resource_manager_a0e3b7dbcf2f10e9261dba2597b5d05fe}{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+D\+I\+R}, \hyperlink{class_resource_manager_a1938a66b618ec099b4355e997a5f3c36}{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+M\+A\+P} 
+\end{DoxySeeAlso}
+
+
+\subsection{멤버 데이타 문서화}
+\hypertarget{class_resource_manager_a0e3b7dbcf2f10e9261dba2597b5d05fe}{}\index{Resource\+Manager@{Resource\+Manager}!N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+D\+I\+R@{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+D\+I\+R}}
+\index{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+D\+I\+R@{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+D\+I\+R}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+D\+I\+R}]{\setlength{\rightskip}{0pt plus 5cm}string Resource\+Manager.\+N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+D\+I\+R = \char`\"{}Assets/G\+C\+Server/Resources/\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\label{class_resource_manager_a0e3b7dbcf2f10e9261dba2597b5d05fe}
+리소스 파일의 경로 \hypertarget{class_resource_manager_a1938a66b618ec099b4355e997a5f3c36}{}\index{Resource\+Manager@{Resource\+Manager}!N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+M\+A\+P@{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+M\+A\+P}}
+\index{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+M\+A\+P@{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+M\+A\+P}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+M\+A\+P}]{\setlength{\rightskip}{0pt plus 5cm}string Resource\+Manager.\+N\+A\+M\+E\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E\+\_\+\+M\+A\+P = \char`\"{}Resource\+Map\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\label{class_resource_manager_a1938a66b618ec099b4355e997a5f3c36}
+리소스 파일 이름 \hypertarget{class_resource_manager_a027f98709c4beea9a7fcabe8237aedfc}{}\index{Resource\+Manager@{Resource\+Manager}!X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+I\+D@{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+I\+D}}
+\index{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+I\+D@{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+I\+D}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+I\+D}]{\setlength{\rightskip}{0pt plus 5cm}string Resource\+Manager.\+X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+I\+D = \char`\"{}id\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\label{class_resource_manager_a027f98709c4beea9a7fcabe8237aedfc}
+X\+M\+L에서 쓰이는 엘리먼트 이름과 속성 이름 \hypertarget{class_resource_manager_a53e4547e881701612126d07eaf40183a}{}\index{Resource\+Manager@{Resource\+Manager}!X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+N\+A\+M\+E@{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+N\+A\+M\+E}}
+\index{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+N\+A\+M\+E@{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+N\+A\+M\+E}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+N\+A\+M\+E}]{\setlength{\rightskip}{0pt plus 5cm}string Resource\+Manager.\+X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+N\+A\+M\+E = \char`\"{}name\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\label{class_resource_manager_a53e4547e881701612126d07eaf40183a}
+X\+M\+L에서 쓰이는 엘리먼트 이름과 속성 이름 \hypertarget{class_resource_manager_a4ce23d5df107fbacec3a6fe820c4dd0f}{}\index{Resource\+Manager@{Resource\+Manager}!X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+S\+I\+Z\+E@{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+S\+I\+Z\+E}}
+\index{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+S\+I\+Z\+E@{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+S\+I\+Z\+E}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+S\+I\+Z\+E}]{\setlength{\rightskip}{0pt plus 5cm}string Resource\+Manager.\+X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+S\+I\+Z\+E = \char`\"{}size\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\label{class_resource_manager_a4ce23d5df107fbacec3a6fe820c4dd0f}
+X\+M\+L에서 쓰이는 엘리먼트 이름과 속성 이름 \hypertarget{class_resource_manager_a76e5f3f0e545a34c09fd85b33aab10b5}{}\index{Resource\+Manager@{Resource\+Manager}!X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+T\+Y\+P\+E@{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+T\+Y\+P\+E}}
+\index{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+T\+Y\+P\+E@{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+T\+Y\+P\+E}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+T\+Y\+P\+E}]{\setlength{\rightskip}{0pt plus 5cm}string Resource\+Manager.\+X\+M\+L\+\_\+\+A\+T\+T\+R\+\_\+\+T\+Y\+P\+E = \char`\"{}type\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\label{class_resource_manager_a76e5f3f0e545a34c09fd85b33aab10b5}
+X\+M\+L에서 쓰이는 엘리먼트 이름과 속성 이름 \hypertarget{class_resource_manager_a1ab2338caffe52ed804c94b05b26a5c1}{}\index{Resource\+Manager@{Resource\+Manager}!X\+M\+L\+\_\+\+E\+L\+E\+M\+E\+N\+T\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E@{X\+M\+L\+\_\+\+E\+L\+E\+M\+E\+N\+T\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E}}
+\index{X\+M\+L\+\_\+\+E\+L\+E\+M\+E\+N\+T\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E@{X\+M\+L\+\_\+\+E\+L\+E\+M\+E\+N\+T\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E}!Resource\+Manager@{Resource\+Manager}}
+\subsubsection[{X\+M\+L\+\_\+\+E\+L\+E\+M\+E\+N\+T\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E}]{\setlength{\rightskip}{0pt plus 5cm}string Resource\+Manager.\+X\+M\+L\+\_\+\+E\+L\+E\+M\+E\+N\+T\+\_\+\+R\+E\+S\+O\+U\+R\+C\+E = \char`\"{}Resource\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}\label{class_resource_manager_a1ab2338caffe52ed804c94b05b26a5c1}
+X\+M\+L에서 쓰이는 엘리먼트 이름과 속성 이름 
+
+이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Scripts/Resource\+Manager.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,268 @@
+\hypertarget{class_game_controller}{}\section{Game\+Controller 클래스 참조}
+\label{class_game_controller}\index{Game\+Controller@{Game\+Controller}}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_game_controller_afd0153e9695df3d4d82a855e506c2c7e}{}{\bfseries Game\+Controller} (\hyperlink{class_server_manager_1_1_g_c_packet_processor}{Server\+Manager.\+G\+C\+Packet\+Processor} processor)\label{class_game_controller_afd0153e9695df3d4d82a855e506c2c7e}
+
+\item 
+string \hyperlink{class_game_controller_a0eba2827c63ded1805248a00dc1c5fbc}{get\+Device\+Name} ()
+\item 
+int \hyperlink{class_game_controller_a5c2c3c6c03ebadbb8d2a55a71456a000}{get\+Resolution\+X} ()
+\item 
+int \hyperlink{class_game_controller_a0de572d9e92f8a09700841f2534629f6}{get\+Resolution\+Y} ()
+\item 
+\hypertarget{class_game_controller_a44c5358ebeb88a43780c6c05cef4674d}{}void {\bfseries remove\+From} (Array\+List list)\label{class_game_controller_a44c5358ebeb88a43780c6c05cef4674d}
+
+\item 
+void \hyperlink{class_game_controller_a47e7610a9cddf869968b388926eab62a}{disconnect} ()
+\item 
+void \hyperlink{class_game_controller_a186282de3ec7fb68cde00368cbfd697d}{read\+Device\+Data\+From\+Xml} (string xml)
+\item 
+void \hyperlink{class_game_controller_aadac19b966dfc27827a6f68ea15d9cec}{send\+Sound} (string name)
+\item 
+void \hyperlink{class_game_controller_a662e97a1d293708aade81c6e2afd0a22}{send\+Vibration} (int time)
+\item 
+void \hyperlink{class_game_controller_a8d4cf54c02ecd7cff7dd3995116efac5}{send\+Change\+View} (string Scene\+Name)
+\item 
+delegate void \hyperlink{class_game_controller_a6c79406c908b41c4f4520c6789d829e6}{System\+Event\+Listener} ()
+\item 
+delegate void \hyperlink{class_game_controller_a87b7db4c19ae1dd2ecbf94c6f1be5c90}{Acceleration\+Listener} (\hyperlink{class_event_manager_1_1_acceleration_event}{Event\+Manager.\+Acceleration\+Event} acceleration)
+\item 
+delegate void \hyperlink{class_game_controller_a5e0106b2e58b70c011fe7f7e9f58ecce}{Gyro\+Listener} (\hyperlink{class_event_manager_1_1_gyro_event}{Event\+Manager.\+Gyro\+Event} gyro)
+\item 
+delegate void \hyperlink{class_game_controller_a0d4534f57395c87d869dc90a70419e7f}{Button\+Listener} (\hyperlink{class_event_manager_1_1_button_event}{Event\+Manager.\+Button\+Event} button\+Event)
+\item 
+delegate void \hyperlink{class_game_controller_ae08375a6caed9e49d310f992e6d6f61b}{Direction\+Key\+Listener} (\hyperlink{class_event_manager_1_1_direction_key_event}{Event\+Manager.\+Direction\+Key\+Event} direction\+Key\+Event)
+\item 
+delegate void \hyperlink{class_game_controller_a653ceafbd20d279abc65adf386a358aa}{Joystick\+Listener} (\hyperlink{class_event_manager_1_1_joystick_event}{Event\+Manager.\+Joystick\+Event} joystick\+Event)
+\item 
+void \hyperlink{class_game_controller_a5b9e4d1735ec8d689a35ad187aefe1e9}{receive\+Event} (\hyperlink{class_event_manager_1_1_event}{Event\+Manager.\+Event} m\+Event)
+\end{DoxyCompactItemize}
+\subsection*{이벤트}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_game_controller_a6c79406c908b41c4f4520c6789d829e6}{System\+Event\+Listener} \hyperlink{class_game_controller_a32dbe49ae40c100cac70423e2ac81aa7}{on\+Controller\+Connected}
+\item 
+\hyperlink{class_game_controller_a6c79406c908b41c4f4520c6789d829e6}{System\+Event\+Listener} \hyperlink{class_game_controller_aca9c2b01d155e895c249ac05e1eb9bf4}{on\+Controller\+Disconnected}
+\item 
+\hyperlink{class_game_controller_a6c79406c908b41c4f4520c6789d829e6}{System\+Event\+Listener} \hyperlink{class_game_controller_a1bd8fb1c7e90146c8bbc25615ffcd4e5}{on\+Controller\+Complete}
+\item 
+\hyperlink{class_game_controller_a87b7db4c19ae1dd2ecbf94c6f1be5c90}{Acceleration\+Listener} \hyperlink{class_game_controller_a2c93984c2eab77efd735468a234d4a77}{on\+Acceleration\+Listener}
+\item 
+\hyperlink{class_game_controller_a5e0106b2e58b70c011fe7f7e9f58ecce}{Gyro\+Listener} \hyperlink{class_game_controller_ae051ab28fdc0f6bf06d1c5fbb4ad3f21}{on\+Gyro\+Listener}
+\item 
+\hyperlink{class_game_controller_a0d4534f57395c87d869dc90a70419e7f}{Button\+Listener} \hyperlink{class_game_controller_a8573dccb810a91d3e1b571f72e321849}{on\+Button\+Listener}
+\item 
+\hyperlink{class_game_controller_ae08375a6caed9e49d310f992e6d6f61b}{Direction\+Key\+Listener} \hyperlink{class_game_controller_aa9886181132e7d48bea03ffd147eafc0}{on\+Direction\+Key\+Listener}
+\item 
+\hyperlink{class_game_controller_a653ceafbd20d279abc65adf386a358aa}{Joystick\+Listener} \hyperlink{class_game_controller_a4ac337d799821aba5064e4e91c565eb9}{on\+Joystick\+Listener}
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+게임 컨트롤러(클라이언트)에 대한 정보를 갖는 클래스
+
+클라이언트의 디바이스 이름, 해상도를 갖는다. \begin{DoxySeeAlso}{참고}
+\hyperlink{class_game_controller_a0eba2827c63ded1805248a00dc1c5fbc}{get\+Device\+Name} 
+
+\hyperlink{class_game_controller_a5c2c3c6c03ebadbb8d2a55a71456a000}{get\+Resolution\+X} 
+
+\hyperlink{class_game_controller_a0de572d9e92f8a09700841f2534629f6}{get\+Resolution\+Y} 이벤트 매니저에 등록한 것과 같이 컨트롤러에 대해서만 이벤트를 받을 수 있으며 이벤트 매니저 호출 직후 호출된다. 컨트롤러에게 전송한 씬을 로드하게 하거나 효과음, 진동에 대한 이펙트를 발생시키고 싶은 경우 이 객체를 이용해야 한다. 
+
+Server\+Manager.\+get\+Controller\+List 
+
+\hyperlink{class_game_controller_aadac19b966dfc27827a6f68ea15d9cec}{send\+Sound} 
+
+\hyperlink{class_game_controller_a662e97a1d293708aade81c6e2afd0a22}{send\+Vibration} 
+
+\hyperlink{class_game_controller_a8d4cf54c02ecd7cff7dd3995116efac5}{send\+Change\+View} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{작성자}
+jiwon 
+\end{DoxyAuthor}
+
+
+\subsection{멤버 함수 문서화}
+\hypertarget{class_game_controller_a87b7db4c19ae1dd2ecbf94c6f1be5c90}{}\index{Game\+Controller@{Game\+Controller}!Acceleration\+Listener@{Acceleration\+Listener}}
+\index{Acceleration\+Listener@{Acceleration\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{Acceleration\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}delegate void Game\+Controller.\+Acceleration\+Listener (
+\begin{DoxyParamCaption}
+\item[{{\bf Event\+Manager.\+Acceleration\+Event}}]{acceleration}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a87b7db4c19ae1dd2ecbf94c6f1be5c90}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_ac459bcb4ba4f140243e271628f8d366c}{Event\+Manager.\+Acceleration\+Listener} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_a0d4534f57395c87d869dc90a70419e7f}{}\index{Game\+Controller@{Game\+Controller}!Button\+Listener@{Button\+Listener}}
+\index{Button\+Listener@{Button\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{Button\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}delegate void Game\+Controller.\+Button\+Listener (
+\begin{DoxyParamCaption}
+\item[{{\bf Event\+Manager.\+Button\+Event}}]{button\+Event}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a0d4534f57395c87d869dc90a70419e7f}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_ae17715b9a94a50d9a8e1f29580af7c16}{Event\+Manager.\+Button\+Listener} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_ae08375a6caed9e49d310f992e6d6f61b}{}\index{Game\+Controller@{Game\+Controller}!Direction\+Key\+Listener@{Direction\+Key\+Listener}}
+\index{Direction\+Key\+Listener@{Direction\+Key\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{Direction\+Key\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}delegate void Game\+Controller.\+Direction\+Key\+Listener (
+\begin{DoxyParamCaption}
+\item[{{\bf Event\+Manager.\+Direction\+Key\+Event}}]{direction\+Key\+Event}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_ae08375a6caed9e49d310f992e6d6f61b}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_a3bcc7e1ecc58c1625fb107ce4fe6feaa}{Event\+Manager.\+Direction\+Key\+Listener} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_a47e7610a9cddf869968b388926eab62a}{}\index{Game\+Controller@{Game\+Controller}!disconnect@{disconnect}}
+\index{disconnect@{disconnect}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{disconnect}]{\setlength{\rightskip}{0pt plus 5cm}void Game\+Controller.\+disconnect (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a47e7610a9cddf869968b388926eab62a}
+컨트롤러와 연결을 끊는다. \hypertarget{class_game_controller_a0eba2827c63ded1805248a00dc1c5fbc}{}\index{Game\+Controller@{Game\+Controller}!get\+Device\+Name@{get\+Device\+Name}}
+\index{get\+Device\+Name@{get\+Device\+Name}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{get\+Device\+Name}]{\setlength{\rightskip}{0pt plus 5cm}string Game\+Controller.\+get\+Device\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a0eba2827c63ded1805248a00dc1c5fbc}
+컨트롤러 디바이스의 이름을 얻는 매소드 \hypertarget{class_game_controller_a5c2c3c6c03ebadbb8d2a55a71456a000}{}\index{Game\+Controller@{Game\+Controller}!get\+Resolution\+X@{get\+Resolution\+X}}
+\index{get\+Resolution\+X@{get\+Resolution\+X}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{get\+Resolution\+X}]{\setlength{\rightskip}{0pt plus 5cm}int Game\+Controller.\+get\+Resolution\+X (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a5c2c3c6c03ebadbb8d2a55a71456a000}
+컨트롤러 디바이스의 x 해상도를 얻는 매소드 \hypertarget{class_game_controller_a0de572d9e92f8a09700841f2534629f6}{}\index{Game\+Controller@{Game\+Controller}!get\+Resolution\+Y@{get\+Resolution\+Y}}
+\index{get\+Resolution\+Y@{get\+Resolution\+Y}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{get\+Resolution\+Y}]{\setlength{\rightskip}{0pt plus 5cm}int Game\+Controller.\+get\+Resolution\+Y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a0de572d9e92f8a09700841f2534629f6}
+컨트롤러 디바이스의 y 해상도를 얻는 매소드 \hypertarget{class_game_controller_a5e0106b2e58b70c011fe7f7e9f58ecce}{}\index{Game\+Controller@{Game\+Controller}!Gyro\+Listener@{Gyro\+Listener}}
+\index{Gyro\+Listener@{Gyro\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{Gyro\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}delegate void Game\+Controller.\+Gyro\+Listener (
+\begin{DoxyParamCaption}
+\item[{{\bf Event\+Manager.\+Gyro\+Event}}]{gyro}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a5e0106b2e58b70c011fe7f7e9f58ecce}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_a4ed9f5be26f2015a5cc107257f02eff8}{Event\+Manager.\+Gyro\+Listener} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_a653ceafbd20d279abc65adf386a358aa}{}\index{Game\+Controller@{Game\+Controller}!Joystick\+Listener@{Joystick\+Listener}}
+\index{Joystick\+Listener@{Joystick\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{Joystick\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}delegate void Game\+Controller.\+Joystick\+Listener (
+\begin{DoxyParamCaption}
+\item[{{\bf Event\+Manager.\+Joystick\+Event}}]{joystick\+Event}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a653ceafbd20d279abc65adf386a358aa}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_ad470a4c2e411d814dd480043332f2a70}{Event\+Manager.\+Joystick\+Listener} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_a186282de3ec7fb68cde00368cbfd697d}{}\index{Game\+Controller@{Game\+Controller}!read\+Device\+Data\+From\+Xml@{read\+Device\+Data\+From\+Xml}}
+\index{read\+Device\+Data\+From\+Xml@{read\+Device\+Data\+From\+Xml}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{read\+Device\+Data\+From\+Xml}]{\setlength{\rightskip}{0pt plus 5cm}void Game\+Controller.\+read\+Device\+Data\+From\+Xml (
+\begin{DoxyParamCaption}
+\item[{string}]{xml}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a186282de3ec7fb68cde00368cbfd697d}
+Xml 스트링으로부터 게임 컨트롤러 변수를 설정한다. 컨트롤러가 연결되어 정보를 전송하면 해당 정보를 활용한다. \hypertarget{class_game_controller_a5b9e4d1735ec8d689a35ad187aefe1e9}{}\index{Game\+Controller@{Game\+Controller}!receive\+Event@{receive\+Event}}
+\index{receive\+Event@{receive\+Event}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{receive\+Event}]{\setlength{\rightskip}{0pt plus 5cm}void Game\+Controller.\+receive\+Event (
+\begin{DoxyParamCaption}
+\item[{{\bf Event\+Manager.\+Event}}]{m\+Event}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a5b9e4d1735ec8d689a35ad187aefe1e9}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_ae034ed89247a369411c89f135c836bd9}{Event\+Manager.\+receive\+Event} 
+\end{DoxySeeAlso}
+이벤트 종류에 대한 리스너 처리\hypertarget{class_game_controller_a8d4cf54c02ecd7cff7dd3995116efac5}{}\index{Game\+Controller@{Game\+Controller}!send\+Change\+View@{send\+Change\+View}}
+\index{send\+Change\+View@{send\+Change\+View}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{send\+Change\+View}]{\setlength{\rightskip}{0pt plus 5cm}void Game\+Controller.\+send\+Change\+View (
+\begin{DoxyParamCaption}
+\item[{string}]{Scene\+Name}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a8d4cf54c02ecd7cff7dd3995116efac5}
+컨트롤러에게 씬을 로드하도록 한다. Asset\+Bundle 형태로 전송된 씬만 가능하다. \hypertarget{class_game_controller_aadac19b966dfc27827a6f68ea15d9cec}{}\index{Game\+Controller@{Game\+Controller}!send\+Sound@{send\+Sound}}
+\index{send\+Sound@{send\+Sound}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{send\+Sound}]{\setlength{\rightskip}{0pt plus 5cm}void Game\+Controller.\+send\+Sound (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_aadac19b966dfc27827a6f68ea15d9cec}
+컨트롤러에게 효과음을 재생하도록 요청한다. Asset\+Bundle 형태로 전송된 효과음만 가능하다. \hypertarget{class_game_controller_a662e97a1d293708aade81c6e2afd0a22}{}\index{Game\+Controller@{Game\+Controller}!send\+Vibration@{send\+Vibration}}
+\index{send\+Vibration@{send\+Vibration}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{send\+Vibration}]{\setlength{\rightskip}{0pt plus 5cm}void Game\+Controller.\+send\+Vibration (
+\begin{DoxyParamCaption}
+\item[{int}]{time}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a662e97a1d293708aade81c6e2afd0a22}
+컨트롤러에게 해당 시간만큼 진동을 일으키도록 요청한다. \hypertarget{class_game_controller_a6c79406c908b41c4f4520c6789d829e6}{}\index{Game\+Controller@{Game\+Controller}!System\+Event\+Listener@{System\+Event\+Listener}}
+\index{System\+Event\+Listener@{System\+Event\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{System\+Event\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}delegate void Game\+Controller.\+System\+Event\+Listener (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a6c79406c908b41c4f4520c6789d829e6}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_a65e017fcb7c22959f09becc40ad3bc2d}{Event\+Manager.\+System\+Event\+Listener} 
+\end{DoxySeeAlso}
+
+
+\subsection{이벤트 문서화}
+\hypertarget{class_game_controller_a2c93984c2eab77efd735468a234d4a77}{}\index{Game\+Controller@{Game\+Controller}!on\+Acceleration\+Listener@{on\+Acceleration\+Listener}}
+\index{on\+Acceleration\+Listener@{on\+Acceleration\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{on\+Acceleration\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Acceleration\+Listener} Game\+Controller.\+on\+Acceleration\+Listener}\label{class_game_controller_a2c93984c2eab77efd735468a234d4a77}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_a653a885d332bd10bf53a1f8e6a8c36cd}{Event\+Manager.\+on\+Acceleration\+Listener} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_a8573dccb810a91d3e1b571f72e321849}{}\index{Game\+Controller@{Game\+Controller}!on\+Button\+Listener@{on\+Button\+Listener}}
+\index{on\+Button\+Listener@{on\+Button\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{on\+Button\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Button\+Listener} Game\+Controller.\+on\+Button\+Listener}\label{class_game_controller_a8573dccb810a91d3e1b571f72e321849}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_a6f4d5e2ed1262c99f3295743878ba681}{Event\+Manager.\+on\+Button\+Listener} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_a1bd8fb1c7e90146c8bbc25615ffcd4e5}{}\index{Game\+Controller@{Game\+Controller}!on\+Controller\+Complete@{on\+Controller\+Complete}}
+\index{on\+Controller\+Complete@{on\+Controller\+Complete}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{on\+Controller\+Complete}]{\setlength{\rightskip}{0pt plus 5cm}{\bf System\+Event\+Listener} Game\+Controller.\+on\+Controller\+Complete}\label{class_game_controller_a1bd8fb1c7e90146c8bbc25615ffcd4e5}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_af12f0caee161b1b2222cfd13cd957750}{Event\+Manager.\+on\+Controller\+Complete} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_a32dbe49ae40c100cac70423e2ac81aa7}{}\index{Game\+Controller@{Game\+Controller}!on\+Controller\+Connected@{on\+Controller\+Connected}}
+\index{on\+Controller\+Connected@{on\+Controller\+Connected}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{on\+Controller\+Connected}]{\setlength{\rightskip}{0pt plus 5cm}{\bf System\+Event\+Listener} Game\+Controller.\+on\+Controller\+Connected}\label{class_game_controller_a32dbe49ae40c100cac70423e2ac81aa7}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_a1982ee974be3949930955adbf2b69416}{Event\+Manager.\+on\+Controller\+Connected} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_aca9c2b01d155e895c249ac05e1eb9bf4}{}\index{Game\+Controller@{Game\+Controller}!on\+Controller\+Disconnected@{on\+Controller\+Disconnected}}
+\index{on\+Controller\+Disconnected@{on\+Controller\+Disconnected}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{on\+Controller\+Disconnected}]{\setlength{\rightskip}{0pt plus 5cm}{\bf System\+Event\+Listener} Game\+Controller.\+on\+Controller\+Disconnected}\label{class_game_controller_aca9c2b01d155e895c249ac05e1eb9bf4}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_a8f4ec7cfc6f0ca0d4a5872997b359861}{Event\+Manager.\+on\+Controller\+Disconnected} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_aa9886181132e7d48bea03ffd147eafc0}{}\index{Game\+Controller@{Game\+Controller}!on\+Direction\+Key\+Listener@{on\+Direction\+Key\+Listener}}
+\index{on\+Direction\+Key\+Listener@{on\+Direction\+Key\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{on\+Direction\+Key\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Direction\+Key\+Listener} Game\+Controller.\+on\+Direction\+Key\+Listener}\label{class_game_controller_aa9886181132e7d48bea03ffd147eafc0}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_aabcdea295255f84519ce6c7ef7026b64}{Event\+Manager.\+on\+Direction\+Key\+Listener} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_ae051ab28fdc0f6bf06d1c5fbb4ad3f21}{}\index{Game\+Controller@{Game\+Controller}!on\+Gyro\+Listener@{on\+Gyro\+Listener}}
+\index{on\+Gyro\+Listener@{on\+Gyro\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{on\+Gyro\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gyro\+Listener} Game\+Controller.\+on\+Gyro\+Listener}\label{class_game_controller_ae051ab28fdc0f6bf06d1c5fbb4ad3f21}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_a31f1da96e98896421b0026df5ce01623}{Event\+Manager.\+on\+Gyro\+Listener} 
+\end{DoxySeeAlso}
+\hypertarget{class_game_controller_a4ac337d799821aba5064e4e91c565eb9}{}\index{Game\+Controller@{Game\+Controller}!on\+Joystick\+Listener@{on\+Joystick\+Listener}}
+\index{on\+Joystick\+Listener@{on\+Joystick\+Listener}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{on\+Joystick\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Joystick\+Listener} Game\+Controller.\+on\+Joystick\+Listener}\label{class_game_controller_a4ac337d799821aba5064e4e91c565eb9}
+\begin{DoxySeeAlso}{참고}
+\hyperlink{class_event_manager_ab148217093b03a8cd7c962a11195c83a}{Event\+Manager.\+on\+Joystick\+Listener} 
+\end{DoxySeeAlso}
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Scripts/Game\+Controller.\+cs\end{DoxyCompactItemize}

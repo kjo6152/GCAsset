@@ -3,14 +3,15 @@ using System.Collections;
 using UnityEngine.UI;
 
 /**
- * 1. 게임컨트롤러 컨텍스트
- * 기능 :
- *  1) 게임에 컨트롤러 라이브라리에 대한 전체적인 관리를 한다.
- *  2) 여러 매니저들의 초기화와 매니저의 인스턴스를 얻을 수 있다.
- *  3) 매니저 클래스는 다음과 같다.
- *   - 게임서버 매니저, 이벤트 매니저, 리소스 매니저
- * 
- * 매소드 :
+ * @breif GCAsset을 이용하기 위한 여러 객체 및 리소스를 관리하는 클래스
+ * @details GCAsset의 기능을 활용하기 위한 모든 객체와 정보들을 가지고 있는 최상위 클래스이다.
+ * 싱글톤 패턴으로 하나의 객체만 유지되며 객체 생성시 씬에 자동으로 오브젝트를 생성하여 동작한다.
+ * 씬이 변경되어도 해당 오브젝트는 파괴되지 않고 계속 유지된다.
+ * 객체 생성시 아래 세 클래스의 객체를 생성한다.
+ * @see ResourceManager, getResourceManager
+ * @see EventManager, getEventManager
+ * @see ServerManager, getServerManager
+ * @author jiwon
  */
 public class GCcontext : MonoBehaviour {
 
@@ -64,14 +65,17 @@ public class GCcontext : MonoBehaviour {
 
 	}
 
+    /** @breif ResourceManager 객체를 얻는 매소드 */
     public ResourceManager getResourceManager()
     {
         return mResourceManager;
     }
+    /** @breif EventManager 객체를 얻는 매소드 */
     public EventManager getEventManager()
     {
         return mEventManager;
     }
+    /** @breif ServerManager 객체를 얻는 매소드 */
     public ServerManager getServerManager()
     {
         return mServerManager;

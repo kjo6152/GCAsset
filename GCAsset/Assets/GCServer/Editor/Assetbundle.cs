@@ -21,7 +21,7 @@ public class ExportGCAssetBundles : Editor
      * 추가적으로 리소스를 관리할 수 있도록 리소스 목록을 xml로 생성한다.
      */
     [MenuItem("Assets/Build Resources AssetBundle")]
-    static void BuildResourceAssetBundle () {
+    public static void BuildResourceAssetBundle () {
         
         // 선택된 디렉토리를 가져옵니다.
         string path = AssetDatabase.GetAssetPath(Selection.activeObject);
@@ -62,7 +62,7 @@ public class ExportGCAssetBundles : Editor
      * @breif 리소스의 정보를 저장하는 리소스 맵 xml 파일을 만든다.
      * @detail 리소스의 정보를 저장하는 리소스 맵 xml 파일을 만든다. BuildResourceAssetBundle 매소드 내부에서 호출된다.
      */
-    static void createResourceMap()
+    public static void createResourceMap()
     {
         Debug.Log("createResourceMap");
         string[] fileList = Directory.GetFiles(ResourceManager.NAME_RESOURCE_DIR, "*.bytes");

@@ -52,7 +52,7 @@ public class GameController {
 		return mDeviceName;
 	}
 	
-    \/** @breif 컨트롤러 디바이스의 x 해상도를 얻는 매소드 */ 
+    /** @breif 컨트롤러 디바이스의 x 해상도를 얻는 매소드 */ 
 	public int getResolutionX(){
 		return mResolutionX;
 	}

@@ -19,7 +19,7 @@ public class GUI_Tool : EditorWindow {
     Texture joystick1_normal_texture = Resources.Load<Texture>("Texture/Joystick1_Normal");
 
     [MenuItem("GUI Tool/Open GUI Tool &1", false, 0)]
-    static void OpenGUITool()
+    public static void OpenGUITool()
     {
         EditorWindow  window = EditorWindow.GetWindow<GUI_Tool>(false);
         window.title = "GUI Tool";

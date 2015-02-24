@@ -1,0 +1,105 @@
+\hypertarget{class_server_manager_1_1_g_c_packet_processor}{}\section{Server\+Manager.\+G\+C\+Packet\+Processor 클래스 참조}
+\label{class_server_manager_1_1_g_c_packet_processor}\index{Server\+Manager.\+G\+C\+Packet\+Processor@{Server\+Manager.\+G\+C\+Packet\+Processor}}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_server_manager_1_1_g_c_packet_processor_a0d33dc9f19b414e680949bee2d3a9be7}{}delegate void {\bfseries Listener} (\hyperlink{class_game_controller}{Game\+Controller} gc)\label{class_server_manager_1_1_g_c_packet_processor_a0d33dc9f19b414e680949bee2d3a9be7}
+
+\item 
+\hypertarget{class_server_manager_1_1_g_c_packet_processor_aedd912743acb53633850b93b35ab0997}{}void {\bfseries set\+Resource\+Meneager} (\hyperlink{class_resource_manager}{Resource\+Manager} rm)\label{class_server_manager_1_1_g_c_packet_processor_aedd912743acb53633850b93b35ab0997}
+
+\item 
+\hypertarget{class_server_manager_1_1_g_c_packet_processor_aedd3fe62e1304e06e85c2a66efa31c11}{}void {\bfseries set\+Event\+Manager} (\hyperlink{class_event_manager}{Event\+Manager} em)\label{class_server_manager_1_1_g_c_packet_processor_aedd3fe62e1304e06e85c2a66efa31c11}
+
+\item 
+\hypertarget{class_server_manager_1_1_g_c_packet_processor_ab5beaf78f6e0893059880be46a58ebc2}{}void {\bfseries set\+Socket} (Socket socket)\label{class_server_manager_1_1_g_c_packet_processor_ab5beaf78f6e0893059880be46a58ebc2}
+
+\item 
+void \hyperlink{class_server_manager_1_1_g_c_packet_processor_a84746f1af9c687835fb20e58dd65824c}{start\+Processor} ()
+\item 
+void \hyperlink{class_server_manager_1_1_g_c_packet_processor_af10653ddaeee59e9c300a70a3780457f}{send\+Sound} (string name)
+\item 
+void \hyperlink{class_server_manager_1_1_g_c_packet_processor_a95466c00108da09905e499103d60c8cb}{send\+Vibration} (int time)
+\item 
+void \hyperlink{class_server_manager_1_1_g_c_packet_processor_a8baeb542bcec06b8e4f16ae7417896fb}{send\+Change\+View} (string Scene\+Name)
+\item 
+\hyperlink{class_game_controller}{Game\+Controller} \hyperlink{class_server_manager_1_1_g_c_packet_processor_a35d3770455e7d5ee73c8ae315c5bd1ce}{get\+Game\+Controller} ()
+\item 
+\hypertarget{class_server_manager_1_1_g_c_packet_processor_a6789b1d7291851798a6b2231539b14b8}{}void {\bfseries stop\+Processor} ()\label{class_server_manager_1_1_g_c_packet_processor_a6789b1d7291851798a6b2231539b14b8}
+
+\end{DoxyCompactItemize}
+\subsection*{정적 Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{class_server_manager_1_1_g_c_packet_processor_a714bda3a3df86d6e7164866313441d6b}{get\+Size} ()
+\end{DoxyCompactItemize}
+\subsection*{이벤트}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_server_manager_1_1_g_c_packet_processor_aaf4f9fa7a203db3ad388adfacf453e49}{}Listener {\bfseries on\+Connect\+Listener}\label{class_server_manager_1_1_g_c_packet_processor_aaf4f9fa7a203db3ad388adfacf453e49}
+
+\item 
+\hypertarget{class_server_manager_1_1_g_c_packet_processor_a77b08a46b3f2e975423eeb8ee62b9980}{}Listener {\bfseries on\+Disconnect\+Listener}\label{class_server_manager_1_1_g_c_packet_processor_a77b08a46b3f2e975423eeb8ee62b9980}
+
+\item 
+\hypertarget{class_server_manager_1_1_g_c_packet_processor_adf20c3a863d86c5edbf1d9334d5bef32}{}Listener {\bfseries on\+Complete\+Listener}\label{class_server_manager_1_1_g_c_packet_processor_adf20c3a863d86c5edbf1d9334d5bef32}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+컨트롤러에게서 패킷을 받아 처리하는 클래스
+
+각 컨트롤러마다 할당되며 실제 통신이 일어나는 클래스이다. 패킷을 분석하여 그에 알맞는 처리를 하거나 다른 객체로 전달해준다. 해당 컨트롤러에게 이벤트를 전달해준다. \begin{DoxySeeAlso}{참고}
+\hyperlink{class_server_manager_1_1_g_c_packet_processor_af10653ddaeee59e9c300a70a3780457f}{send\+Sound}, \hyperlink{class_server_manager_1_1_g_c_packet_processor_a95466c00108da09905e499103d60c8cb}{send\+Vibration}, \hyperlink{class_server_manager_1_1_g_c_packet_processor_a8baeb542bcec06b8e4f16ae7417896fb}{send\+Change\+View} 
+\end{DoxySeeAlso}
+
+
+\subsection{멤버 함수 문서화}
+\hypertarget{class_server_manager_1_1_g_c_packet_processor_a35d3770455e7d5ee73c8ae315c5bd1ce}{}\index{Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}!get\+Game\+Controller@{get\+Game\+Controller}}
+\index{get\+Game\+Controller@{get\+Game\+Controller}!Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}}
+\subsubsection[{get\+Game\+Controller}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Game\+Controller} Server\+Manager.\+G\+C\+Packet\+Processor.\+get\+Game\+Controller (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_1_1_g_c_packet_processor_a35d3770455e7d5ee73c8ae315c5bd1ce}
+연결된 컨트롤러를 얻는 매소드 \hypertarget{class_server_manager_1_1_g_c_packet_processor_a714bda3a3df86d6e7164866313441d6b}{}\index{Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}!get\+Size@{get\+Size}}
+\index{get\+Size@{get\+Size}!Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}}
+\subsubsection[{get\+Size}]{\setlength{\rightskip}{0pt plus 5cm}static int Server\+Manager.\+G\+C\+Packet\+Processor.\+get\+Size (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_server_manager_1_1_g_c_packet_processor_a714bda3a3df86d6e7164866313441d6b}
+Packet\+Data 구조체의 크기를 리턴한다. (고정값) \hypertarget{class_server_manager_1_1_g_c_packet_processor_a8baeb542bcec06b8e4f16ae7417896fb}{}\index{Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}!send\+Change\+View@{send\+Change\+View}}
+\index{send\+Change\+View@{send\+Change\+View}!Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}}
+\subsubsection[{send\+Change\+View}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+Manager.\+G\+C\+Packet\+Processor.\+send\+Change\+View (
+\begin{DoxyParamCaption}
+\item[{string}]{Scene\+Name}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_1_1_g_c_packet_processor_a8baeb542bcec06b8e4f16ae7417896fb}
+씬을 로드하라는 이벤트를 보낸다.  Scene\+Name 로드할 씬 이름 (확장자 제외) \hypertarget{class_server_manager_1_1_g_c_packet_processor_af10653ddaeee59e9c300a70a3780457f}{}\index{Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}!send\+Sound@{send\+Sound}}
+\index{send\+Sound@{send\+Sound}!Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}}
+\subsubsection[{send\+Sound}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+Manager.\+G\+C\+Packet\+Processor.\+send\+Sound (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_1_1_g_c_packet_processor_af10653ddaeee59e9c300a70a3780457f}
+음향 효과 이벤트를 보낸다.  name 재생할 음향 효과 명 (확장자 제외) \hypertarget{class_server_manager_1_1_g_c_packet_processor_a95466c00108da09905e499103d60c8cb}{}\index{Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}!send\+Vibration@{send\+Vibration}}
+\index{send\+Vibration@{send\+Vibration}!Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}}
+\subsubsection[{send\+Vibration}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+Manager.\+G\+C\+Packet\+Processor.\+send\+Vibration (
+\begin{DoxyParamCaption}
+\item[{int}]{time}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_1_1_g_c_packet_processor_a95466c00108da09905e499103d60c8cb}
+진동에 대한 이벤트를 보낸다.  time 진동 시간이다. \hypertarget{class_server_manager_1_1_g_c_packet_processor_a84746f1af9c687835fb20e58dd65824c}{}\index{Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}!start\+Processor@{start\+Processor}}
+\index{start\+Processor@{start\+Processor}!Server\+Manager\+::\+G\+C\+Packet\+Processor@{Server\+Manager\+::\+G\+C\+Packet\+Processor}}
+\subsubsection[{start\+Processor}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+Manager.\+G\+C\+Packet\+Processor.\+start\+Processor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_1_1_g_c_packet_processor_a84746f1af9c687835fb20e58dd65824c}
+G\+C\+Packet\+Processor를 동작시킨다. 
+
+이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Scripts/Server\+Manager.\+cs\end{DoxyCompactItemize}

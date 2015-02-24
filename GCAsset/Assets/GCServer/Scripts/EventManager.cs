@@ -5,7 +5,7 @@ using System;
 
 /**
  * @breif 이벤트 매니저
- * @detail
+ * @details
  * 다음과 같은 기능을 제공한다.
  * 매 프레임마다 이벤트를 처리하여 사용자에게 제공한다. 사용자는 리스너를 등록하여 이벤트를 받아 사용할 수 있다. 제공되는 이벤트는 다음과 같다.
  * @see onControllerConnected
@@ -65,7 +65,7 @@ public class EventManager {
 
     /** 
      * @breif 자이로 센서 필터 
-     * @detail 컨트롤러로부터 전송된 자이로 센서가 등록된 필터를 거쳐 가공된 형태로 사용자에게 제공된다.
+     * @details 컨트롤러로부터 전송된 자이로 센서가 등록된 필터를 거쳐 가공된 형태로 사용자에게 제공된다.
      * @see IEventFilter @see GravityFilter @see KalmanFilter 
      */ 
     public IEventFilter mGyroFilter;
@@ -81,7 +81,7 @@ public class EventManager {
 
     /** 
      * @breif GCAsset 이벤트
-     * @detail GCAsset 내부 여러 클래스들에서 이벤트를 주고 받기 위해 정의된 이벤트
+     * @details GCAsset 내부 여러 클래스들에서 이벤트를 주고 받기 위해 정의된 이벤트
      */ 
     public class Event
     {
@@ -242,7 +242,7 @@ public class EventManager {
 
     /**
      * @breif 클라이언트로부터 온 이벤트 저장하는 매소드
-     * @detail 클라이언트로부터 온 이벤트를 @see ServerManager 에게서 받아 처리한다.
+     * @details 클라이언트로부터 온 이벤트를 @see ServerManager 에게서 받아 처리한다.
      * 이벤트 필터를 적용하여 전달된 센서 값들을 필터링한다.
      * 각각 알맞은 Queue에 쌓는 역할을 하며 쌓인 이벤트는 프레임 마다 처리된다.
      * @see processEvent
@@ -290,7 +290,7 @@ public class EventManager {
 
     /**
      * @breif Queue에 쌓인 이벤트들을 처리한다.
-     * @detail 컨트롤러로부터 받은 큐에 저장된 이벤트를 처리하여 적절한 리스너를 호출한다.
+     * @details 컨트롤러로부터 받은 큐에 저장된 이벤트를 처리하여 적절한 리스너를 호출한다.
      * 메인스레드에서 동작한다.
      * @see receiveEvent
      */

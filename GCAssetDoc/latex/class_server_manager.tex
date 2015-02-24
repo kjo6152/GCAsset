@@ -1,0 +1,101 @@
+\hypertarget{class_server_manager}{}\section{Server\+Manager 클래스 참조}
+\label{class_server_manager}\index{Server\+Manager@{Server\+Manager}}
+\subsection*{클래스}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_server_manager_1_1_g_c_packet_processor}{G\+C\+Packet\+Processor}
+\end{DoxyCompactItemize}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_server_manager_ab02465d0708b65f377a76a6a2f56cc2a}{}void {\bfseries set\+Resource\+Meneager} (\hyperlink{class_resource_manager}{Resource\+Manager} rm)\label{class_server_manager_ab02465d0708b65f377a76a6a2f56cc2a}
+
+\item 
+\hypertarget{class_server_manager_aa3958ad086f969c79af74c911db3a117}{}void {\bfseries set\+Event\+Manager} (\hyperlink{class_event_manager}{Event\+Manager} em)\label{class_server_manager_aa3958ad086f969c79af74c911db3a117}
+
+\item 
+void \hyperlink{class_server_manager_a9f1c5daccfe1743857d149ea8440cdbf}{init} ()
+\item 
+void \hyperlink{class_server_manager_ad753c79f3f2e4ade1d4cf6cd239bc949}{start\+Server} ()
+\item 
+void \hyperlink{class_server_manager_a88ea7e510fc57e2966d4b88f6fc4da8c}{stop\+Server} ()
+\item 
+\hypertarget{class_server_manager_aae062674cf602cd09876dfe6f6837915}{}Array\+List {\bfseries get\+Controller\+List} ()\label{class_server_manager_aae062674cf602cd09876dfe6f6837915}
+
+\item 
+int \hyperlink{class_server_manager_a887b75d30b5212341e86d2b18e5b1120}{get\+Port} ()
+\item 
+string\mbox{[}$\,$\mbox{]} \hyperlink{class_server_manager_a71b2a5361c711b1974ee60e4ed60ceb0}{get\+I\+P\+Address} ()
+\item 
+bool \hyperlink{class_server_manager_a09dbc4ef521584f7e4b7aa0a139a19df}{is\+Running} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+
+\begin{DoxyEnumerate}
+\item 게임서버 매니저 기능 \+: 1) 게임 서버에 대한 관리를 한다. 2) I\+P 통신에 대한 서버를 오픈한다. 3) 클라이언트가 접속하면 디바이스에 대한 정보를 받아 컨트롤러 객체를 생성한다. 생성된 컨트롤러 객체로부터 디바이스에 대한 정보를 얻을 수 있다. 4) 리소스 매니저를 통해 초기 리소스를 전송한다. 5) 컨트롤러로부터 여러 데이터들을 전송받고 이벤트를 이벤트 매니저로 전달해준다. 6) 게임 서버에 대한 정보를 얻는다. ( 아이피, 맥 어드레스 및 디바이스명 등등)  G\+C\+Asset과 컨트롤러간 통신을 담당하는 클래스
+\end{DoxyEnumerate}
+
+서버 및 컨트롤러 관리, 네트워크를 담당한다.  서버를 시작하거나 종료시킬 수 있으며 서버는 스레드로 동작한다. \begin{DoxySeeAlso}{참고}
+\hyperlink{class_server_manager_ad753c79f3f2e4ade1d4cf6cd239bc949}{start\+Server}, \hyperlink{class_server_manager_a88ea7e510fc57e2966d4b88f6fc4da8c}{stop\+Server} 서버에 관련하여 I\+P, Port, 서버 상태 정보를 얻을 수 있다. 
+
+\hyperlink{class_server_manager_a71b2a5361c711b1974ee60e4ed60ceb0}{get\+I\+P\+Address}, \hyperlink{class_server_manager_a887b75d30b5212341e86d2b18e5b1120}{get\+Port}, \hyperlink{class_server_manager_a09dbc4ef521584f7e4b7aa0a139a19df}{is\+Running} 또한 연결된 컨트롤러의 목록을 얻을 수 있다. 
+
+get\+Controller\+List 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{작성자}
+jiwon 
+\end{DoxyAuthor}
+
+
+\subsection{멤버 함수 문서화}
+\hypertarget{class_server_manager_a71b2a5361c711b1974ee60e4ed60ceb0}{}\index{Server\+Manager@{Server\+Manager}!get\+I\+P\+Address@{get\+I\+P\+Address}}
+\index{get\+I\+P\+Address@{get\+I\+P\+Address}!Server\+Manager@{Server\+Manager}}
+\subsubsection[{get\+I\+P\+Address}]{\setlength{\rightskip}{0pt plus 5cm}string \mbox{[}$\,$\mbox{]} Server\+Manager.\+get\+I\+P\+Address (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_a71b2a5361c711b1974ee60e4ed60ceb0}
+I\+P 리스트를 리턴하는 매소드 \hypertarget{class_server_manager_a887b75d30b5212341e86d2b18e5b1120}{}\index{Server\+Manager@{Server\+Manager}!get\+Port@{get\+Port}}
+\index{get\+Port@{get\+Port}!Server\+Manager@{Server\+Manager}}
+\subsubsection[{get\+Port}]{\setlength{\rightskip}{0pt plus 5cm}int Server\+Manager.\+get\+Port (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_a887b75d30b5212341e86d2b18e5b1120}
+포트를 리턴하는 매소드 \hypertarget{class_server_manager_a9f1c5daccfe1743857d149ea8440cdbf}{}\index{Server\+Manager@{Server\+Manager}!init@{init}}
+\index{init@{init}!Server\+Manager@{Server\+Manager}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+Manager.\+init (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_a9f1c5daccfe1743857d149ea8440cdbf}
+서버 초기화 작업을 수행한다.
+
+보안을 위해 포트를 랜덤으로 생성한다. \hypertarget{class_server_manager_a09dbc4ef521584f7e4b7aa0a139a19df}{}\index{Server\+Manager@{Server\+Manager}!is\+Running@{is\+Running}}
+\index{is\+Running@{is\+Running}!Server\+Manager@{Server\+Manager}}
+\subsubsection[{is\+Running}]{\setlength{\rightskip}{0pt plus 5cm}bool Server\+Manager.\+is\+Running (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_a09dbc4ef521584f7e4b7aa0a139a19df}
+현재 서버의 동작 상태를 리턴하는 매소드 \hypertarget{class_server_manager_ad753c79f3f2e4ade1d4cf6cd239bc949}{}\index{Server\+Manager@{Server\+Manager}!start\+Server@{start\+Server}}
+\index{start\+Server@{start\+Server}!Server\+Manager@{Server\+Manager}}
+\subsubsection[{start\+Server}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+Manager.\+start\+Server (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_ad753c79f3f2e4ade1d4cf6cd239bc949}
+서버를 시작하고 플레이어를 대기하는 상태로 들어간다. \hypertarget{class_server_manager_a88ea7e510fc57e2966d4b88f6fc4da8c}{}\index{Server\+Manager@{Server\+Manager}!stop\+Server@{stop\+Server}}
+\index{stop\+Server@{stop\+Server}!Server\+Manager@{Server\+Manager}}
+\subsubsection[{stop\+Server}]{\setlength{\rightskip}{0pt plus 5cm}void Server\+Manager.\+stop\+Server (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_server_manager_a88ea7e510fc57e2966d4b88f6fc4da8c}
+서버를 종료하고 자원을 해제한다. 
+
+이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+Scripts/Server\+Manager.\+cs\end{DoxyCompactItemize}

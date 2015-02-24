@@ -6,34 +6,30 @@ using System.Xml.Linq;
 using System;
 
 /**
- * 4. 리소스 매니저
- * 기능 :
- *  1) 게임에서 사용되는 리소스의 목록을 만들고 안드로이드로 전송한다. 
- *  2) 커스텀 컨트롤러의 씬을 파싱하여 안드로이드로 보낼 수 있도록 리소스 형태(xml)로 만든다.
- */
-
-/**
- * Todo : View를 제외한 리소스가 정상적으로 생성되는지 확인하고 서버 매니저에서
- * 리소스 요청을 받았을 때 해당 파일의 패스를 리턴해주어 서버 매니저에서 전송할 수 있도록 한다.
+ * @breif GCAsset와 컨트롤러간 주고 받을 리소스를 관리하는 클래스
+ * @details 사용자가 생성한 AssetBundle을 컨트롤러로 전송할 수 있도록 xml을 파싱하여 정보를 가지고 있는 클래스이다.
+ * AssetBundle에 대한 경로나 xml 문서의 명칭 등 상수를 가지고 있다.
+ * @see ExportGCAssetBundles
+ * @author jiwon
  */
 public class ResourceManager {
-    /**
-     * 리소스 파일의 경로
-     */ 
+
+    /** @breif 리소스 파일의 경로 */
     public static string NAME_RESOURCE_DIR = "Assets/GCServer/Resources/";
+    /** @breif 리소스 파일 이름 */
     public static string NAME_RESOURCE_MAP = "ResourceMap";
 
-    /**
-     * XML에서 쓰이는 엘리먼트 이름과 속성 이름
-     */
+    /** @breif  XML에서 쓰이는 엘리먼트 이름과 속성 이름 */
     public static string XML_ELEMENT_RESOURCE = "Resource";
+    /** @breif  XML에서 쓰이는 엘리먼트 이름과 속성 이름 */
     public static string XML_ATTR_ID = "id";
+    /** @breif  XML에서 쓰이는 엘리먼트 이름과 속성 이름 */
     public static string XML_ATTR_NAME = "name";
+    /** @breif  XML에서 쓰이는 엘리먼트 이름과 속성 이름 */
     public static string XML_ATTR_TYPE = "type";
+    /** @breif  XML에서 쓰이는 엘리먼트 이름과 속성 이름 */
     public static string XML_ATTR_SIZE = "size";
 
-
-	string mResourcesPath = null;
 	int mResourceLength;
     byte[][] assetbytes;
 
@@ -45,18 +41,10 @@ public class ResourceManager {
         
 	}
 
-	// Use this for initialization
-	void Start () {
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
-    /*
-     * 기존의 리소스맵에서부터 정보를 읽어온다.
+    /**
+     * @breif 리소스맵에서부터 정보를 읽어온다.
+     * @details 클라이언트와 연결 시 전송할 수 있도록 리소스 개수, 이름, 바이트를 로드한다.
+     * @see NAME_RESOURCE_DIR, NAME_RESOURCE_MAP
      */
     public void LoadResourceMap(string name){
         TextAsset asset = Resources.Load(name) as TextAsset;
@@ -77,7 +65,10 @@ public class ResourceManager {
             mResourceLength++;
         }
     }
-
+    
+    /**
+     * 리소스들을 byte형태로 로드해둔다.
+     */ 
     void LoadResourcesBytes()
     {
         assetbytes = new byte[mResourceLength+1][];
@@ -106,91 +97,32 @@ public class ResourceManager {
 		return null;
 	}
 
-    /**
-     * 코드(아이디)를 가진 리소스의 바이트를 얻는다.
-     */
+    /** @breif 코드(아이디)를 가진 리소스의 바이트를 리턴하는 매소드 */
     public byte[] getResourceByte(int code)
     {
         return assetbytes[code];
     }
 
-	/**
-	 * 코드(리소스의 아이디)를 통해 해당 리소스의 이름을 리턴해준다.
-	 */
+	/** @breif 코드(리소스의 아이디)를 통해 해당 리소스의 이름을 리턴하는 매소드 */
 	public string getResourceName(int code){
 		XElement element = getElement (code);
 		if (element == null)return null;
 		return element.Attribute(XML_ATTR_NAME).Value;
 	}
 
-	/**
-	 * 코드(아이디)를 가진 리소스의 크기를 리턴한다.
-	 */ 
+	/** @breif 코드(아이디)를 가진 리소스의 크기를 리턴하는 매소드 */ 
 	public int getResourceSize(int code){
 		XElement element = getElement (code);
 		if (element == null)return -1;
 		return Convert.ToInt32(element.Attribute(XML_ATTR_SIZE).Value);
 	}
 
-	/**
-	 * 리소스가 저장된 위치를 리턴한다.
-	 */ 
-	public string getResourceDirectory(){
-		return mResourcesPath;
-	}
-
-	/**
-	 * 리소스의 개수를 리턴한다.
-	 */
+	/** @breif 리소스의 개수를 리턴하는 매소드 */
 	public int getResourceLength(){
 		return mResourceLength;
 	}
 
-	/**
-	 * 이름을 가진 리소스 엘리먼트를 리턴한다.
-	 */
-	XElement getElement(string name){
-		IEnumerator elements = mResourceMap.Elements (XML_ELEMENT_RESOURCE).GetEnumerator();
-		XElement element;
-		XAttribute attr;
-		while (elements.MoveNext()) {
-			element = (XElement)elements.Current;
-			attr = element.Attribute(XML_ATTR_NAME);
-			if(attr!=null&&attr.Value==name)return element;
-		}
-		return null;
-	}
-
-	/**
-	 * 이름을 통해 리소스 타입 속성을 얻는다.
-	 */ 
-	public string getResourceType(string name){
-		XElement element = getElement (name);
-		if (element == null)return null;
-		return element.Attribute(XML_ATTR_TYPE).Value;
-	}
-
-	/**
-	 * 이름을 통해 리소스 아이디 속성을 얻는다.
-	 */ 
-	public int getResourceCode(string name){
-		XElement element = getElement (name);
-		if (element == null)return -1;
-		return Convert.ToInt32 (element.Attribute (XML_ATTR_ID).Value);
-	}
-
-	/**
-	 * 이름을 통해 리소스 파일 크기 속성을 얻는다.
-	 */ 
-	public int getResourceSize(string name){
-		XElement element = getElement (name);
-		if (element == null)return -1;
-		return Convert.ToInt32 (element.Attribute (XML_ATTR_SIZE).Value);
-	}
-
-    /**
-     * 리소스 맵을 string으로 변환한다.
-     */
+    /** @breif 리소스 맵을 string으로 변환해주는 매소드 */
 	public string getResourceMap(){
 		return mResourceMap.ToString();
 	}

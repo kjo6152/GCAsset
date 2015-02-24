@@ -21,6 +21,18 @@ using System.Xml.Serialization;
  *  6) 게임 서버에 대한 정보를 얻는다. ( 아이피, 맥 어드레스 및 디바이스명 등등)
  * 
  */
+
+/**
+ * @breif GCAsset과 컨트롤러간 통신을 담당하는 클래스
+ * @details 서버 및 컨트롤러 관리, 네트워크를 담당한다. </br>
+ * 서버를 시작하거나 종료시킬 수 있으며 서버는 스레드로 동작한다.
+ * @see startServer, stopServer
+ * 서버에 관련하여 IP, Port, 서버 상태 정보를 얻을 수 있다.
+ * @see getIPAddress, getPort, isRunning
+ * 또한 연결된 컨트롤러의 목록을 얻을 수 있다.
+ * @see getControllerList
+ * @author jiwon
+ */
 public class ServerManager {
 	/**
 	 * 할당될 포트의 최소갑과 최대값 및 여러 서버에 관련된 설정 변수들
@@ -50,10 +62,6 @@ public class ServerManager {
 		
 	}
 
-	/**
-	 * 의존성 주입
-	 * Todo : 의존성을 어떻게 떨어뜨릴 것인가?
-	 */
 	public void setResourceMeneager(ResourceManager rm){
 		this.mResourceManager = rm;
 	}
@@ -62,11 +70,11 @@ public class ServerManager {
 		this.mEventManager = em;
 	}
 
-	/**
-	 * 서버 초기화 작업을 수행한다.
-	 * 랜덤 포트 생성 작업 수행
-	 */
-	public void init(){
+    /**
+     * @breif 서버 초기화 작업을 수행한다.
+     * @details 보안을 위해 포트를 랜덤으로 생성한다.
+     */
+    public void init(){
 		Debug.Log ("initServer");
 		System.Random rand = new System.Random ();
 		//mPort = rand.Next(minPort, maxPort);
@@ -75,10 +83,10 @@ public class ServerManager {
         mServerThread = null;
 	}
 
-	/**
-	 * 생성된 소켓을 실제 서버에 바인딩하고 Accept하는 스레드를 생성한다.
-	 */
-	public void startServer(){
+    /**
+     * @breif 서버를 시작하고 플레이어를 대기하는 상태로 들어간다.
+     */
+    public void startServer(){
 		Debug.Log ("startServer");
 		
 		if (mServerThread != null) {
@@ -152,9 +160,9 @@ public class ServerManager {
         mEventManager.receiveEvent(gc, GCconst.TYPE_SYSTEM, GCconst.CODE_COMPLETE, null);
 	}
 
-	/**
-	 * 스레드에 abort를 호출하여 종료시킨다.
-	 */ 
+    /**
+     * @breif 서버를 종료하고 자원을 해제한다.
+     */
 	public void stopServer(){
 		Debug.Log ("stopServer");
 		
@@ -191,14 +199,18 @@ public class ServerManager {
         }
         return ControllerList;
     }
+
     /**
-     * 서버 관려 변수 get 매소드
+     * @breif 포트를 리턴하는 매소드
      */
     public int getPort()
     {
 		return mPort; 
 	}
 
+    /**
+     * @breif IP 리스트를 리턴하는 매소드
+     */
 	public string[] getIPAddress(){
         ArrayList ipList = new ArrayList();
 		IPHostEntry host = Dns.GetHostEntry (Dns.GetHostName ());
@@ -213,15 +225,22 @@ public class ServerManager {
         return ipArray;
 	}
 
+    /**
+     * @breif 현재 서버의 동작 상태를 리턴하는 매소드
+     */
     public bool isRunning()
     {
         return mServerThread == null ? false : true;
     }
-	
-	/**
-	 * 클라이언트 소켓으로부터 패킷을 받아 처리하는 클래스
-	 */
-	public class GCPacketProcessor{
+
+    /**
+     * @breif 컨트롤러에게서 패킷을 받아 처리하는 클래스
+     * @details 각 컨트롤러마다 할당되며 실제 통신이 일어나는 클래스이다.
+     * 패킷을 분석하여 그에 알맞는 처리를 하거나 다른 객체로 전달해준다.
+     * 해당 컨트롤러에게 이벤트를 전달해준다.
+     * @see sendSound, sendVibration, sendChangeView
+     */
+    public class GCPacketProcessor{
         const int BUFFER_SIZE = 4096;
 		Socket mSocket;
 		StreamWriter mStreamWriter;
@@ -395,10 +414,11 @@ public class ServerManager {
 			//데이터 전송
 			mSocket.Send(xmlBuffer,xmlBuffer.Length,0);
 		}
-		/**
-		 * 사운드 효과에 대한 이벤트를 보낸다.
-         * name은 재생할 파일명이다. (example.mp3)
-		 */ 
+
+        /**
+         * @breif 음향 효과 이벤트를 보낸다.
+         * @params name 재생할 음향 효과 명 (확장자 제외)
+         */
 		public void sendSound(string name){
             byte[] strBuffer = new UTF8Encoding().GetBytes(name);
             //보낼 패킷 생성
@@ -410,8 +430,8 @@ public class ServerManager {
 		}
 
 		/**
-		 * 진동에 대한 이벤트를 보낸다.
-         * Time은 진동 시간이다.
+		 * @breif 진동에 대한 이벤트를 보낸다.
+         * @params time 진동 시간이다.
 		 */
 		public void sendVibration(int time){
 			//보낼 패킷 생성
@@ -423,9 +443,9 @@ public class ServerManager {
 		}
 
         /**
-         * View를 변경하라는 이벤트를 보낸다.
-         * 씬 이름을 보내면 된다. (.unity 제외)
-         */ 
+		 * @breif 씬을 로드하라는 이벤트를 보낸다.
+         * @params SceneName 로드할 씬 이름 (확장자 제외)
+		 */
         public void sendChangeView(string SceneName)
         {
             byte[] strBuffer = new UTF8Encoding().GetBytes(SceneName);
@@ -437,12 +457,11 @@ public class ServerManager {
             mSocket.Send(strBuffer, strBuffer.Length, 0);
         }
 
+        /** @breif 연결된 컨트롤러를 얻는 매소드 */
         public GameController getGameController(){
             return mGameController;
         }
-		/**
-		 * 패킷 프로세서를 중단한다.
-		 */ 
+		
 		public void stopProcessor(){
             Debug.Log("stopProcessor");
 			if (mThread == null) {

@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/GCServer/Example/ServerExample.unity
   - enabled: 0
-    path: Assets/UserResources/controller.unity
+    path: Assets/GCServer/Example/UserResources/controller.unity
   - enabled: 0
     path: Assets/GCServer/Example/ServerExample.unity
   - enabled: 0
