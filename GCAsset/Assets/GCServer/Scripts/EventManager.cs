@@ -4,32 +4,72 @@ using System.Threading;
 using System;
 
 /**
- * 3. 이벤트 메니저
- * 기능 :
- *  1) 게임서버 매니저로부터 받은 이벤트를 관리한다.
- *  2) 게임 개발자는 이벤트 매니저에 리스너를 등록하여 이벤트를 받아 처리로직을 구현한다. 
- *  3) 이벤트 매니저에 필터를 구현하여 등록할 수 있으며 기본적으로 제공하는 필터를 사용할 수 있다.
+ * @breif 이벤트 매니저
+ * @detail
+ * 다음과 같은 기능을 제공한다.
+ * 매 프레임마다 이벤트를 처리하여 사용자에게 제공한다. 사용자는 리스너를 등록하여 이벤트를 받아 사용할 수 있다. 제공되는 이벤트는 다음과 같다.
+ * @see onControllerConnected
+ * @see onControllerDisconnected
+ * @see onControllerComplete
+ * @see onAccelerationListener
+ * @see onGyroListener
+ * @see onButtonListener
+ * @see onDirectionKeyListener
+ * @see onJoystickListener
+ * 
+ * 또한 필터를 구현하여 등록할 수 있으며 기본적으로 제공하는 필터를 사용할 수 있다.
+ * 기본적으로 제공되는 필터는 아래와 같다.
+ * @see AttitudeFilter
+ * @see GravityFilter
+ * @see KalmanFilter
+ * 
+ * 자신이 직접 필터를 구현하고 싶다면 다음 인터페이스를 참고하여 등록해야 합니다.
+ * @see IEventFiler 
+ * @see mGyroFilter
+ * @see mAccelerationFilter
+ * 
+ * @author jiwon
+ 
  */
 public class EventManager {
 
+    /** @breif 시스템 이벤트 리스너 델리게이트 @see GameController */ 
     public delegate void SystemEventListener(GameController gc);
+    /** @breif 가속도 센서 이벤트 리스너 델리게이트 @see GameController @see AccelerationEvent */ 
 	public delegate void AccelerationListener(GameController gc,AccelerationEvent acceleration);
+    /** @breif 자이로 센서 이벤트 리스너 델리게이트 @see GameController @see GyroEvent */ 
 	public delegate void GyroListener(GameController gc,GyroEvent gyro);
+    /** @breif 버튼 이벤트 리스너 델리게이트 @see GameController @see ButtonEvent */ 
     public delegate void ButtonListener(GameController gc, ButtonEvent buttonEvent);
+    /** @breif 방향키 이벤트 리스너 델리게이트 @see GameController @see DirectionKeyEvent */ 
     public delegate void DirectionKeyListener(GameController gc, DirectionKeyEvent directionKeyEvent);
+    /** @breif 조이스틱 이벤트 리스너 델리게이트 @see GameController @see JoystickEvent */ 
     public delegate void JoystickListener(GameController gc, JoystickEvent joystickEvent);
 
+    /** @breif 컨트롤러가 연결 되었을 때 호출되는 시스템 이벤트 리스너 @see SystemEventListener */ 
     public event SystemEventListener onControllerConnected;
+    /** @breif 컨트롤러가 연결이 끊겼을 때 호출되는 시스템 이벤트 리스너 @see SystemEventListener */ 
     public event SystemEventListener onControllerDisconnected;
+    /** @breif 컨트롤러가 연결되어 리소스 전송이 완료 되었을 때 호출되는 시스템 이벤트 리스너 @see SystemEventListener */ 
     public event SystemEventListener onControllerComplete;
+    /** @breif 가속도 센서 이벤트 리스너 @see AccelerationListener */ 
     public event AccelerationListener onAccelerationListener;
+    /** @breif 자이로 센서 이벤트 리스너 @see GyroListener */ 
     public event GyroListener onGyroListener;
+    /** @breif 버튼 이벤트 리스너 @see ButtonListener */ 
     public event ButtonListener onButtonListener;
+    /** @breif 방향키 센서 이벤트 리스너 @see DirectionKeyListener */ 
     public event DirectionKeyListener onDirectionKeyListener;
+    /** @breif 조이스틱 센서 이벤트 리스너 @see JoystickListener */ 
     public event JoystickListener onJoystickListener;
 
-
+    /** 
+     * @breif 자이로 센서 필터 
+     * @detail 컨트롤러로부터 전송된 자이로 센서가 등록된 필터를 거쳐 가공된 형태로 사용자에게 제공된다.
+     * @see IEventFilter @see GravityFilter @see KalmanFilter 
+     */ 
     public IEventFilter mGyroFilter;
+    /** @breif 가속도 센서 필터  @see IEventFilter */ 
     public IEventFilter mAccelerationFilter;
 
     private AudioSource mAudioSource;
@@ -39,6 +79,10 @@ public class EventManager {
 
     Queue EventQueue = new Queue();
 
+    /** 
+     * @breif GCAsset 이벤트
+     * @detail GCAsset 내부 여러 클래스들에서 이벤트를 주고 받기 위해 정의된 이벤트
+     */ 
     public class Event
     {
         ushort type;
@@ -98,8 +142,11 @@ public class EventManager {
             this.Object = Object;
         }
     }
+
+    /** @breif 자이로 센서 이벤트 */ 
     public class GyroEvent
     {
+        /** @breif 각 축에 대한 센서 값 */ 
         public float x, y, z, w;
         public GyroEvent(float[] sensor)
         {
@@ -109,8 +156,11 @@ public class EventManager {
             w = sensor[3];
         }
     }
+
+    /** @breif 가속도 센서 이벤트 */ 
     public class AccelerationEvent
     {
+        /** @breif 각 축에 대한 센서 값 */ 
         public float x, y, z;
         public AccelerationEvent(float[] sensor)
         {
@@ -119,25 +169,38 @@ public class EventManager {
             z = sensor[2];
         }
     }
+
+    /** @breif 버튼 이벤트 */ 
     public class ButtonEvent
     {
+        /** @breif 버튼에 지정된 id값 */ 
         public int id;
         public ButtonEvent(int[] eventBuffer){
             id = eventBuffer[0];
         }
     }
+
+    /** @breif 방향키 이벤트 */ 
     public class DirectionKeyEvent
     {
-        public int id,key;
+        /** @breif 방향키에 지정된 id값 */
+        public int id;
+        /** @breif 방향키의 상,하,좌,우 값 @see GCconst.VALUE_UP @see GCconst.VALUE_RIGHT @see GCconst.VALUE_DOWN @see GCconst.VALUE_LEFT */
+        public int key;
         public DirectionKeyEvent(int[] eventBuffer)
         {
             id = eventBuffer[0];
             key = eventBuffer[1];
         }
     }
+
+    /** @breif 조이스틱 이벤트 */ 
     public class JoystickEvent
     {
-        public int id,x,y;
+        /** @breif 조이스틱에 지정된 id값 */
+        public int id;
+        /** @breif 조이스틱 중앙을 원점으로 했을 때 x,y 좌표 값 */
+        public int x,y;
         public JoystickEvent(int[] eventBuffer)
         {
             id = eventBuffer[0];
@@ -155,6 +218,7 @@ public class EventManager {
         clearListener();
 	}
 
+    /** @breif 등록된 리스너를 초기화하는 매소드 */ 
     public void clearListener()
     {
         onControllerConnected = delegate { };
@@ -176,12 +240,14 @@ public class EventManager {
         processEvent();
 	}
 
-	/**
-	 * 클라이언트로부터 온 이벤트를 ServerManager에게서 받아 처리한다.
+    /**
+     * @breif 클라이언트로부터 온 이벤트 저장하는 매소드
+     * @detail 클라이언트로부터 온 이벤트를 @see ServerManager 에게서 받아 처리한다.
      * 이벤트 필터를 적용하여 전달된 센서 값들을 필터링한다.
-	 * 각각 알맞은 Queue에 쌓는 역할을 한다.
-	 */ 
-	public void receiveEvent(GameController gc,ushort type, ushort code,byte[] value){
+     * 각각 알맞은 Queue에 쌓는 역할을 하며 쌓인 이벤트는 프레임 마다 처리된다.
+     * @see processEvent
+     */
+    public void receiveEvent(GameController gc,ushort type, ushort code,byte[] value){
         if (type == GCconst.TYPE_EVENT)
         {
             switch (code)
@@ -222,11 +288,13 @@ public class EventManager {
 		return;
 	}
 
-	/**
-	 * Queue에 쌓인 이벤트들을 처리한다.
-	 * 메인스레드에서 동작시켜야한다.
-	 */ 
-	public void processEvent(){
+    /**
+     * @breif Queue에 쌓인 이벤트들을 처리한다.
+     * @detail 컨트롤러로부터 받은 큐에 저장된 이벤트를 처리하여 적절한 리스너를 호출한다.
+     * 메인스레드에서 동작한다.
+     * @see receiveEvent
+     */
+    public void processEvent(){
         try
         {
             while (true)

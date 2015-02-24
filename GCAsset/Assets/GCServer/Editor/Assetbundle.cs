@@ -6,9 +6,20 @@ using System.IO;
 using System.Xml.Linq;
 using System.Text;
 
-public class ExportAssetBundles : Editor
+/**
+ * @breif AssetBundle을 생성해주는 클래스
+ * @details Unity 에디터에서 사용할 수 있는 메뉴를 추가해준다. 
+ * 실제 프로그램에서는 컴파일되지 않으며 데이터에서 리소스 폴더를 우클릭하여 "Build Resources AssetBundle"를 클릭하면 AssetBundle을 생성한다.
+ * 생성된 AssetBundle은 GCAsset 내부에 저장되며 컨트롤러와 연결 시 전송되어 사용할 수 있다.
+ * @author jiwon
+ */
+public class ExportGCAssetBundles : Editor
 {
-    
+    /**
+     * @breif 메뉴를 추가하고 AssetBundle을 빌드하는 매소드
+     * @detail 메뉴를 추가하고 AssetBundle을 빌드한다. 
+     * 추가적으로 리소스를 관리할 수 있도록 리소스 목록을 xml로 생성한다.
+     */
     [MenuItem("Assets/Build Resources AssetBundle")]
     static void BuildResourceAssetBundle () {
         
@@ -48,8 +59,9 @@ public class ExportAssetBundles : Editor
     }
 
     /**
-	 * 리소스의 정보를 저장하는 리소스 맵 xml 파일을 만든다.
-	 */
+     * @breif 리소스의 정보를 저장하는 리소스 맵 xml 파일을 만든다.
+     * @detail 리소스의 정보를 저장하는 리소스 맵 xml 파일을 만든다. BuildResourceAssetBundle 매소드 내부에서 호출된다.
+     */
     static void createResourceMap()
     {
         Debug.Log("createResourceMap");
