@@ -14,7 +14,6 @@ using System;
  * @see onAccelerationListener
  * @see onGyroListener
  * @see onButtonListener
- * @see onDirectionKeyListener
  * @see onJoystickListener
  * 
  * 또한 필터를 구현하여 등록할 수 있으며 기본적으로 제공하는 필터를 사용할 수 있다.
@@ -41,8 +40,6 @@ public class EventManager {
 	public delegate void GyroListener(GameController gc,GyroEvent gyro);
     /** @breif 버튼 이벤트 리스너 델리게이트 @see GameController @see ButtonEvent */ 
     public delegate void ButtonListener(GameController gc, ButtonEvent buttonEvent);
-    /** @breif 방향키 이벤트 리스너 델리게이트 @see GameController @see DirectionKeyEvent */ 
-    public delegate void DirectionKeyListener(GameController gc, DirectionKeyEvent directionKeyEvent);
     /** @breif 조이스틱 이벤트 리스너 델리게이트 @see GameController @see JoystickEvent */ 
     public delegate void JoystickListener(GameController gc, JoystickEvent joystickEvent);
 
@@ -58,8 +55,6 @@ public class EventManager {
     public event GyroListener onGyroListener;
     /** @breif 버튼 이벤트 리스너 @see ButtonListener */ 
     public event ButtonListener onButtonListener;
-    /** @breif 방향키 센서 이벤트 리스너 @see DirectionKeyListener */ 
-    public event DirectionKeyListener onDirectionKeyListener;
     /** @breif 조이스틱 센서 이벤트 리스너 @see JoystickListener */ 
     public event JoystickListener onJoystickListener;
 
@@ -111,12 +106,6 @@ public class EventManager {
         {
             if (code != GCconst.CODE_BUTTON) return null;
             else return (ButtonEvent)Object;
-        }
-
-        public DirectionKeyEvent getDirectionKeyEvent()
-        {
-            if (code != GCconst.CODE_DIRECTION_KEY) return null;
-            else return (DirectionKeyEvent)Object;
         }
 
         public JoystickEvent getJoystickEvent()
@@ -180,20 +169,6 @@ public class EventManager {
         }
     }
 
-    /** @breif 방향키 이벤트 */ 
-    public class DirectionKeyEvent
-    {
-        /** @breif 방향키에 지정된 id값 */
-        public int id;
-        /** @breif 방향키의 상,하,좌,우 값 @see GCconst.VALUE_UP @see GCconst.VALUE_RIGHT @see GCconst.VALUE_DOWN @see GCconst.VALUE_LEFT */
-        public int key;
-        public DirectionKeyEvent(int[] eventBuffer)
-        {
-            id = eventBuffer[0];
-            key = eventBuffer[1];
-        }
-    }
-
     /** @breif 조이스틱 이벤트 */ 
     public class JoystickEvent
     {
@@ -227,7 +202,6 @@ public class EventManager {
         onAccelerationListener = delegate { };
         onGyroListener = delegate { };
         onButtonListener = delegate { };
-        onDirectionKeyListener = delegate { };
         onJoystickListener = delegate { };
     }
 	// Use this for initialization
@@ -255,10 +229,6 @@ public class EventManager {
                 case GCconst.CODE_BUTTON:
                     Buffer.BlockCopy(value, 0, eventBuffer, 0, GCconst.SIZE_BUTTON);
                     EventQueue.Enqueue(new Event(gc, type, code, new ButtonEvent(eventBuffer)));
-                    break;
-                case GCconst.CODE_DIRECTION_KEY:
-                    Buffer.BlockCopy(value, 0, eventBuffer, 0, GCconst.SIZE_DIRECTION_KEY);
-                    EventQueue.Enqueue(new Event(gc, type, code, new DirectionKeyEvent(eventBuffer)));
                     break;
                 case GCconst.CODE_JOYSTICK:
                     Buffer.BlockCopy(value, 0, eventBuffer, 0, GCconst.SIZE_JOYSTICK);
@@ -325,9 +295,6 @@ public class EventManager {
                     {
                         case GCconst.CODE_BUTTON:
                             onButtonListener(mEvent.getGameController(), mEvent.getButtonEvent());
-                            break;
-                        case GCconst.CODE_DIRECTION_KEY:
-                            onDirectionKeyListener(mEvent.getGameController(), mEvent.getDirectionKeyEvent());
                             break;
                         case GCconst.CODE_JOYSTICK:
                             onJoystickListener(mEvent.getGameController(), mEvent.getJoystickEvent());

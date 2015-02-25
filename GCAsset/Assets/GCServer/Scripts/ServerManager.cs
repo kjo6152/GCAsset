@@ -10,17 +10,6 @@ using System;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-/**
- * 2. 게임서버 매니저
- * 기능 :
- *  1) 게임 서버에 대한 관리를 한다. 
- *  2) IP 통신에 대한 서버를 오픈한다.
- *  3) 클라이언트가 접속하면 디바이스에 대한 정보를 받아 컨트롤러 객체를 생성한다. 생성된 컨트롤러 객체로부터 디바이스에 대한 정보를 얻을 수 있다.
- *  4) 리소스 매니저를 통해 초기 리소스를 전송한다.
- *  5) 컨트롤러로부터 여러 데이터들을 전송받고 이벤트를 이벤트 매니저로 전달해준다.
- *  6) 게임 서버에 대한 정보를 얻는다. ( 아이피, 맥 어드레스 및 디바이스명 등등)
- * 
- */
 
 /**
  * @breif GCAsset과 컨트롤러간 통신을 담당하는 클래스
@@ -111,6 +100,7 @@ public class ServerManager {
 		try{
 			while(true){
 				Socket client = mServerSocket.Accept ();
+                client.NoDelay = true;
 				//패킷프로세서 및 GCClient 객체 생성
 				GCPacketProcessor processor = new GCPacketProcessor();
 				mProcessorList.Add(processor);
@@ -396,6 +386,7 @@ public class ServerManager {
                 buf = mResourceManager.getResourceByte(i);
                 while (remain > 0)
                 {
+                    Debug.Log("size : " + remain);
                     ret = mSocket.Send(buf,offset,remain,SocketFlags.None);
                     remain -= ret;
                     offset += ret;

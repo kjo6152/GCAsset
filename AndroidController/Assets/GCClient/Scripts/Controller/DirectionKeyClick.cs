@@ -11,7 +11,7 @@ public class DirectionKeyClick : MonoBehaviour
     public Sprite downPressSprite;
     public int vibrate_int = 15;
     public string downPressSound;
-    public int id = 0;
+    public int id;
     private GCcontext mGCcontext;
 
     // Use this for initialization
@@ -25,10 +25,8 @@ public class DirectionKeyClick : MonoBehaviour
 
         if (touchCount == 0)
         {
-
             Debug.Log("touch Count1 :" + touchCount + "click :" + DirectionKeyList[minIdx[0]].name + ", sprite : " + pressDownSprite[minIdx[0]]);
             this.transform.parent.GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[0]];
-
         }
         else
         {
@@ -37,10 +35,11 @@ public class DirectionKeyClick : MonoBehaviour
                 // 소리하고 bibrate 설정해야해 ..
                 Debug.Log("touch Count2 :" + touchCount + "click" + i + " : " + DirectionKeyList[minIdx[i]] + "sprite : " + pressDownSprite[minIdx[i]]);
                 this.transform.parent.GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[i]];
-
             }
         }
+
 #if UNITY_ANDROID
+        //진동 - 안드로이드에서만 적용
         AndroidManager.GetInstance().CallVibrate(vibrate_int);
 #endif
         //사운드
@@ -51,6 +50,7 @@ public class DirectionKeyClick : MonoBehaviour
         values[0] = id; values[1] = GCconst.VALUE_PRESSED;
         mGCcontext.getClientManager().sendEvent(GCconst.CODE_DIRECTION_KEY, values);
 #endif
+ 
     }
 
  

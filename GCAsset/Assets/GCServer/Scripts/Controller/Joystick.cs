@@ -1,20 +1,16 @@
-﻿//#define CONTROLLER
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class Joystick : MonoBehaviour {
 
     public Camera MainCamera;
     private Sprite wheel;
-    public string downPressSound;
-    public int id = 0;
-    private GCcontext mGCcontext;
+    public int id;
 
     void Start()
     {
+        Debug.Log(this);
         wheel = this.GetComponent<SpriteRenderer>().sprite;
-        mGCcontext = GCcontext.getInstance;
 
         this.GetComponent<Transform>().position = new Vector3(0, 0, 0);
     }
@@ -38,33 +34,24 @@ public class Joystick : MonoBehaviour {
             
             if(hit.collider)
             {
+              
                 if (hit.collider.name.Equals(this.transform.parent.name))
                 {
-                    
-                    if (Input.GetTouch(i).phase == TouchPhase.Began)
-                    {
-
-                        this.GetComponent<Transform>().position = new Vector3(worldTouch.x, worldTouch.y, 1f);
-                        // x.y 이벤트 전달.
-
-                    }
-                    else if (Input.GetTouch(i).phase == TouchPhase.Moved || Input.GetTouch(i).phase == TouchPhase.Stationary)
-                    {
-                        this.GetComponent<Transform>().position = new Vector3(worldTouch.x, worldTouch.y, 1f);
-                        // x.y 이벤트 전달.
-                        
-                    }
-                    else if (Input.GetTouch(i).phase == TouchPhase.Ended)
+                   
+                   
+                    if (Input.GetTouch(i).phase == TouchPhase.Ended)
                     {
                         this.GetComponent<Transform>().position = this.transform.parent.position;
                     }
+                    else
+                    {
+                        this.GetComponent<Transform>().position = new Vector3(worldTouch.x, worldTouch.y, 1f);
 
-#if CONTROLLER
-        int[] values = new int[3];
-        values[0] = id; values[1] = 10; values[2] = 20;
-        mGCcontext.getClientManager().sendEvent(GCconst.CODE_JOYSTICK, values);
-#endif
+                        worldTouch.x -= this.transform.parent.position.x;
+                        worldTouch.y -= this.transform.parent.position.y;
 
+                        this.GetComponent<JoyStickOnClick>().OnClick(id,worldTouch);
+                    }
 
                 }
               
@@ -74,11 +61,8 @@ public class Joystick : MonoBehaviour {
                 this.GetComponent<Transform>().position = this.transform.parent.position;
                 //터치영역이 아닐때 나는 효과음..
             }
-          
-
-
 
         }
-
+        
 	}
 }

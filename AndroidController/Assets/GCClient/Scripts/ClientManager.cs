@@ -102,6 +102,7 @@ public class ClientManager {
 	void connectServer(){
         Debug.Log("connectServer");
 		try{
+            mClientSocket.NoDelay = true;
             mClientSocket.Connect(mServerEndPoint);
             onServerConnected();
 			//패킷프로세서 및 GCClient 객체 생성

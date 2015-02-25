@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['size_5fsensor',['SIZE_SENSOR',['../class_g_cconst.html#a13a353e3da52e3a0454487664c360dab',1,'GCconst']]]
+  ['type_5fevent',['TYPE_EVENT',['../class_g_cconst.html#a5653aff2918dd19b3ed466d054916b51',1,'GCconst']]]
 ];

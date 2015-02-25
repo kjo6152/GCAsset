@@ -3,8 +3,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class ButtonClick : MonoBehaviour
-{
+public class ButtonClick : MonoBehaviour {
 
     /**
      * 
@@ -14,12 +13,13 @@ public class ButtonClick : MonoBehaviour
      * 서버와의 통신 기능
      * 
      **/
+   
 
     bool result;
     public Sprite downPressSprite;
     public int vibrate_int = 15;
     public string downPressSound;
-    public int id = 0;
+    public int id;
     private GCcontext mGCcontext;
 
     // Use this for initialization
@@ -30,12 +30,12 @@ public class ButtonClick : MonoBehaviour
 
     public void DownClick(GameObject[] buttonList, int[] minIdx, int touchCount, Sprite[] pressDownSprite)
     {
-
+        
         if (touchCount == 0)
         {
-
+            Debug.Log("get Id  : " + buttonList[minIdx[0]].GetComponent<ButtonClick>().vibrate_int);
             Debug.Log("touch Count1 :" + touchCount + "click :" + buttonList[minIdx[0]].name + ", sprite : " + pressDownSprite[minIdx[0]]);
-            buttonList[minIdx[0]].GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[0]];
+            buttonList[minIdx[0]].GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[0]];    
 
         }
         else
@@ -43,10 +43,10 @@ public class ButtonClick : MonoBehaviour
             for (int i = 1; i <= touchCount; i++)
             {
                 // 소리하고 bibrate 설정해야해 ..
-
+                Debug.Log("get Id  : " + buttonList[minIdx[i]].GetComponent<ButtonClick>().vibrate_int);
                 Debug.Log("touch Count2 :" + touchCount + "click" + i + " : " + buttonList[minIdx[i]] + "sprite : " + pressDownSprite[minIdx[i]]);
                 buttonList[minIdx[i]].GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[i]];
-
+                
             }
         }
 #if UNITY_ANDROID
@@ -55,7 +55,7 @@ public class ButtonClick : MonoBehaviour
 #endif
         //사운드
         mGCcontext.getEventManager().playSound(downPressSound);
-      
+
 #if CONTROLLER
         int[] values = new int[2];
         values[0] = id; values[1] = GCconst.VALUE_PRESSED;
@@ -64,17 +64,17 @@ public class ButtonClick : MonoBehaviour
     }
 
 
-    public void UpState(GameObject[] buttonList, int[] minIdx, int touchCount, int buttonListLength, Sprite[] upPressSprite, Sprite[] pressDownSprite)
+    public void UpState(GameObject[] buttonList, int[] minIdx, int touchCount, int buttonListLength, Sprite[] upPressSprite , Sprite[] pressDownSprite)
     {
-        int i = 0;
-
+        int i= 0;
+        
         for (i = 0; i < buttonListLength; i++)
         {
             buttonList[i].GetComponent<SpriteRenderer>().sprite = upPressSprite[i];
         }
-        for (i = 0; i <= touchCount; i++)
+        for (i = 0; i <=touchCount; i++)
         {
-            buttonList[minIdx[i]].GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[i]];
+            buttonList[minIdx[i]].GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[i]];   
         }
 
     }

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['serverexample',['ServerExample',['../class_server_example.html',1,'']]],
-  ['servermanager',['ServerManager',['../class_server_manager.html',1,'']]]
+  ['touchcorrection',['TouchCorrection',['../class_touch_correction.html',1,'']]]
 ];

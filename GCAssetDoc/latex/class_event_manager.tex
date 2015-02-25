@@ -7,8 +7,6 @@ class \hyperlink{class_event_manager_1_1_acceleration_event}{Acceleration\+Event
 \item 
 class \hyperlink{class_event_manager_1_1_button_event}{Button\+Event}
 \item 
-class \hyperlink{class_event_manager_1_1_direction_key_event}{Direction\+Key\+Event}
-\item 
 class \hyperlink{class_event_manager_1_1_event}{Event}
 \item 
 class \hyperlink{class_event_manager_1_1_gyro_event}{Gyro\+Event}
@@ -25,8 +23,6 @@ delegate void \hyperlink{class_event_manager_ac459bcb4ba4f140243e271628f8d366c}{
 delegate void \hyperlink{class_event_manager_a4ed9f5be26f2015a5cc107257f02eff8}{Gyro\+Listener} (\hyperlink{class_game_controller}{Game\+Controller} gc, \hyperlink{class_event_manager_1_1_gyro_event}{Gyro\+Event} gyro)
 \item 
 delegate void \hyperlink{class_event_manager_ae17715b9a94a50d9a8e1f29580af7c16}{Button\+Listener} (\hyperlink{class_game_controller}{Game\+Controller} gc, \hyperlink{class_event_manager_1_1_button_event}{Button\+Event} button\+Event)
-\item 
-delegate void \hyperlink{class_event_manager_a3bcc7e1ecc58c1625fb107ce4fe6feaa}{Direction\+Key\+Listener} (\hyperlink{class_game_controller}{Game\+Controller} gc, \hyperlink{class_event_manager_1_1_direction_key_event}{Direction\+Key\+Event} direction\+Key\+Event)
 \item 
 delegate void \hyperlink{class_event_manager_ad470a4c2e411d814dd480043332f2a70}{Joystick\+Listener} (\hyperlink{class_game_controller}{Game\+Controller} gc, \hyperlink{class_event_manager_1_1_joystick_event}{Joystick\+Event} joystick\+Event)
 \item 
@@ -70,8 +66,6 @@ void \hyperlink{class_event_manager_a84d2c420c890acdc95571366a8b55c74}{process\+
 \item 
 \hyperlink{class_event_manager_ae17715b9a94a50d9a8e1f29580af7c16}{Button\+Listener} \hyperlink{class_event_manager_a6f4d5e2ed1262c99f3295743878ba681}{on\+Button\+Listener}
 \item 
-\hyperlink{class_event_manager_a3bcc7e1ecc58c1625fb107ce4fe6feaa}{Direction\+Key\+Listener} \hyperlink{class_event_manager_aabcdea295255f84519ce6c7ef7026b64}{on\+Direction\+Key\+Listener}
-\item 
 \hyperlink{class_event_manager_ad470a4c2e411d814dd480043332f2a70}{Joystick\+Listener} \hyperlink{class_event_manager_ab148217093b03a8cd7c962a11195c83a}{on\+Joystick\+Listener}
 \end{DoxyCompactItemize}
 
@@ -91,8 +85,6 @@ void \hyperlink{class_event_manager_a84d2c420c890acdc95571366a8b55c74}{process\+
 \hyperlink{class_event_manager_a31f1da96e98896421b0026df5ce01623}{on\+Gyro\+Listener} 
 
 \hyperlink{class_event_manager_a6f4d5e2ed1262c99f3295743878ba681}{on\+Button\+Listener} 
-
-\hyperlink{class_event_manager_aabcdea295255f84519ce6c7ef7026b64}{on\+Direction\+Key\+Listener} 
 
 \hyperlink{class_event_manager_ab148217093b03a8cd7c962a11195c83a}{on\+Joystick\+Listener}
 \end{DoxySeeAlso}
@@ -149,20 +141,7 @@ jiwon
 {}
 \end{DoxyParamCaption}
 )}\label{class_event_manager_a1a5bf8b2520c7ce2a1c6b8c54f1974e4}
-등록된 리스너를 초기화하는 매소드 \hypertarget{class_event_manager_a3bcc7e1ecc58c1625fb107ce4fe6feaa}{}\index{Event\+Manager@{Event\+Manager}!Direction\+Key\+Listener@{Direction\+Key\+Listener}}
-\index{Direction\+Key\+Listener@{Direction\+Key\+Listener}!Event\+Manager@{Event\+Manager}}
-\subsubsection[{Direction\+Key\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}delegate void Event\+Manager.\+Direction\+Key\+Listener (
-\begin{DoxyParamCaption}
-\item[{{\bf Game\+Controller}}]{gc, }
-\item[{{\bf Direction\+Key\+Event}}]{direction\+Key\+Event}
-\end{DoxyParamCaption}
-)}\label{class_event_manager_a3bcc7e1ecc58c1625fb107ce4fe6feaa}
-방향키 이벤트 리스너 델리게이트 \begin{DoxySeeAlso}{참고}
-\hyperlink{class_game_controller}{Game\+Controller} 
-
-\hyperlink{class_event_manager_1_1_direction_key_event}{Direction\+Key\+Event} 
-\end{DoxySeeAlso}
-\hypertarget{class_event_manager_a4ed9f5be26f2015a5cc107257f02eff8}{}\index{Event\+Manager@{Event\+Manager}!Gyro\+Listener@{Gyro\+Listener}}
+등록된 리스너를 초기화하는 매소드 \hypertarget{class_event_manager_a4ed9f5be26f2015a5cc107257f02eff8}{}\index{Event\+Manager@{Event\+Manager}!Gyro\+Listener@{Gyro\+Listener}}
 \index{Gyro\+Listener@{Gyro\+Listener}!Event\+Manager@{Event\+Manager}}
 \subsubsection[{Gyro\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}delegate void Event\+Manager.\+Gyro\+Listener (
 \begin{DoxyParamCaption}
@@ -283,12 +262,6 @@ Queue에 쌓인 이벤트들을 처리한다.
 컨트롤러가 연결이 끊겼을 때 호출되는 시스템 이벤트 리스너 \begin{DoxySeeAlso}{참고}
 \hyperlink{class_event_manager_a65e017fcb7c22959f09becc40ad3bc2d}{System\+Event\+Listener} 
 \end{DoxySeeAlso}
-\hypertarget{class_event_manager_aabcdea295255f84519ce6c7ef7026b64}{}\index{Event\+Manager@{Event\+Manager}!on\+Direction\+Key\+Listener@{on\+Direction\+Key\+Listener}}
-\index{on\+Direction\+Key\+Listener@{on\+Direction\+Key\+Listener}!Event\+Manager@{Event\+Manager}}
-\subsubsection[{on\+Direction\+Key\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Direction\+Key\+Listener} Event\+Manager.\+on\+Direction\+Key\+Listener}\label{class_event_manager_aabcdea295255f84519ce6c7ef7026b64}
-방향키 센서 이벤트 리스너 \begin{DoxySeeAlso}{참고}
-\hyperlink{class_event_manager_a3bcc7e1ecc58c1625fb107ce4fe6feaa}{Direction\+Key\+Listener} 
-\end{DoxySeeAlso}
 \hypertarget{class_event_manager_a31f1da96e98896421b0026df5ce01623}{}\index{Event\+Manager@{Event\+Manager}!on\+Gyro\+Listener@{on\+Gyro\+Listener}}
 \index{on\+Gyro\+Listener@{on\+Gyro\+Listener}!Event\+Manager@{Event\+Manager}}
 \subsubsection[{on\+Gyro\+Listener}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Gyro\+Listener} Event\+Manager.\+on\+Gyro\+Listener}\label{class_event_manager_a31f1da96e98896421b0026df5ce01623}
@@ -305,4 +278,4 @@ Queue에 쌓인 이벤트들을 처리한다.
 
 이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
 \item 
-Scripts/Event\+Manager.\+cs\end{DoxyCompactItemize}
+C\+:/devtools/workspace/\+G\+C\+Asset/\+G\+C\+Asset/\+Assets/\+G\+C\+Server/\+Scripts/Event\+Manager.\+cs\end{DoxyCompactItemize}

@@ -19,9 +19,9 @@ public class GCconst
     public const ushort CODE_VIBRATION = 0x12;
     public const ushort CODE_SOUND = 0x13;
     public const ushort CODE_BUTTON = 0x14;
+    public const ushort CODE_DIRECTION_KEY = 0x14;
     public const ushort CODE_JOYSTICK = 0x15;
-    public const ushort CODE_DIRECTION_KEY = 0x16;
-
+    
     /**
      * TYPE_SENSOR 관련 CODE
      */
@@ -40,14 +40,6 @@ public class GCconst
      */
     public const int VALUE_PRESSED = 0x41;
     public const int VALUE_UNPRESSED = 0x42;
-
-    /**
-     * CODE_DIRECTION_KEY 관련 VALUE
-     */
-    public const int VALUE_UP = 0x51;
-    public const int VALUE_RIGHT = 0x52;
-    public const int VALUE_DOWN = 0x53;
-    public const int VALUE_LEFT = 0x54;
 
     /**
      * Event Size 관련 상수

@@ -29,6 +29,7 @@ public class EventManager {
     AudioSource mAudioSource;
 
     private bool supportsGyroscope;
+    private Vector3 preGyroscope;
 
     Queue EventQueue = new Queue();
 
@@ -86,6 +87,7 @@ public class EventManager {
         //supportsGyroscope = false;
         setUpdateInterval(0.5f);
         Input.gyro.enabled = true;
+        preGyroscope = Input.gyro.rotationRate;
 
         onServerConnected = delegate { };
         onServerDisconnected = delegate { };
@@ -99,7 +101,11 @@ public class EventManager {
 	public void Update () {
         if (supportsGyroscope)
         {
-            mClientManager.sendSensor(Input.gyro);
+            if (preGyroscope.x != Input.gyro.rotationRate.x && preGyroscope.y != Input.gyro.rotationRate.y && preGyroscope.z != Input.gyro.rotationRate.z)
+            {
+                mClientManager.sendSensor(Input.gyro);
+                preGyroscope = Input.gyro.rotationRate;
+            }
         }
         processEvent();
 	}

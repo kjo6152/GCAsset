@@ -4,5 +4,6 @@ var searchData=
   ['buttonclick',['ButtonClick',['../class_button_click.html',1,'']]],
   ['buttonevent',['ButtonEvent',['../class_event_manager_1_1_button_event.html',1,'EventManager']]],
   ['buttonlistener',['ButtonListener',['../class_event_manager.html#ae17715b9a94a50d9a8e1f29580af7c16',1,'EventManager.ButtonListener()'],['../class_game_controller.html#a0d4534f57395c87d869dc90a70419e7f',1,'GameController.ButtonListener()']]],
-  ['buttontouchcorrection',['ButtonTouchCorrection',['../class_button_touch_correction.html',1,'']]]
+  ['buttononclick',['ButtonOnClick',['../class_button_on_click.html',1,'']]],
+  ['buttontouchcorllection',['ButtonTouchCorllection',['../class_button_touch_corllection.html',1,'']]]
 ];

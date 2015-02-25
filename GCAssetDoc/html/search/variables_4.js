@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['name_5fresource_5fdir',['NAME_RESOURCE_DIR',['../class_resource_manager.html#a0e3b7dbcf2f10e9261dba2597b5d05fe',1,'ResourceManager']]],
-  ['name_5fresource_5fmap',['NAME_RESOURCE_MAP',['../class_resource_manager.html#a1938a66b618ec099b4355e997a5f3c36',1,'ResourceManager']]]
+  ['size_5fsensor',['SIZE_SENSOR',['../class_g_cconst.html#a13a353e3da52e3a0454487664c360dab',1,'GCconst']]]
 ];

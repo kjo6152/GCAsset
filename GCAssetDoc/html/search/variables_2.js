@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['key',['key',['../class_event_manager_1_1_direction_key_event.html#abb8a5f31e506640b8b8ef049ef848607',1,'EventManager::DirectionKeyEvent']]]
+  ['maccelerationfilter',['mAccelerationFilter',['../class_event_manager.html#a2e8707f51be09be7f400bd9cca230b3a',1,'EventManager']]],
+  ['mgyrofilter',['mGyroFilter',['../class_event_manager.html#a7cee85488f5d7220c102cd945b1f494a',1,'EventManager']]]
 ];

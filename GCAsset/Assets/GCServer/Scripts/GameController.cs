@@ -42,7 +42,6 @@ public class GameController {
         onAccelerationListener = delegate { };
         onGyroListener = delegate { };
         onButtonListener = delegate { };
-        onDirectionKeyListener = delegate { };
         onJoystickListener = delegate { };
 
 	}
@@ -118,8 +117,6 @@ public class GameController {
     public delegate void GyroListener(EventManager.GyroEvent gyro);
     /** @see EventManager.ButtonListener */
     public delegate void ButtonListener(EventManager.ButtonEvent buttonEvent);
-    /** @see EventManager.DirectionKeyListener */
-    public delegate void DirectionKeyListener(EventManager.DirectionKeyEvent directionKeyEvent);
     /** @see EventManager.JoystickListener */
     public delegate void JoystickListener(EventManager.JoystickEvent joystickEvent);
 
@@ -135,8 +132,6 @@ public class GameController {
     public event GyroListener onGyroListener;
     /** @see EventManager.onButtonListener */
     public event ButtonListener onButtonListener;
-    /** @see EventManager.onDirectionKeyListener */
-    public event DirectionKeyListener onDirectionKeyListener;
     /** @see EventManager.onJoystickListener */
     public event JoystickListener onJoystickListener;
 
@@ -167,9 +162,6 @@ public class GameController {
             {
                 case GCconst.CODE_BUTTON:
                     onButtonListener(mEvent.getButtonEvent());
-                    break;
-                case GCconst.CODE_DIRECTION_KEY:
-                    onDirectionKeyListener(mEvent.getDirectionKeyEvent());
                     break;
                 case GCconst.CODE_JOYSTICK:
                     onJoystickListener(mEvent.getJoystickEvent());

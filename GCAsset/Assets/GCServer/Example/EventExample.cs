@@ -27,8 +27,9 @@ public class EventExample : MonoBehaviour
         mGCcontext.getEventManager().onAccelerationListener += new EventManager.AccelerationListener(mEventManager_onAccelerationListener);
         mGCcontext.getEventManager().onGyroListener += new EventManager.GyroListener(mEventManager_onGyroListener);
         mGCcontext.getEventManager().onButtonListener += new EventManager.ButtonListener(mEventManager_onButtonListener);
-        mGCcontext.getEventManager().onDirectionKeyListener += new EventManager.DirectionKeyListener(mEventManager_onDirectionKeyListener);
         mGCcontext.getEventManager().onJoystickListener += new EventManager.JoystickListener(mEventManager_onJoystickListener);
+
+        mGCcontext.getEventManager().mGyroFilter = new AttitudeFilter();
     }
 
     /**
@@ -40,17 +41,6 @@ public class EventExample : MonoBehaviour
     {
         Debug.Log("onJoystickListener");
         Debug.Log("id : " + joystickEvent.id + " / x : " + joystickEvent.x + " / y : " + joystickEvent.y);
-    }
-
-    /**
-     * @breif 방향키 이벤트
-     * @see EventManager.DirectionKeyEvent
-     * @see GameController
-     */
-    void mEventManager_onDirectionKeyListener(GameController gc, EventManager.DirectionKeyEvent directionKeyEvent)
-    {
-        Debug.Log("onDirectionKeyListener");
-        Debug.Log("id : " + directionKeyEvent.id + " / key : " + directionKeyEvent.key);
     }
 
     /**
@@ -73,6 +63,10 @@ public class EventExample : MonoBehaviour
     {
         //Debug.Log("onGyroListener");
         //Debug.Log("x : " + gyro.x + " / y : " + gyro.y + " / z : " + gyro.z);
+        /** 필터를 적용하지 않았을 경우 */
+        //transform.position += new Vector3(gyro.y * 5, -gyro.x * 5, 0);
+        /** AttitudeFilter를 적용했을 경우 */
+        transform.position += new Vector3(-gyro.y * 5, gyro.x * 5, 0);
     }
 
     /**

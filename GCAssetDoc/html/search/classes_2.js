@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['cameramove',['CameraMove',['../class_camera_move.html',1,'']]]
+  ['directionkeyclick',['DirectionKeyClick',['../class_direction_key_click.html',1,'']]],
+  ['directionkeytouchcorllection',['DirectionkeyTouchCorllection',['../class_directionkey_touch_corllection.html',1,'']]]
 ];
