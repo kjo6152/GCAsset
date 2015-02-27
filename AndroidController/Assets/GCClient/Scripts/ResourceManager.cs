@@ -148,7 +148,31 @@ public class ResourceManager {
         {
             path = this.getResourcePath(i);
             Debug.Log("asset path : " + path);
-            asset[i-1] = AssetBundle.CreateFromFile(path);
+            try
+            {
+                asset[i - 1] = AssetBundle.CreateFromFile(path);
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+            }
+            
+        }
+    }
+
+    public void UnloadResources()
+    {
+        for (int i = 1; i <= mResourceLength; i++)
+        {
+            try
+            {
+                asset[i - 1].Unload(true);
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+            }
+
         }
     }
 

@@ -70,7 +70,19 @@ public class ServerExample : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+        if (mGCcontext.getServerManager().isRunning())
+        {
+            Sprite image = Resources.Load<Sprite>("powerbutton_on");
+            Image OnOffImage = GameObject.Find("ServerButton").GetComponentInChildren<Image>();
+            OnOffImage.sprite = image;
+        }
+        else
+        {
+            Sprite image = Resources.Load<Sprite>("powerbutton_off");
+            if (image == null) Debug.Log("null!!");
+            Image OnOffImage = GameObject.Find("ServerButton").GetComponentInChildren<Image>();
+            OnOffImage.sprite = image;
+        }
 	}
 
     /**

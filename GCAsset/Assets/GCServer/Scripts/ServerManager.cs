@@ -175,7 +175,7 @@ public class ServerManager {
 		mProcessorList.Clear ();
 		if (mServerSocket != null) {
 			mServerSocket.Close ();
-			mServerSocket=null;
+            mServerSocket=null;
 		}
 		mServerThread = null;
 	}

@@ -88,7 +88,7 @@ public class ClientManager {
 			Debug.Log("Client already started");
 			return;
 		}
-		
+        
 		mClientSocket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         mServerEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
         mClientThread = new Thread(connectServer);
@@ -110,6 +110,7 @@ public class ClientManager {
             mProcessor.setSocket(mClientSocket);
             mProcessor.setEventManager(mEventManager);
             mProcessor.setResourceMeneager(mResourceManager);
+            mProcessor.setClientManager(this);
 			//게임 컨트롤러에 대한 이벤트 추가
             mProcessor.onConnectListener += new GCPacketProcessor.Listener(onServerConnected);
             mProcessor.onDisconnectListener += new GCPacketProcessor.Listener(onServerDisconnected);
@@ -163,15 +164,16 @@ public class ClientManager {
 		if (mClientThread == null) {
 			Debug.Log ("Client already stopped");
 			return;
-		}
+        }
         mClientThread.Abort();
         destroyClient();
+        
 	}
 
 	/**
 	 * 서버에 관련된 리소스를 해제한다.
 	 */
-    void destroyClient()
+    public void destroyClient()
     {
         Debug.Log("destroyClient");
         if(mProcessor!=null)mProcessor.stopProcessor();
@@ -227,11 +229,11 @@ public class ClientManager {
 	public class GCPacketProcessor{
         const int BUFFER_SIZE = 4096;
 		Socket mSocket;
-		Thread mThread;
 		byte[] recvBuffer;
         byte[] sendBuffer;
 
 		ResourceManager mResourceManager;
+        ClientManager mClientManager;
 		EventManager mEventManager;
 
 		public delegate void Listener();
@@ -253,7 +255,6 @@ public class ClientManager {
 		}
 
 		public GCPacketProcessor(){
-			mThread = new Thread(receivePacket);
             recvBuffer = new byte[BUFFER_SIZE];
             sendBuffer = new byte[BUFFER_SIZE];
 		}
@@ -265,6 +266,10 @@ public class ClientManager {
 		public void setEventManager(EventManager em){
 			this.mEventManager = em;
 		}
+        public void setClientManager(ClientManager cm)
+        {
+            this.mClientManager = cm;
+        }
 
 		public void setSocket(Socket socket){
 			this.mSocket = socket;
@@ -284,7 +289,7 @@ public class ClientManager {
         {
             //먼저 자신의 정보를 전송한다.
             sendDeviceInfo();
-			mThread.Start ();
+            receivePacket();
 		}
 
 		/**
@@ -297,7 +302,8 @@ public class ClientManager {
 					Debug.Log("receivePacket");
                     if (mSocket.Receive(recvBuffer, GCPacketProcessor.getSize(), 0) <= 0)
                     {
-                        this.stopProcessor();
+                        mClientManager.destroyClient();
+                        break;
                     }
                     processPacket(GCPacketProcessor.getPacketData(recvBuffer));
 				}
@@ -481,10 +487,6 @@ public class ClientManager {
 		 */ 
 		public void stopProcessor(){
             Debug.Log("stopProcessor");
-			if (mThread == null) {
-				Debug.Log ("Server already stopped");
-				return;
-            }
             destroyProcessor();
 		}
 
@@ -494,7 +496,6 @@ public class ClientManager {
             mSocket.Shutdown(SocketShutdown.Both);
 			mSocket.Close ();
             mSocket = null;
-			mThread = null;
 		}
 
 		/**
