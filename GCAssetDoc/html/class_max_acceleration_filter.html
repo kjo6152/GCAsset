@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.9.1"/>
+<title>My Project: MaxAccelerationFilter 클래스 참조</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">My Project
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- 다음에 의해 생성됨 :  Doxygen 1.8.9.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'검색');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>메인&#160;페이지</span></a></li>
+      <li><a href="pages.html"><span>관련된&#160;페이지</span></a></li>
+      <li class="current"><a href="annotated.html"><span>클래스</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="검색" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="annotated.html"><span>클래스&#160;목록</span></a></li>
+      <li><a href="classes.html"><span>클래스&#160;색인</span></a></li>
+      <li><a href="hierarchy.html"><span>클래스&#160;계통도</span></a></li>
+      <li><a href="functions.html"><span>클래스&#160;멤버</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public 멤버 함수</a> &#124;
+<a href="class_max_acceleration_filter-members.html">모든 멤버 목록</a>  </div>
+  <div class="headertitle">
+<div class="title">MaxAccelerationFilter 클래스 참조</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+MaxAccelerationFilter에 대한 상속 다이어그램 : </div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_max_acceleration_filter.png" usemap="#MaxAccelerationFilter_map" alt=""/>
+  <map id="MaxAccelerationFilter_map" name="MaxAccelerationFilter_map">
+<area href="interface_i_event_filter.html" alt="IEventFilter" shape="rect" coords="0,0,137,24"/>
+</map>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public 멤버 함수</h2></td></tr>
+<tr class="memitem:a59cde31f8ac45c09cb6636cc140feea6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_max_acceleration_filter.html#a59cde31f8ac45c09cb6636cc140feea6">filter</a> (ref float[] data)</td></tr>
+<tr class="separator:a59cde31f8ac45c09cb6636cc140feea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3170f540e55ea996ec824e74df17b8d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_max_acceleration_filter.html#a3170f540e55ea996ec824e74df17b8d2">clearMax</a> ()</td></tr>
+<tr class="separator:a3170f540e55ea996ec824e74df17b8d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">상세한 설명</h2>
+<div class="textblock"><p>자이로 센서를 통해 중력을 얻는 필터</p>
+<p>컨트롤러로부터 전송된 가속도 값을 필터링하여 가장 큰 값을 구하는 필터 필터를 등록하면 사용자에게 전달되는 값은 필터링된 값이 전달된다. </p><dl class="section see"><dt>참고</dt><dd>EventManager.mAccerationFilter </dd></dl>
+<dl class="section author"><dt>작성자</dt><dd>jiwon </dd></dl>
+</div><h2 class="groupheader">멤버 함수 문서화</h2>
+<a class="anchor" id="a3170f540e55ea996ec824e74df17b8d2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MaxAccelerationFilter.clearMax </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>최대값을 초기화한다. </p><dl class="section see"><dt>참고</dt><dd><a class="el" href="class_max_acceleration_filter.html#a59cde31f8ac45c09cb6636cc140feea6">MaxAccelerationFilter.filter</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a59cde31f8ac45c09cb6636cc140feea6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MaxAccelerationFilter.filter </td>
+          <td>(</td>
+          <td class="paramtype">ref float[]&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>가속도 값을 모두 더해 가장 큰 값을 구하는 필터</p>
+<p>Gyroscope에서 전달되는 값들 중 userAcceleration값을 센서에서 받아 합을 구하고 그동안 값 중 가장 큰 값을 구한다. </p><dl class="section see"><dt>참고</dt><dd><a class="el" href="interface_i_event_filter.html#aa70c90ea957214088b4c4cbb275a6714" title="데이터가 필터링되는 매소드 ">IEventFilter.filter</a> </dd></dl>
+
+<p><a class="el" href="interface_i_event_filter.html#aa70c90ea957214088b4c4cbb275a6714">IEventFilter</a>를 구현.</p>
+
+</div>
+</div>
+<hr/>이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.:<ul>
+<li>C:/devtools/workspace/GCAsset/GCAsset/Assets/GCServer/Scripts/EventFilter/MaxAccelerationFilter.cs</li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+생성시간 : 금 2월 27 2015 20:42:53, 프로젝트명 : My Project, 생성자 :  &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.9.1
+</small></address>
+</body>
+</html>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loadresourcemap',['LoadResourceMap',['../class_resource_manager.html#a9708efe73c033a8bb4edbe86897b358e',1,'ResourceManager']]]
+  ['joysticklistener',['JoystickListener',['../class_event_manager.html#ad470a4c2e411d814dd480043332f2a70',1,'EventManager.JoystickListener()'],['../class_game_controller.html#a653ceafbd20d279abc65adf386a358aa',1,'GameController.JoystickListener()']]]
 ];

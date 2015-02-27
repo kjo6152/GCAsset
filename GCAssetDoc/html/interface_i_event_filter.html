@@ -95,29 +95,84 @@ IEventFilter에 대한 상속 다이어그램 : </div>
  <div class="center">
   <img src="interface_i_event_filter.png" usemap="#IEventFilter_map" alt=""/>
   <map id="IEventFilter_map" name="IEventFilter_map">
-<area href="class_attitude_filter.html" alt="AttitudeFilter" shape="rect" coords="0,56,83,80"/>
-<area href="class_gravity_filter.html" alt="GravityFilter" shape="rect" coords="93,56,176,80"/>
-<area href="class_kalman_filter.html" alt="KalmanFilter" shape="rect" coords="186,56,269,80"/>
+<area href="class_attitude_filter.html" alt="AttitudeFilter" shape="rect" coords="0,56,137,80"/>
+<area href="class_gravity_filter.html" alt="GravityFilter" shape="rect" coords="147,56,284,80"/>
+<area href="class_kalman_filter.html" alt="KalmanFilter" shape="rect" coords="294,56,431,80"/>
+<area href="class_max_acceleration_filter.html" alt="MaxAccelerationFilter" shape="rect" coords="441,56,578,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public 멤버 함수</h2></td></tr>
-<tr class="memitem:aa70c90ea957214088b4c4cbb275a6714"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa70c90ea957214088b4c4cbb275a6714"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>filter</b> (ref float[] data)</td></tr>
+<tr class="memitem:aa70c90ea957214088b4c4cbb275a6714"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_i_event_filter.html#aa70c90ea957214088b4c4cbb275a6714">filter</a> (ref float[] data)</td></tr>
+<tr class="memdesc:aa70c90ea957214088b4c4cbb275a6714"><td class="mdescLeft">&#160;</td><td class="mdescRight">데이터가 필터링되는 매소드  <a href="#aa70c90ea957214088b4c4cbb275a6714">더 자세히 ...</a><br /></td></tr>
 <tr class="separator:aa70c90ea957214088b4c4cbb275a6714"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">상세한 설명</h2>
 <div class="textblock"><p>필터 인터페이스</p>
-<p>여러 필터가 구현해야할 인터페이스 </p><dl class="section see"><dt>참고</dt><dd><a class="el" href="class_event_manager.html#ae034ed89247a369411c89f135c836bd9">EventManager.receiveEvent</a> </dd></dl>
+<p>여러 필터가 구현해야할 인터페이스 </p><dl class="section see"><dt>참고</dt><dd><a class="el" href="class_event_manager.html#a7cee85488f5d7220c102cd945b1f494a">EventManager.mGyroFilter</a>, <a class="el" href="class_event_manager.html#a2e8707f51be09be7f400bd9cca230b3a">EventManager.mAccelerationFilter</a> </dd></dl>
 <dl class="section author"><dt>작성자</dt><dd>jiwon </dd></dl>
-</div><hr/>이 인터페이스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.:<ul>
+</div><h2 class="groupheader">멤버 함수 문서화</h2>
+<a class="anchor" id="aa70c90ea957214088b4c4cbb275a6714"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void IEventFilter.filter </td>
+          <td>(</td>
+          <td class="paramtype">ref float[]&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>데이터가 필터링되는 매소드 </p>
+<p>Unity 자이로 센서와 가속도 센서의 값을 받아서 처리한 후 다시 설정한다.<br />
+</p><ul>
+<li>자이로 센서<br />
+ Gyroscope의 rotationRate, gravity, attitude를 활용한 값이며 총 10개의 float 값으로 0~9까지 각각 아래의 값을 갖는다.<br />
+ 받고 싶은 데이터는 data[0-3] 각각의 값에 설정해주면 이벤트 x,y,z,w값에 설정된다.<br />
+ 1) 0 - 2 : ratationRate<br />
+ data[0] : Gyroscope.rotationRate.x<br />
+ data[1] : Gyroscope.rotationRate.y<br />
+ data[2] : Gyroscope.rotationRate.z<br />
+ 2) 3 - 5 : ratationRate<br />
+ data[3] : Gyroscope.gravity.x<br />
+ data[4] : Gyroscope.gravity.y<br />
+ data[5] : Gyroscope.gravity.z<br />
+ 3) 6 - 9 : ratationRate<br />
+ data[6] : Gyroscope.attitude.x<br />
+ data[7] : Gyroscope.attitude.y<br />
+ data[8] : Gyroscope.attitude.z<br />
+ data[9] : Gyroscope.attitude.w<br />
+</li>
+<li>가속도 센서<br />
+ Gyroscope의 userAcceleration를 활용한 값이며 총 3개의 float 값으로 0~2까지 각각 아래의 값을 갖는다.<br />
+ 받고 싶은 데이터는 data[0-2] 각각의 값에 설정해주면 이벤트 x,y,z값에 설정된다.<br />
+ data[0] : Gyroscope.userAcceleration.x<br />
+ data[1] : Gyroscope.userAcceleration.y<br />
+ data[2] : Gyroscope.userAcceleration.z<br />
+ <dl class="params"><dt>매개변수</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">센서값</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+<p><a class="el" href="class_kalman_filter.html#a9a7d63d4acea7ce12b83b00f9d02f7cb">KalmanFilter</a>, <a class="el" href="class_max_acceleration_filter.html#a59cde31f8ac45c09cb6636cc140feea6">MaxAccelerationFilter</a>, <a class="el" href="class_attitude_filter.html#a91c49319cb969aae2a5b28948eeac963">AttitudeFilter</a>, <a class="el" href="class_gravity_filter.html#ad397d715404a4057f13631b1b9978903">GravityFilter</a>에서 구현되었습니다.</p>
+
+</div>
+</div>
+<hr/>이 인터페이스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.:<ul>
 <li>C:/devtools/workspace/GCAsset/GCAsset/Assets/GCServer/Scripts/EventFilter/IEventFilter.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-생성시간 : 목 2월 26 2015 00:15:16, 프로젝트명 : My Project, 생성자 :  &#160;<a href="http://www.doxygen.org/index.html">
+생성시간 : 금 2월 27 2015 20:42:53, 프로젝트명 : My Project, 생성자 :  &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

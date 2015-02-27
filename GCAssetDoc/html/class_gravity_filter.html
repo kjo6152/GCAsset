@@ -101,21 +101,41 @@ GravityFilter에 대한 상속 다이어그램 : </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public 멤버 함수</h2></td></tr>
-<tr class="memitem:ad397d715404a4057f13631b1b9978903"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad397d715404a4057f13631b1b9978903"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>filter</b> (ref float[] data)</td></tr>
+<tr class="memitem:ad397d715404a4057f13631b1b9978903"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_gravity_filter.html#ad397d715404a4057f13631b1b9978903">filter</a> (ref float[] data)</td></tr>
 <tr class="separator:ad397d715404a4057f13631b1b9978903"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">상세한 설명</h2>
 <div class="textblock"><p>자이로 센서를 통해 중력을 얻는 필터</p>
 <p>컨트롤러로부터 전송된 자이로 센서의 값을 필터링하여 중력값을 얻는 필터 필터를 등록하면 사용자에게 전달되는 값은 필터링된 값이 전달된다. </p><dl class="section see"><dt>참고</dt><dd><a class="el" href="class_event_manager.html#a7cee85488f5d7220c102cd945b1f494a">EventManager.mGyroFilter</a> </dd></dl>
 <dl class="section author"><dt>작성자</dt><dd>jiwon </dd></dl>
-</div><hr/>이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.:<ul>
+</div><h2 class="groupheader">멤버 함수 문서화</h2>
+<a class="anchor" id="ad397d715404a4057f13631b1b9978903"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GravityFilter.filter </td>
+          <td>(</td>
+          <td class="paramtype">ref float[]&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>gravity 값을 필터링하는 매소드</p>
+<p>Gyroscope에서 전달되는 값들 중 gravity 값을 센서에서 받을 수 있도록 설정한다. </p><dl class="section see"><dt>참고</dt><dd><a class="el" href="interface_i_event_filter.html#aa70c90ea957214088b4c4cbb275a6714" title="데이터가 필터링되는 매소드 ">IEventFilter.filter</a> </dd></dl>
+
+<p><a class="el" href="interface_i_event_filter.html#aa70c90ea957214088b4c4cbb275a6714">IEventFilter</a>를 구현.</p>
+
+</div>
+</div>
+<hr/>이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.:<ul>
 <li>C:/devtools/workspace/GCAsset/GCAsset/Assets/GCServer/Scripts/EventFilter/GravityFilter.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-생성시간 : 목 2월 26 2015 00:15:16, 프로젝트명 : My Project, 생성자 :  &#160;<a href="http://www.doxygen.org/index.html">
+생성시간 : 금 2월 27 2015 20:42:53, 프로젝트명 : My Project, 생성자 :  &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.9.1
 </small></address>

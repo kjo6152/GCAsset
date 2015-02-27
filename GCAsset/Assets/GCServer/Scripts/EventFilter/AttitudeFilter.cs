@@ -9,6 +9,12 @@ using System.Collections;
  * @author jiwon
  */
 public class AttitudeFilter : IEventFilter{
+
+    /**
+     * @breif attitude 값을 필터링하는 매소드
+     * @details Gyroscope에서 전달되는 값들 중 attitude 값을 센서에서 받을 수 있도록 설정한다.
+     * @see IEventFilter.filter
+     */
     public void filter(ref float[] data)
     {
         data[0] = data[6];

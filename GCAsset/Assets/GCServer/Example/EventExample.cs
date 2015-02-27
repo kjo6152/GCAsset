@@ -30,6 +30,7 @@ public class EventExample : MonoBehaviour
         mGCcontext.getEventManager().onJoystickListener += new EventManager.JoystickListener(mEventManager_onJoystickListener);
 
         mGCcontext.getEventManager().mGyroFilter = new AttitudeFilter();
+        mGCcontext.getEventManager().mAccelerationFilter = new MaxAccelerationFilter();
     }
 
     /**
@@ -77,7 +78,7 @@ public class EventExample : MonoBehaviour
     void mEventManager_onAccelerationListener(GameController gc, EventManager.AccelerationEvent acceleration)
     {
         //Debug.Log("onAccelerationListener");
-        //Debug.Log("x : " + acceleration.x + " / y : " + acceleration.y + " / z : " + acceleration.z);
+        Debug.Log("x : " + acceleration.x + " / y : " + acceleration.y + " / z : " + acceleration.z);
     }
 
     // Update is called once per frame

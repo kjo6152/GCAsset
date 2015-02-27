@@ -1,0 +1,60 @@
+\hypertarget{class_max_acceleration_filter}{}\section{Max\+Acceleration\+Filter 클래스 참조}
+\label{class_max_acceleration_filter}\index{Max\+Acceleration\+Filter@{Max\+Acceleration\+Filter}}
+Max\+Acceleration\+Filter에 대한 상속 다이어그램 \+: \begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_max_acceleration_filter}
+\end{center}
+\end{figure}
+\subsection*{Public 멤버 함수}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_max_acceleration_filter_a59cde31f8ac45c09cb6636cc140feea6}{filter} (ref float\mbox{[}$\,$\mbox{]} data)
+\item 
+void \hyperlink{class_max_acceleration_filter_a3170f540e55ea996ec824e74df17b8d2}{clear\+Max} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{상세한 설명}
+자이로 센서를 통해 중력을 얻는 필터
+
+컨트롤러로부터 전송된 가속도 값을 필터링하여 가장 큰 값을 구하는 필터 필터를 등록하면 사용자에게 전달되는 값은 필터링된 값이 전달된다. \begin{DoxySeeAlso}{참고}
+Event\+Manager.\+m\+Acceration\+Filter 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{작성자}
+jiwon 
+\end{DoxyAuthor}
+
+
+\subsection{멤버 함수 문서화}
+\hypertarget{class_max_acceleration_filter_a3170f540e55ea996ec824e74df17b8d2}{}\index{Max\+Acceleration\+Filter@{Max\+Acceleration\+Filter}!clear\+Max@{clear\+Max}}
+\index{clear\+Max@{clear\+Max}!Max\+Acceleration\+Filter@{Max\+Acceleration\+Filter}}
+\subsubsection[{clear\+Max}]{\setlength{\rightskip}{0pt plus 5cm}void Max\+Acceleration\+Filter.\+clear\+Max (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_max_acceleration_filter_a3170f540e55ea996ec824e74df17b8d2}
+최대값을 초기화한다. \begin{DoxySeeAlso}{참고}
+\hyperlink{class_max_acceleration_filter_a59cde31f8ac45c09cb6636cc140feea6}{Max\+Acceleration\+Filter.\+filter} 
+\end{DoxySeeAlso}
+\hypertarget{class_max_acceleration_filter_a59cde31f8ac45c09cb6636cc140feea6}{}\index{Max\+Acceleration\+Filter@{Max\+Acceleration\+Filter}!filter@{filter}}
+\index{filter@{filter}!Max\+Acceleration\+Filter@{Max\+Acceleration\+Filter}}
+\subsubsection[{filter}]{\setlength{\rightskip}{0pt plus 5cm}void Max\+Acceleration\+Filter.\+filter (
+\begin{DoxyParamCaption}
+\item[{ref float\mbox{[}$\,$\mbox{]}}]{data}
+\end{DoxyParamCaption}
+)}\label{class_max_acceleration_filter_a59cde31f8ac45c09cb6636cc140feea6}
+가속도 값을 모두 더해 가장 큰 값을 구하는 필터
+
+Gyroscope에서 전달되는 값들 중 user\+Acceleration값을 센서에서 받아 합을 구하고 그동안 값 중 가장 큰 값을 구한다. \begin{DoxySeeAlso}{참고}
+\hyperlink{interface_i_event_filter_aa70c90ea957214088b4c4cbb275a6714}{I\+Event\+Filter.\+filter} 
+\end{DoxySeeAlso}
+
+
+\hyperlink{interface_i_event_filter_aa70c90ea957214088b4c4cbb275a6714}{I\+Event\+Filter}를 구현.
+
+
+
+이 클래스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/devtools/workspace/\+G\+C\+Asset/\+G\+C\+Asset/\+Assets/\+G\+C\+Server/\+Scripts/\+Event\+Filter/Max\+Acceleration\+Filter.\+cs\end{DoxyCompactItemize}

@@ -3,26 +3,75 @@
 I\+Event\+Filter에 대한 상속 다이어그램 \+: \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[height=2.000000cm]{interface_i_event_filter}
+\includegraphics[height=1.931034cm]{interface_i_event_filter}
 \end{center}
 \end{figure}
 \subsection*{Public 멤버 함수}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{interface_i_event_filter_aa70c90ea957214088b4c4cbb275a6714}{}void {\bfseries filter} (ref float\mbox{[}$\,$\mbox{]} data)\label{interface_i_event_filter_aa70c90ea957214088b4c4cbb275a6714}
-
-\end{DoxyCompactItemize}
+void \hyperlink{interface_i_event_filter_aa70c90ea957214088b4c4cbb275a6714}{filter} (ref float\mbox{[}$\,$\mbox{]} data)
+\begin{DoxyCompactList}\small\item\em 데이터가 필터링되는 매소드 \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{상세한 설명}
 필터 인터페이스
 
 여러 필터가 구현해야할 인터페이스 \begin{DoxySeeAlso}{참고}
-\hyperlink{class_event_manager_ae034ed89247a369411c89f135c836bd9}{Event\+Manager.\+receive\+Event} 
+\hyperlink{class_event_manager_a7cee85488f5d7220c102cd945b1f494a}{Event\+Manager.\+m\+Gyro\+Filter}, \hyperlink{class_event_manager_a2e8707f51be09be7f400bd9cca230b3a}{Event\+Manager.\+m\+Acceleration\+Filter} 
 \end{DoxySeeAlso}
 \begin{DoxyAuthor}{작성자}
 jiwon 
 \end{DoxyAuthor}
+
+
+\subsection{멤버 함수 문서화}
+\hypertarget{interface_i_event_filter_aa70c90ea957214088b4c4cbb275a6714}{}\index{I\+Event\+Filter@{I\+Event\+Filter}!filter@{filter}}
+\index{filter@{filter}!I\+Event\+Filter@{I\+Event\+Filter}}
+\subsubsection[{filter}]{\setlength{\rightskip}{0pt plus 5cm}void I\+Event\+Filter.\+filter (
+\begin{DoxyParamCaption}
+\item[{ref float\mbox{[}$\,$\mbox{]}}]{data}
+\end{DoxyParamCaption}
+)}\label{interface_i_event_filter_aa70c90ea957214088b4c4cbb275a6714}
+
+
+데이터가 필터링되는 매소드 
+
+Unity 자이로 센서와 가속도 센서의 값을 받아서 처리한 후 다시 설정한다.~\newline
+
+\begin{DoxyItemize}
+\item 자이로 센서~\newline
+ Gyroscope의 rotation\+Rate, gravity, attitude를 활용한 값이며 총 10개의 float 값으로 0$\sim$9까지 각각 아래의 값을 갖는다.~\newline
+ 받고 싶은 데이터는 data\mbox{[}0-\/3\mbox{]} 각각의 값에 설정해주면 이벤트 x,y,z,w값에 설정된다.~\newline
+ 1) 0 -\/ 2 \+: ratation\+Rate~\newline
+ data\mbox{[}0\mbox{]} \+: Gyroscope.\+rotation\+Rate.\+x~\newline
+ data\mbox{[}1\mbox{]} \+: Gyroscope.\+rotation\+Rate.\+y~\newline
+ data\mbox{[}2\mbox{]} \+: Gyroscope.\+rotation\+Rate.\+z~\newline
+ 2) 3 -\/ 5 \+: ratation\+Rate~\newline
+ data\mbox{[}3\mbox{]} \+: Gyroscope.\+gravity.\+x~\newline
+ data\mbox{[}4\mbox{]} \+: Gyroscope.\+gravity.\+y~\newline
+ data\mbox{[}5\mbox{]} \+: Gyroscope.\+gravity.\+z~\newline
+ 3) 6 -\/ 9 \+: ratation\+Rate~\newline
+ data\mbox{[}6\mbox{]} \+: Gyroscope.\+attitude.\+x~\newline
+ data\mbox{[}7\mbox{]} \+: Gyroscope.\+attitude.\+y~\newline
+ data\mbox{[}8\mbox{]} \+: Gyroscope.\+attitude.\+z~\newline
+ data\mbox{[}9\mbox{]} \+: Gyroscope.\+attitude.\+w~\newline
+
+\item 가속도 센서~\newline
+ Gyroscope의 user\+Acceleration를 활용한 값이며 총 3개의 float 값으로 0$\sim$2까지 각각 아래의 값을 갖는다.~\newline
+ 받고 싶은 데이터는 data\mbox{[}0-\/2\mbox{]} 각각의 값에 설정해주면 이벤트 x,y,z값에 설정된다.~\newline
+ data\mbox{[}0\mbox{]} \+: Gyroscope.\+user\+Acceleration.\+x~\newline
+ data\mbox{[}1\mbox{]} \+: Gyroscope.\+user\+Acceleration.\+y~\newline
+ data\mbox{[}2\mbox{]} \+: Gyroscope.\+user\+Acceleration.\+z~\newline
+ 
+\begin{DoxyParams}{매개변수}
+{\em 센서값} & \\
+\hline
+\end{DoxyParams}
+
+\end{DoxyItemize}
+
+\hyperlink{class_kalman_filter_a9a7d63d4acea7ce12b83b00f9d02f7cb}{Kalman\+Filter}, \hyperlink{class_max_acceleration_filter_a59cde31f8ac45c09cb6636cc140feea6}{Max\+Acceleration\+Filter}, \hyperlink{class_attitude_filter_a91c49319cb969aae2a5b28948eeac963}{Attitude\+Filter}, \hyperlink{class_gravity_filter_ad397d715404a4057f13631b1b9978903}{Gravity\+Filter}에서 구현되었습니다.
+
 
 
 이 인터페이스에 대한 문서화 페이지는 다음의 파일로부터 생성되었습니다.\+:\begin{DoxyCompactItemize}

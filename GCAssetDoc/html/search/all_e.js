@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['readme',['README',['../md__c_1_devtools_workspace__g_c_asset__g_c_asset__assets__g_c_server__r_e_a_d_m_e.html',1,'']]],
-  ['readdevicedatafromxml',['readDeviceDataFromXml',['../class_game_controller.html#a186282de3ec7fb68cde00368cbfd697d',1,'GameController']]],
-  ['receiveevent',['receiveEvent',['../class_event_manager.html#ae034ed89247a369411c89f135c836bd9',1,'EventManager.receiveEvent()'],['../class_game_controller.html#a5b9e4d1735ec8d689a35ad187aefe1e9',1,'GameController.receiveEvent()']]],
-  ['resourcemanager',['ResourceManager',['../class_resource_manager.html',1,'']]]
+  ['processevent',['processEvent',['../class_event_manager.html#a84d2c420c890acdc95571366a8b55c74',1,'EventManager']]]
 ];
