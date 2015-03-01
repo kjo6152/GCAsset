@@ -108,7 +108,13 @@ public class GameController {
     {
         processor.sendChangeView(SceneName);
     }
-	
+
+    /** @breif 센서 사용을 설정한다. */
+    public void sendSensorEnabled(bool enabled)
+    {
+        processor.sendSensorEnabled(enabled);
+    }
+
     /** @see EventManager.SystemEventListener */
     public delegate void SystemEventListener();
     /** @see EventManager.AccelerationListener */

@@ -32,6 +32,8 @@ public class GCconst
      */
     public const ushort CODE_ACCELERATION = 0x21;
     public const ushort CODE_GYRO = 0x22;
+    public const ushort CODE_ENABLE = 0x23;
+    public const ushort CODE_DISABLE = 0x24;
 
     /**
      * @breif TYPE_SYSTEM 관련 CODE

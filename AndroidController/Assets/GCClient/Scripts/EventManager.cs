@@ -80,11 +80,14 @@ public class EventManager {
         Input.gyro.updateInterval = interval;
     }
 
+    public void setSensorEnabled(bool enabled)
+    {
+        Input.gyro.enabled = enabled;
+    }
+
 	public void init(){
         supportsGyroscope = SystemInfo.supportsGyroscope;
         Debug.Log("supportsGyroscope : " + supportsGyroscope);
-        //디버깅을 위해서 센서 이벤트를 임시로 받지 않기 위한 코드
-        //supportsGyroscope = false;
         setUpdateInterval(0.5f);
         Input.gyro.enabled = true;
         preGyroscope = Input.gyro.rotationRate;
@@ -96,10 +99,10 @@ public class EventManager {
         onSoundListener = delegate { };
         onViewListener = delegate { };
 	}
-	
+
 	// Update is called once per frame
 	public void Update () {
-        if (supportsGyroscope)
+        if (supportsGyroscope && Input.gyro.enabled)
         {
             if (preGyroscope.x != Input.gyro.rotationRate.x && preGyroscope.y != Input.gyro.rotationRate.y && preGyroscope.z != Input.gyro.rotationRate.z)
             {

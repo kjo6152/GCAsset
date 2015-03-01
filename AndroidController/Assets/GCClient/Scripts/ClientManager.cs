@@ -338,6 +338,14 @@ public class ClientManager {
                     break;
 			    //센서 이벤트
 			    case GCconst.TYPE_SENSOR:
+                    if (packet.code == GCconst.CODE_ENABLE)
+                    {
+                        mEventManager.setSensorEnabled(true);
+                    }
+                    else if (packet.code == GCconst.CODE_DISABLE)
+                    {
+                        mEventManager.setSensorEnabled(false);
+                    }
 				    break;
 			    /**
 			     * 리소스 패킷

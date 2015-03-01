@@ -448,6 +448,17 @@ public class ServerManager {
             mSocket.Send(strBuffer, strBuffer.Length, 0);
         }
 
+        /**
+		 * @breif 센서 사용을 설정한다.
+		 */
+        public void sendSensorEnabled(bool enabled)
+        {
+            //보낼 패킷 생성
+            byte[] packetBuffer = enabled == true ? getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_ENABLE, 0) : getPacketByteArray(GCconst.TYPE_SENSOR, GCconst.CODE_DISABLE, 0);
+            //패킷 전송
+            mSocket.Send(packetBuffer, packetBuffer.Length, 0);
+        }
+
         /** @breif 연결된 컨트롤러를 얻는 매소드 */
         public GameController getGameController(){
             return mGameController;
