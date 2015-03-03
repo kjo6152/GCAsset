@@ -7,7 +7,7 @@ public class ButtonTouchCorllection : MonoBehaviour {
     public float buttonDelay;
 
 
-    public int ButtonSelectTouchObject(Vector3 touch, int buttonListLength , GameObject[] buttonList)
+    public int ButtonSelectTouchObject(Vector3 touch, int buttonListLength, Transform[] buttonList)
     {
       
         int minIdx = 0;
@@ -17,7 +17,7 @@ public class ButtonTouchCorllection : MonoBehaviour {
 
         for (int i = 0; i < buttonListLength; i++)
         {
-            Button_TouchDistance[i] = Vector3.Distance(touch, buttonList[i].transform.position);
+            Button_TouchDistance[i] = Vector3.Distance(touch, buttonList[i].position);
         }
 
         // 가장 가까운 버튼 선택 후 리턴.

@@ -25,6 +25,8 @@ void \hyperlink{class_game_controller_a662e97a1d293708aade81c6e2afd0a22}{send\+V
 \item 
 void \hyperlink{class_game_controller_a8d4cf54c02ecd7cff7dd3995116efac5}{send\+Change\+View} (string Scene\+Name)
 \item 
+void \hyperlink{class_game_controller_a300e1d194e0c3271776659f7149ca8a6}{send\+Sensor\+Enabled} (bool enabled)
+\item 
 delegate void \hyperlink{class_game_controller_a6c79406c908b41c4f4520c6789d829e6}{System\+Event\+Listener} ()
 \item 
 delegate void \hyperlink{class_game_controller_a87b7db4c19ae1dd2ecbf94c6f1be5c90}{Acceleration\+Listener} (\hyperlink{class_event_manager_1_1_acceleration_event}{Event\+Manager.\+Acceleration\+Event} acceleration)
@@ -172,7 +174,14 @@ Xml 스트링으로부터 게임 컨트롤러 변수를 설정한다. 컨트롤�
 \item[{string}]{Scene\+Name}
 \end{DoxyParamCaption}
 )}\label{class_game_controller_a8d4cf54c02ecd7cff7dd3995116efac5}
-컨트롤러에게 씬을 로드하도록 한다. Asset\+Bundle 형태로 전송된 씬만 가능하다. \hypertarget{class_game_controller_aadac19b966dfc27827a6f68ea15d9cec}{}\index{Game\+Controller@{Game\+Controller}!send\+Sound@{send\+Sound}}
+컨트롤러에게 씬을 로드하도록 한다. Asset\+Bundle 형태로 전송된 씬만 가능하다. \hypertarget{class_game_controller_a300e1d194e0c3271776659f7149ca8a6}{}\index{Game\+Controller@{Game\+Controller}!send\+Sensor\+Enabled@{send\+Sensor\+Enabled}}
+\index{send\+Sensor\+Enabled@{send\+Sensor\+Enabled}!Game\+Controller@{Game\+Controller}}
+\subsubsection[{send\+Sensor\+Enabled}]{\setlength{\rightskip}{0pt plus 5cm}void Game\+Controller.\+send\+Sensor\+Enabled (
+\begin{DoxyParamCaption}
+\item[{bool}]{enabled}
+\end{DoxyParamCaption}
+)}\label{class_game_controller_a300e1d194e0c3271776659f7149ca8a6}
+센서 사용을 설정한다. \hypertarget{class_game_controller_aadac19b966dfc27827a6f68ea15d9cec}{}\index{Game\+Controller@{Game\+Controller}!send\+Sound@{send\+Sound}}
 \index{send\+Sound@{send\+Sound}!Game\+Controller@{Game\+Controller}}
 \subsubsection[{send\+Sound}]{\setlength{\rightskip}{0pt plus 5cm}void Game\+Controller.\+send\+Sound (
 \begin{DoxyParamCaption}

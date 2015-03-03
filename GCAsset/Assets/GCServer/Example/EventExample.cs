@@ -52,7 +52,7 @@ public class EventExample : MonoBehaviour
     void mEventManager_onButtonListener(GameController gc, EventManager.ButtonEvent buttonEvent)
     {
         Debug.Log("onButtonListener");
-        Debug.Log("id : " + buttonEvent.id);
+        Debug.Log("id :: " + buttonEvent.id);
     }
 
     /**

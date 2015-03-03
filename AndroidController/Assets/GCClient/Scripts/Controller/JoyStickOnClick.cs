@@ -9,17 +9,20 @@ public class JoyStickOnClick : MonoBehaviour {
      *  Joystick Onclick 관련 코드작성.. 
      * 
      **/
+    public int id;
+
     private GCcontext mGCcontext;
 
     // Use this for initialization
     void Start()
     {
+        
         mGCcontext = GCcontext.getInstance;
     }
 
-    public void OnClick(int id,Vector3 worldTouch)
+    public void OnClick(Vector3 worldTouch)
     {
-        Debug.Log("Joystick Onclick :" + worldTouch);
+        Debug.Log("Joystick :" + worldTouch);
 
 #if CONTROLLER
         int[] values = new int[3];

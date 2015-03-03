@@ -168,6 +168,7 @@ public class EventManager {
                         break;
                     case GCconst.CODE_VIEW:
                         Application.LoadLevel(mEvent.getPath());
+                        mResourceManager.setLastScene(mEvent.getPath());
                         onViewListener(mEvent.getPath());
                         break;
                 }

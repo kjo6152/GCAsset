@@ -115,7 +115,7 @@ public class ServerExample : MonoBehaviour {
         for (int i = 0; i < ControllerList.Count; i++)
         {
             GameController controller = (GameController)ControllerList[i];
-            controller.sendChangeView("controller");
+            controller.sendChangeView("cont");
         }
     }
 

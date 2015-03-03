@@ -5,7 +5,9 @@ using UnityEditor;
 using System.Collections;
 
 // Unity Editor 메뉴창에 GUI 툴 등록
-[ExecuteInEditMode] public class GUI_Tool : EditorWindow {
+[ExecuteInEditMode]
+public class GUI_Tool : EditorWindow
+{
     static public int id = 0;
 
     Texture button1_on_texture_circle = Resources.Load<Texture>("Texture/Button1_On_Circle");
@@ -23,6 +25,10 @@ using System.Collections;
 
     Texture camera_texture = Resources.Load<Texture>("Texture/Camera");
 
+    void Start()
+    {
+        //버튼 방향키 조이스틱 태그 강제생성.
+    }
     void Update()
     {
         ButtonClick[] normal = GameObject.FindObjectsOfType<ButtonClick>();
@@ -39,18 +45,18 @@ using System.Collections;
                 id = joystick1[i].id;
         }
 
-        Joystick[] joystick2 = GameObject.FindObjectsOfType<Joystick>();
-        for (int i = 0; i < joystick2.Length; i++)
-        {
-            if (joystick2[i].id > id)
-                id = joystick2[i].id;
-        }
+        //Joystick[] joystick2 = GameObject.FindObjectsOfType<Joystick>();
+        //for (int i = 0; i < joystick2.Length; i++)
+        //{
+        //    if (joystick2[i].id > id)
+        //        id = joystick2[i].id;
+        //}
     }
 
     [MenuItem("GUI Tool/Open GUI Tool &1", false, 0)]
     static void OpenGUITool()
     {
-        EditorWindow  window = EditorWindow.GetWindow<GUI_Tool>(false);
+        EditorWindow window = EditorWindow.GetWindow<GUI_Tool>(false);
         window.title = "GUI Tool";
         window.maxSize = new Vector2(150f, 600f);
         window.minSize = new Vector2(140f, 600f);
@@ -136,10 +142,10 @@ using System.Collections;
         if (FindObjectOfType<Camera>() == null)
         {
             EditorUtility.DisplayDialog("Can not create object.", "Can not find camera object.\nCreate camera object first.", "OK");
-            return ;
+            return;
         }
 
-        string [] directArr = 
+        string[] directArr = 
         {
             "Up",
             "Down",
@@ -201,38 +207,52 @@ using System.Collections;
             return;
         }
 
-        // 부모 오브젝트
-        GameObject obj = new GameObject();
-        obj.transform.parent = FindObjectOfType<Camera>().transform;
-        obj.name = "Joystick " + (++id);
-        obj.tag = "GameController";
-        obj.transform.position = new Vector3(0f, 0f, 1f);
-        obj.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
-        obj.transform.localScale = new Vector3(150f, 150f, 1f);
 
-        obj.AddComponent<SpriteRenderer>();
-        obj.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprite/Joystick_range");
+        if (FindObjectOfType<JoystickTouchCorrection>() == null)
+        {
+            GameObject obj = new GameObject();
+            obj.transform.parent = FindObjectOfType<Camera>().transform;
+            obj.name = "Joystick";
+            obj.tag = "GameController";
+            obj.transform.position = new Vector3(0f, 0f, 1f);
+            obj.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
+            obj.transform.localScale = new Vector3(120f, 120f, 1f);
 
-        obj.AddComponent<CircleCollider2D>();
-        obj.GetComponent<CircleCollider2D>().radius = 0.8f;
+            obj.AddComponent<TouchCorrection>();
+            obj.GetComponent<TouchCorrection>().MainCamera = FindObjectOfType<Camera>();
 
-        // 자식 오브젝트
-        GameObject btn = new GameObject();
-        btn.transform.parent = obj.transform;
-        btn.name = "Wheel ";
-        btn.transform.position = new Vector3(0f, 0f, 0f);
-        btn.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
-        btn.transform.localScale = new Vector3(1f, 1f, 1f);
+            obj.AddComponent<JoystickTouchCorrection>();
+        }
 
-        btn.AddComponent<SpriteRenderer>();
-        btn.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprite/Joystick_wheel");
-        btn.GetComponent<SpriteRenderer>().sortingOrder = 1;
+        // 첫 번째 자식 오브젝트
+        GameObject btn1 = new GameObject();
+        btn1.transform.parent = FindObjectOfType<JoystickTouchCorrection>().transform;
+        btn1.name = "Basic Joystick";
+        btn1.tag = "Joystick";
+        btn1.transform.position = new Vector3(0f, 0f, 0f);
+        btn1.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
+        btn1.transform.localScale = new Vector3(1f, 1f, 1f);
 
-        btn.AddComponent<Joystick>();
-        btn.GetComponent<Joystick>().id = id;
-        btn.GetComponent<Joystick>().MainCamera = FindObjectOfType<Camera>();
+        btn1.AddComponent<SpriteRenderer>();
+        btn1.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprite/Joystick_range");
 
-        btn.AddComponent<JoyStickOnClick>();
+        btn1.AddComponent<CircleCollider2D>();
+        btn1.GetComponent<CircleCollider2D>().radius = 0.75f;
+
+        // 두 번째 자식 오브젝트
+        GameObject btn2 = new GameObject();
+        btn2.transform.parent = btn1.transform;
+        btn2.name = "Wheel";
+        btn2.transform.position = new Vector3(0f, 0f, 0f);
+        btn2.transform.localRotation = new Quaternion(0f, 0f, 0f, 0f);
+        btn2.transform.localScale = new Vector3(1f, 1f, 1f);
+
+        btn2.AddComponent<SpriteRenderer>();
+        btn2.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprite/Joystick_wheel");
+        btn2.GetComponent<SpriteRenderer>().sortingOrder = 1;
+
+        btn2.AddComponent<JoyStickOnClick>();
+        btn2.GetComponent<JoyStickOnClick>().id = ++id;
     }
 
     static void CreateCamera()

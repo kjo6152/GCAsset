@@ -14,14 +14,13 @@ using System.Collections.Generic;
 public class TouchCorrection : MonoBehaviour
 {
 
-
     /**
      * 버튼관련
      */
     private bool firstTouch;
     public Camera MainCamera;
     private Collider2D collider;
-    private GameObject[] buttonList;
+    private Transform[] buttonList = new Transform[10];
   
     private float[] Button_TouchDistance;
 
@@ -40,22 +39,25 @@ public class TouchCorrection : MonoBehaviour
       * 방향키 관련
       */
 
-    private GameObject[] DirectionKeyList;
+    private Transform[] DirectionKeyList = new Transform[4];
+    
 
     private float[] DirectionKey_TouchDistance;
 
     private DirectionKeyClick directionKeyClick;
 
     private Sprite[] directionPressDownSprite;
-    private Sprite NomalJoystick;
+    private Sprite NomalDirectionKey;
 
 
     private int directionKeyLength;
-    //public float directionKeyDelay;
+    private int directionKeyArrayLength;
+ 
     float directionKeytimer;
 
     private bool buttonClickState = false;
     private bool directionKeyClickState = false;
+    private bool joystickClickState = false;
 
     private ButtonTouchCorllection buttonTouchCorllection;
     private DirectionkeyTouchCorllection directionKeyTouchCorllection;
@@ -63,133 +65,123 @@ public class TouchCorrection : MonoBehaviour
 
     private float buttonDelay;
     private float directionKeyDelay;
+    private int buttonTouchCount = 0;
+    private int directionTouchCount = 0;
+    private int joystickTouchCount = 0;
+
+    /**
+      * 조이스틱 관련
+      */
+    private Transform[] joystickList = new Transform[10];
+    private int joystickLength;
+    private Sprite[] joystickSprite;
+    private GameObject[] joystickChild;
+
+
+    private int[] buttonMinidx;
+    private int[] directionMinidx;
+    private int[] joystickMinidx;
+
+
+    private int buttonChildLength;
+    private int directionKeyChildLengh = 4;
+    private int joystickChildLength;
+    
+
     /**
      * GameObject 가 생성되면서 Button List들에 대한 초기화.
      * 버튼들의 PressUp 이미지 초기화.
      */
     void Start()
     {
+        buttonMinidx = new int[5];
+        directionMinidx = new int[5];
+        joystickMinidx = new int[5];
+
         /**
           * 버튼관련
           */
         //생성한 버튼 컴포넌트의 리스트 저장.
-        buttonList = GameObject.FindGameObjectsWithTag("Button");
+        buttonChildLength = GameObject.FindObjectOfType<ButtonTouchCorllection>().transform.childCount;
 
-        buttonTouchCorllection = GetComponent<ButtonTouchCorllection>();
-        buttonListLength = buttonList.Length;
-        pressUpSprite = new Sprite[buttonListLength];
-        pressDownSprite = new Sprite[buttonListLength];
-     
-      
-
-
-        //pressup 이미지 초기화.
-        for (int i = 0; i<buttonListLength; i++)
+        if (buttonChildLength > 0)
         {
-            pressUpSprite[i] = buttonList[i].GetComponent<SpriteRenderer>().sprite;
-            pressDownSprite[i] = buttonList[i].GetComponent<ButtonClick>().downPressSprite;
-           
+            for (int i = 0; i < buttonChildLength; i++)
+            {
+
+                buttonList[i] = FindObjectOfType<ButtonTouchCorllection>().transform.GetChild(i);
+                //Debug.Log(FindObjectOfType<ButtonTouchCorllection>().transform.GetChild(i));
+
+            }
+
+            buttonListLength = buttonList.Length;
+            pressUpSprite = new Sprite[buttonListLength];
+            pressDownSprite = new Sprite[buttonListLength];
+
+            //pressup 이미지 초기화.
+            for (int i = 0; i < buttonChildLength; i++)
+            {
+                pressUpSprite[i] = buttonList[i].GetComponent<SpriteRenderer>().sprite;
+                pressDownSprite[i] = buttonList[i].GetComponent<ButtonClick>().downPressSprite;
+
+            }
+            buttontimer = 0;
+            firstTouch = true;
         }
-        buttontimer = 0;
-        firstTouch = true;
 
         /**
           * 방향키 관련
           */
-
-
-        DirectionKeyList = GameObject.FindGameObjectsWithTag("DirectionKey");
-
-        directionKeyLength = DirectionKeyList.Length;
-        directionPressDownSprite = new Sprite[directionKeyLength];
-
-        for (int i = 0; i < directionKeyLength; i++)
+        if (FindObjectOfType<DirectionkeyTouchCorllection>() != null)
         {
-            directionPressDownSprite[i] = DirectionKeyList[i].GetComponent<DirectionKeyClick>().downPressSprite;
-        }
-        if (this.name.Equals("DirectionKey"))
-        {
-            NomalJoystick = this.GetComponent<SpriteRenderer>().sprite;
+            for (int i = 0; i < directionKeyChildLengh; i++)
+            {
+                DirectionKeyList[i] = FindObjectOfType<DirectionkeyTouchCorllection>().transform.GetChild(i);
+            }
+
+            directionPressDownSprite = new Sprite[directionKeyChildLengh];
+
+            for (int i = 0; i < directionKeyChildLengh; i++)
+            {
+                directionPressDownSprite[i] = DirectionKeyList[i].GetComponent<DirectionKeyClick>().downPressSprite;
+            }
+            if (this.name.Equals("DirectionKey"))
+            {
+                NomalDirectionKey = this.GetComponent<SpriteRenderer>().sprite;
+            }
         }
 
+        /**
+       * 조이스틱관련.
+       */
+
+        joystickChildLength = GameObject.FindObjectOfType<JoystickTouchCorrection>().transform.childCount; ;
+        Debug.Log(joystickChildLength);
+
+        if (joystickChildLength > 0)
+        {
+            for (int i = 0; i < joystickChildLength; i++)
+            {
+
+                joystickList[i] = FindObjectOfType<JoystickTouchCorrection>().transform.GetChild(i);
+
+
+            }
+
+
+
+            joystickSprite = new Sprite[joystickChildLength];
+
+        }
         
-
     }
 
-    /**
-     * 버튼
-     * 터치 좌표와 GameObject 간에 가장 가까운 object를 선택하여
-     * 그 Object 의 Index 를 반환.
-     */
-    int ButtonSelectTouchObject(Vector3 touch)
-    {
-        int minIdx = 0;
-        float minDistance;
-        Button_TouchDistance = new float[buttonListLength];
-
-
-        for (int i = 0; i < buttonListLength; i++)
-        {
-            Button_TouchDistance[i] = Vector3.Distance(touch, buttonList[i].transform.position);
-        }
-
-        // 가장 가까운 버튼 선택 후 리턴.
-        minDistance = Button_TouchDistance[0];
-
-        for (int i = 1; i < buttonListLength; i++)
-        {
-            if (minDistance > Button_TouchDistance[i])
-            {
-                minDistance = Button_TouchDistance[i];
-                minIdx = i;
-            }
-        }
-
-        return minIdx;
-    }
-
-
-    /**
-     * 방향키
-     * 터치 좌표와 GameObject 간에 가장 가까운 object를 선택하여
-     * 그 Object 의 Index 를 반환.
-     */
-    int DirectionSelectTouchObject(Vector3 touch)
-    {
-        int minIdx = 0;
-        float minDistance;
-        DirectionKey_TouchDistance = new float[directionKeyLength];
-
-
-        for (int i = 0; i < directionKeyLength; i++)
-        {
-            DirectionKey_TouchDistance[i] = Vector3.Distance(touch, DirectionKeyList[i].transform.position);
-        }
-
-        // 가장 가까운 버튼 선택 후 리턴.
-        minDistance = DirectionKey_TouchDistance[0];
-
-        for (int i = 1; i < directionKeyLength; i++)
-        {
-            if (minDistance > DirectionKey_TouchDistance[i])
-            {
-                minDistance = DirectionKey_TouchDistance[i];
-                minIdx = i;
-            }
-        }
-
-        return minIdx;
-    }
-
+    
 
 	void Update () {
 
-        int buttonTouchCount = 0;
-        int[] buttonMinidx = new int[5];
-
-        int directionTouchCount = 0;
-        int[] directionMinidx = new int[5];
-      
+        
+       
        
        // Debug.Log("버튼 딜레이  : " + buttonDelay);
         //Debug.Log(" 방향키 딜레이  : " + directionKeyDelay);
@@ -198,149 +190,186 @@ public class TouchCorrection : MonoBehaviour
 
         if (Input.touchCount == 0) // 터치하지 않을때..
         {
+            
+            ClickState.buttonClickState = false;
+            ClickState.directionClickState = false;
+            ClickState.joystickClickState = false;
+            
             // 버튼에 대한 upSprite 초기화.
-            for (int i = 0; i < buttonListLength; i++)
+            for (int i = 0; i < buttonChildLength; i++)
             {
+                //Debug.Log(i);
                 buttonList[i].GetComponent<SpriteRenderer>().sprite = pressUpSprite[i];
             }
 
             // directionkey 에 대한 노말 버튼 초기화.
             if (this.name.Equals("DirectionKey"))
             {
-                this.GetComponent<SpriteRenderer>().sprite = NomalJoystick;
+                this.GetComponent<SpriteRenderer>().sprite = NomalDirectionKey;
             }
 
+            for (int j = 0; j < joystickChildLength; j++)
+            {
+                
+                joystickList[j].GetChild(0).position = joystickList[j].GetChild(0).parent.position;
+            }
         }
 
 
         for (int i = 0; i < Input.touchCount; i++)
         {
 
-
+            //Debug.Log("buttonhit");
             Vector3 worldTouch = MainCamera.ScreenToWorldPoint(Input.GetTouch(i).position);
             hit = Physics2D.Raycast(new Vector2(worldTouch.x, worldTouch.y), Vector2.zero, Mathf.Infinity);
 
             if (hit.collider)
             {
-               
+                
                 if (hit.collider.transform.parent.name.Equals("Button") && this.name.Equals("Button"))
                 {
                     
                     buttontimer += Time.deltaTime;
-                    buttonClickState = true;
+                    ClickState.buttonClickState = true;
                     buttonTouchCorllection = hit.collider.transform.parent.GetComponent<ButtonTouchCorllection>();
                     buttonDelay = buttonTouchCorllection.buttonDelay;
 
-                    //buttonMinidx[buttonTouchCount] = buttonTouchCorllection.ButtonSelectTouchObject(worldTouch, buttonListLength, buttonList);
+                    buttonMinidx[buttonTouchCount] = buttonTouchCorllection.ButtonSelectTouchObject(worldTouch, buttonChildLength, buttonList);
                     if (Input.GetTouch(i).phase == TouchPhase.Began)
                     {
-                     
-                       
+
+                        
                         //buttonMinidx[buttonTouchCount] = ButtonSelectTouchObject(worldTouch);
-                        buttonMinidx[buttonTouchCount] = buttonTouchCorllection.ButtonSelectTouchObject(worldTouch, buttonListLength, buttonList);
+                        //buttonMinidx[buttonTouchCount] = buttonTouchCorllection.ButtonSelectTouchObject(worldTouch, buttonListLength, buttonList);
                         buttonClick = buttonList[buttonMinidx[buttonTouchCount]].GetComponent<ButtonClick>();
-                        buttonClick.DownClick(buttonList, buttonMinidx, buttonTouchCount, pressDownSprite);
-                        buttonClick.UpState(buttonList, buttonMinidx, buttonTouchCount, buttonListLength, pressUpSprite, pressDownSprite);
-                        buttonTouchCount++;
+                        buttonClick.DownClick(buttonList, buttonMinidx, pressDownSprite);
+                        buttonClick.UpState(buttonList, buttonMinidx, 0, buttonChildLength, pressUpSprite, pressDownSprite);
+                        //buttonTouchCount=1;
                         buttontimer = 0;
                     }
                     else if (buttontimer > buttonDelay && (Input.GetTouch(i).phase == TouchPhase.Moved || Input.GetTouch(i).phase == TouchPhase.Stationary))
                     {
-                        
+                       
                         //Debug.Log(this.gameObject.GetComponent<ButtonTouchCorllection>().buttonDelay);
                         //buttonMinidx[buttonTouchCount] = ButtonSelectTouchObject(worldTouch);
-                        buttonMinidx[buttonTouchCount] = buttonTouchCorllection.ButtonSelectTouchObject(worldTouch, buttonListLength, buttonList);
+                        //buttonMinidx[buttonTouchCount] = buttonTouchCorllection.ButtonSelectTouchObject(worldTouch, buttonListLength, buttonList);
                         buttonClick = buttonList[buttonMinidx[buttonTouchCount]].GetComponent<ButtonClick>();
-                        buttonClick.DownClick(buttonList, buttonMinidx, buttonTouchCount, pressDownSprite);
-                        buttonClick.UpState(buttonList, buttonMinidx, buttonTouchCount, buttonListLength, pressUpSprite, pressDownSprite);
-                        buttonTouchCount++;
+                        buttonClick.DownClick(buttonList, buttonMinidx,  pressDownSprite);
+                        buttonClick.UpState(buttonList, buttonMinidx, 0, buttonChildLength, pressUpSprite, pressDownSprite);
+                        //buttonTouchCount++;
                         buttontimer = 0;
 
                     }
 
                     else if (Input.GetTouch(i).phase == TouchPhase.Ended)
                     {
-                        for (int j = 0; j < buttonListLength; j++)
+                        for (int j = 0; j < buttonChildLength; j++)
                         {
                             buttonList[j].GetComponent<SpriteRenderer>().sprite = pressUpSprite[j];
                         }
-
+                        buttonTouchCount = 0;
                     }
-
-
                 }
                 else if (hit.collider.transform.parent.name.Equals("DirectionKey") && this.name.Equals("DirectionKey"))
                 {
+                    ClickState.directionClickState = true;
+                    
                     directionKeytimer += Time.deltaTime;
-                    directionKeyClickState = true;
                     directionKeyTouchCorllection = hit.collider.transform.parent.GetComponent<DirectionkeyTouchCorllection>();
                     directionKeyDelay = directionKeyTouchCorllection.directionKeyDelay;
-                    directionMinidx[directionTouchCount] = directionKeyTouchCorllection.DirectionSelectTouchObject(worldTouch, directionKeyLength, DirectionKeyList);
+                    directionMinidx[directionTouchCount] = directionKeyTouchCorllection.DirectionSelectTouchObject(worldTouch, directionKeyChildLengh, DirectionKeyList);
                     
                     if (Input.GetTouch(i).phase == TouchPhase.Began)
                     {
-                       
-                        //directionMinidx[directionTouchCount] = directionKeyTouchCorllection.DirectionSelectTouchObject(worldTouch, directionKeyLength, DirectionKeyList);
+                        Debug.Log("no hit direction");
+                        //directionMinidx[directionTouchCount] = directionKeyTouchCorllection.DirectionSelectTouchObject(worldTouch, directionKeyChildLengh, DirectionKeyList);
                         //directionMinidx[directionTouchCount] = DirectionSelectTouchObject(worldTouch);
                         directionKeyClick = DirectionKeyList[directionMinidx[directionTouchCount]].GetComponent<DirectionKeyClick>();
-                        directionKeyClick.DownClick(DirectionKeyList, directionMinidx, directionTouchCount, directionPressDownSprite);
-                        directionTouchCount++;
+                        directionKeyClick.DownClick(DirectionKeyList, directionMinidx,  directionPressDownSprite);
+                      
                         directionKeytimer = 0;
                     }
                     else if (directionKeytimer > directionKeyDelay && (Input.GetTouch(i).phase == TouchPhase.Moved || Input.GetTouch(i).phase == TouchPhase.Stationary))
                     {
-                        
-                        //directionMinidx[directionTouchCount] = directionKeyTouchCorllection.DirectionSelectTouchObject(worldTouch, directionKeyLength, DirectionKeyList);
+
+                        //directionMinidx[directionTouchCount] = directionKeyTouchCorllection.DirectionSelectTouchObject(worldTouch, directionKeyChildLengh, DirectionKeyList);
                         //directionMinidx[directionTouchCount] = DirectionSelectTouchObject(worldTouch);
                         directionKeyClick = DirectionKeyList[directionMinidx[directionTouchCount]].GetComponent<DirectionKeyClick>();
-                        directionKeyClick.DownClick(DirectionKeyList, directionMinidx, directionTouchCount, directionPressDownSprite);
-                        directionTouchCount++;
+                        directionKeyClick.DownClick(DirectionKeyList, directionMinidx, directionPressDownSprite);
+                    
                         directionKeytimer = 0;
                     }
                     else if (Input.GetTouch(i).phase == TouchPhase.Ended)
                     {
                         if (this.name.Equals("DirectionKey"))
                         {
-                            this.GetComponent<SpriteRenderer>().sprite = NomalJoystick;
+                            this.GetComponent<SpriteRenderer>().sprite = NomalDirectionKey;
                         }
-
                     }
-
                 }
 
+                    
+                else if (hit.collider.transform.parent.name.Equals("Joystick") && this.name.Equals("Joystick"))
+                {
+                    
+                    ClickState.joystickClickState = true;
+                    joystickMinidx[joystickTouchCount] = hit.collider.transform.parent.GetComponent<JoystickTouchCorrection>().JoystickSelectTouchObject(worldTouch, joystickChildLength, joystickList);
+                    
+                    if (Input.GetTouch(i).phase == TouchPhase.Ended)
+                    {
+                        joystickList[joystickMinidx[joystickTouchCount]].transform.Find("Wheel").transform.position = joystickList[joystickMinidx[joystickTouchCount]].transform.Find("Wheel").transform.parent.position;
+                        joystickList[joystickMinidx[joystickTouchCount]].transform.Find("Wheel").GetComponent<JoyStickOnClick>().OnClick(new Vector3(0f, 0f, 0f));
+                    }
+                    else
+                    {
+                        Debug.Log(joystickList[joystickMinidx[joystickTouchCount]].transform.Find("Wheel").name);    
+
+                        joystickList[joystickMinidx[joystickTouchCount]].transform.Find("Wheel").GetComponent<Transform>().position = new Vector3(worldTouch.x, worldTouch.y, 1f);
+
+                        worldTouch.x -= joystickList[joystickMinidx[joystickTouchCount]].transform.Find("Wheel").transform.parent.position.x;
+                        worldTouch.y -= joystickList[joystickMinidx[joystickTouchCount]].transform.Find("Wheel").transform.parent.position.y;
+
+                        joystickList[joystickMinidx[joystickTouchCount]].transform.Find("Wheel").GetComponent<JoyStickOnClick>().OnClick(worldTouch);
+                    }
+                }
+               
             }
+
             else
             {
-                Debug.Log("no hit ");
-                if (buttonClickState)
-                {
-                    for (int j = 0; j < buttonListLength; j++)
-                    {
-                        buttonList[j].GetComponent<SpriteRenderer>().sprite = pressUpSprite[j];
-                    }
+               
+               //Debug.Log("object : " + this + ", buttonclickstate : " + ClickState.buttonClickState + " , dirkeystate ; " + ClickState.directionClickState +",joystickstate : " + ClickState.joystickClickState);
 
-                    buttonClickState = false;
-                }
-                else if (directionKeyClickState)
+               //Debug.Log(hit.collider.transform.parent.name);
+               if (ClickState.buttonClickState)
+               {
+                   for (int j = 0; j < buttonChildLength; j++)
+                   {
+                       buttonList[j].GetComponent<SpriteRenderer>().sprite = pressUpSprite[j];
+                   }
+
+                   buttonClickState = false;
+               }
+               if (ClickState.directionClickState)
                 {
-                    if (this.name.Equals("DirectionKey"))
+                    
+                    if (this.name.Equals("DirectionKey") )
                     {
-                        this.GetComponent<SpriteRenderer>().sprite = NomalJoystick;
+                        this.GetComponent<SpriteRenderer>().sprite = NomalDirectionKey;
                     }
                     directionKeyClickState = false;
+
                 }
-                else if (buttonClickState && directionKeyClickState)
-                {
-                    for (int j = 0; j < buttonListLength; j++)
-                    {
-                        buttonList[j].GetComponent<SpriteRenderer>().sprite = pressUpSprite[j];
-                    }
-                    if (this.name.Equals("DirectionKey"))
-                    {
-                        this.GetComponent<SpriteRenderer>().sprite = NomalJoystick;
-                    }
-                    buttonClickState = directionKeyClickState = false;
+               if (ClickState.joystickClickState)
+               {
+                   for (int j = 0; j < joystickChildLength; j++)
+                   {
+                       joystickList[j].transform.Find("Wheel").transform.position = joystickList[j].transform.Find("Wheel").transform.parent.position;
+                   }
+                   joystickClickState = false;
                 }
+               
+
             }
 
 

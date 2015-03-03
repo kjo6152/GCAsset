@@ -25,30 +25,14 @@ public class ButtonClick : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        
         mGCcontext = GCcontext.getInstance;
     }
 
-    public void DownClick(GameObject[] buttonList, int[] minIdx, int touchCount, Sprite[] pressDownSprite)
+    public void DownClick(Transform[] buttonList, int[] minIdx, Sprite[] pressDownSprite)
     {
-        
-        if (touchCount == 0)
-        {
-            Debug.Log("get Id  : " + buttonList[minIdx[0]].GetComponent<ButtonClick>().vibrate_int);
-            Debug.Log("touch Count1 :" + touchCount + "click :" + buttonList[minIdx[0]].name + ", sprite : " + pressDownSprite[minIdx[0]]);
-            buttonList[minIdx[0]].GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[0]];    
-
-        }
-        else
-        {
-            for (int i = 1; i <= touchCount; i++)
-            {
-                // 소리하고 bibrate 설정해야해 ..
-                Debug.Log("get Id  : " + buttonList[minIdx[i]].GetComponent<ButtonClick>().vibrate_int);
-                Debug.Log("touch Count2 :" + touchCount + "click" + i + " : " + buttonList[minIdx[i]] + "sprite : " + pressDownSprite[minIdx[i]]);
-                buttonList[minIdx[i]].GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[i]];
-                
-            }
-        }
+        Debug.Log("Button Pressed :" + id);
+        buttonList[minIdx[0]].GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[0]];    
 #if UNITY_ANDROID
         //진동 - 안드로이드에서만 적용
         AndroidManager.GetInstance().CallVibrate(vibrate_int);
@@ -64,7 +48,7 @@ public class ButtonClick : MonoBehaviour {
     }
 
 
-    public void UpState(GameObject[] buttonList, int[] minIdx, int touchCount, int buttonListLength, Sprite[] upPressSprite , Sprite[] pressDownSprite)
+    public void UpState(Transform[] buttonList, int[] minIdx, int touchCount, int buttonListLength, Sprite[] upPressSprite, Sprite[] pressDownSprite)
     {
         int i= 0;
         

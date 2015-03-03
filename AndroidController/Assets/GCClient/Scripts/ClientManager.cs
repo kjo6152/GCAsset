@@ -165,7 +165,7 @@ public class ClientManager {
 			Debug.Log ("Client already stopped");
 			return;
         }
-        mClientThread.Abort();
+
         destroyClient();
         
 	}
@@ -302,7 +302,7 @@ public class ClientManager {
 					Debug.Log("receivePacket");
                     if (mSocket.Receive(recvBuffer, GCPacketProcessor.getSize(), 0) <= 0)
                     {
-                        mClientManager.destroyClient();
+                        mClientManager.stopClient();
                         break;
                     }
                     processPacket(GCPacketProcessor.getPacketData(recvBuffer));
@@ -475,7 +475,7 @@ public class ClientManager {
             }
             catch
             {
-                stopProcessor();
+                mClientManager.stopClient();
             }
             
 		}

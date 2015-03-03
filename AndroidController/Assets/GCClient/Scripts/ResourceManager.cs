@@ -17,6 +17,7 @@ using System;
  * 리소스 요청을 받았을 때 해당 파일의 패스를 리턴해주어 서버 매니저에서 전송할 수 있도록 한다.
  */
 public class ResourceManager {
+    string lastScene;
 	string mResourcesPath;
 	int mResourceLength;
 
@@ -39,6 +40,7 @@ public class ResourceManager {
 
 	public void init(){
 		Debug.Log ("init");
+        lastScene = null;
         mResourcesPath = Application.persistentDataPath + NAME_RESOURCE_DIR;
         Directory.CreateDirectory(mResourcesPath);
 		mResourceLength = 0;
@@ -55,12 +57,15 @@ public class ResourceManager {
 		
 	}
 
-	/**
-	 * 컨트롤러 씬으로부터 오브젝트를 파싱하여 xml 파일로 생성
-	 */ 
-	void createViewMap()
-	{
-	}
+    public void setLastScene(string scene)
+    {
+        this.lastScene = scene;
+    }
+
+    public string getLastScene()
+    {
+        return this.lastScene;
+    }
 
     void createDeviceInfo()
     {

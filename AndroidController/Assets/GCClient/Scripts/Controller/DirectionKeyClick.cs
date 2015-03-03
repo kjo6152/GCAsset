@@ -17,26 +17,14 @@ public class DirectionKeyClick : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+      
         mGCcontext = GCcontext.getInstance;
     }
 
-    public void DownClick(GameObject[] DirectionKeyList, int[] minIdx, int touchCount, Sprite[] pressDownSprite)
+    public void DownClick(Transform[] DirectionKeyList, int[] minIdx,  Sprite[] pressDownSprite)
     {
-
-        if (touchCount == 0)
-        {
-            Debug.Log("touch Count1 :" + touchCount + "click :" + DirectionKeyList[minIdx[0]].name + ", sprite : " + pressDownSprite[minIdx[0]]);
-            this.transform.parent.GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[0]];
-        }
-        else
-        {
-            for (int i = 1; i <= touchCount; i++)
-            {
-                // 소리하고 bibrate 설정해야해 ..
-                Debug.Log("touch Count2 :" + touchCount + "click" + i + " : " + DirectionKeyList[minIdx[i]] + "sprite : " + pressDownSprite[minIdx[i]]);
-                this.transform.parent.GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[i]];
-            }
-        }
+        Debug.Log("Button Pressed :" + id);
+        this.transform.parent.GetComponent<SpriteRenderer>().sprite = pressDownSprite[minIdx[0]];
 
 #if UNITY_ANDROID
         //진동 - 안드로이드에서만 적용

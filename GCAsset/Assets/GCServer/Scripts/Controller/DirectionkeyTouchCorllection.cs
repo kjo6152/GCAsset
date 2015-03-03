@@ -6,7 +6,7 @@ public class DirectionkeyTouchCorllection : MonoBehaviour {
     private float[] DirectionKey_TouchDistance;
     public float directionKeyDelay;
     
-    public int DirectionSelectTouchObject(Vector3 touch, int directionKeyLength, GameObject[] DirectionKeyList)
+    public int DirectionSelectTouchObject(Vector3 touch, int directionKeyLength, Transform[] DirectionKeyList)
     {
         int minIdx = 0;
         float minDistance;

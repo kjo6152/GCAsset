@@ -476,7 +476,14 @@ public class ServerManager {
 
 		void destroyProcessor(){
             Debug.Log("destroyProcessor");
-            mSocket.Shutdown(SocketShutdown.Both);
+            try
+            {
+                mSocket.Shutdown(SocketShutdown.Both);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+            }
 			mSocket.Close ();
             mSocket = null;
 			mThread = null;

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿#if UNITY_ANDROID || UNITY_EDITOR
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,8 +21,8 @@ public class AndroidManager : MonoBehaviour
 
     void Awake()
     {
-        AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        curActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+        //AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        //curActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
         //vibratePlugin = new AndroidJavaClass("com.org.secmem");
     }
 
@@ -34,3 +35,4 @@ public class AndroidManager : MonoBehaviour
  
 
 }
+#endif
