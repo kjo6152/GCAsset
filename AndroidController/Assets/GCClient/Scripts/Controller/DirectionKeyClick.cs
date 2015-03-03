@@ -10,7 +10,7 @@ public class DirectionKeyClick : MonoBehaviour
     bool result;
     public Sprite downPressSprite;
     public int vibrate_int = 15;
-    public string downPressSound;
+    public AudioClip downPressSound;
     public int id;
     private GCcontext mGCcontext;
 
@@ -31,7 +31,8 @@ public class DirectionKeyClick : MonoBehaviour
         AndroidManager.GetInstance().CallVibrate(vibrate_int);
 #endif
         //사운드
-        mGCcontext.getEventManager().playSound(downPressSound);
+        mGCcontext.getAudioSource().clip = downPressSound;
+        mGCcontext.getAudioSource().Play();
 
 #if CONTROLLER
         int[] values = new int[2];

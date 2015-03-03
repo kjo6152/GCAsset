@@ -1,5 +1,4 @@
-﻿#if UNITY_ANDROID
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -21,18 +20,15 @@ public class AndroidManager : MonoBehaviour
 
     void Awake()
     {
-        //AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        //curActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
-        //vibratePlugin = new AndroidJavaClass("com.org.secmem");
+        AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        curActivity = jc.GetStatic<AndroidJavaObject>("currentActivity");
     }
 
     public void CallVibrate(int seconds)
     {
         //자바 호출
         curActivity.Call("CallVibrate", seconds);
-        //vibratePlugin.Call("CallVibrate", seconds);
     }
  
 
 }
-#endif
