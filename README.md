@@ -10,7 +10,7 @@ Unity Game Controller Asset Project
 - show GCAssetDoc and below demonstration.
 
 ##Demonstration
-[![GCAsset](https://www.youtube.com/upload_thumbnail?v=fqAveffmrjY&t=hqdefault&ts=1444309069644)](https://youtu.be/fqAveffmrjY "Go into the Blink!")
+[![GCAsset](https://i.ytimg.com/vi/fqAveffmrjY/3.jpg?time=1444309123564)](https://youtu.be/fqAveffmrjY "Go into the Blink!")
 - Click the upper image if you want to watch a demo video!
 
 ##GCAsset Members
