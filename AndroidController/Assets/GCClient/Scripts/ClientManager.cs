@@ -90,6 +90,7 @@ public class ClientManager {
 		}
         
 		mClientSocket = new Socket (AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        mClientSocket.NoDelay = true;
         mServerEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
         mClientThread = new Thread(connectServer);
 		mClientThread.Start ();

@@ -186,7 +186,7 @@ public class ResourceManager {
         UnityEngine.Object obj = null;
         for (int i = 0; i < mResourceLength; i++)
         {
-            obj = asset[i].Load(name);
+            obj = asset[i].LoadAsset(name);
             if (obj != null) return obj;
         }
         return obj;
